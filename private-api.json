@@ -6178,6 +6178,26 @@
           "totalPages" : {
             "minimum" : 1,
             "type" : "integer"
+          },
+          "firstPage" : {
+            "type" : "string",
+            "format" : "uri",
+            "nullable" : false
+          },
+          "lastPage" : {
+            "type" : "string",
+            "format" : "uri",
+            "nullable" : false
+          },
+          "nextPage" : {
+            "type" : "string",
+            "format" : "uri",
+            "nullable" : true
+          },
+          "previousPage" : {
+            "type" : "string",
+            "format" : "uri",
+            "nullable" : true
           }
         }
       },
