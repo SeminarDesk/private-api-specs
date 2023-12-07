@@ -4838,10 +4838,7 @@
             "$ref" : "#/components/schemas/AdditionalField"
           },
           "value" : {
-            "nullable" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/AdditionalFieldValue"
-            } ]
+            "$ref" : "#/components/schemas/AdditionalFieldValue"
           }
         }
       },
