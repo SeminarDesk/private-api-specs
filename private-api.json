@@ -4838,12 +4838,15 @@
             "$ref" : "#/components/schemas/AdditionalField"
           },
           "value" : {
-            "$ref" : "#/components/schemas/AdditionalFieldValue"
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/AdditionalFieldValue"
+            } ]
           }
         }
       },
       "AdditionalFieldValue" : {
-        "anyOf" : [ {
+        "oneOf" : [ {
           "type" : "string"
         }, {
           "type" : "number"
@@ -4853,15 +4856,7 @@
           "type" : "boolean"
         }, {
           "type" : "array",
-          "items" : {
-            "anyOf" : [ {
-              "type" : "string"
-            }, {
-              "type" : "number"
-            }, {
-              "type" : "integer"
-            } ]
-          }
+          "items" : { }
         } ]
       },
       "AdditionalField" : {
