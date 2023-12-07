@@ -4838,14 +4838,14 @@
             "$ref" : "#/components/schemas/AdditionalField"
           },
           "value" : {
-            "nullable" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/AnyValue"
-            } ]
+            "$ref" : "#/components/schemas/AnyValue"
           }
         }
       },
-      "AnyValue" : { },
+      "AnyValue" : {
+        "description" : "Can be any value, including `null`.",
+        "nullable" : true
+      },
       "AdditionalField" : {
         "required" : [ "id", "isDisplayedInLists", "name", "order", "type" ],
         "type" : "object",
@@ -6598,11 +6598,7 @@
         "type" : "object",
         "properties" : {
           "id" : {
-            "allOf" : [ {
-              "readOnly" : true
-            }, {
-              "$ref" : "#/components/schemas/NumericPrimaryKey"
-            } ]
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
           },
           "number" : {
             "type" : "string",
