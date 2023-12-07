@@ -3701,51 +3701,42 @@
         "type" : "object",
         "properties" : {
           "unconfirmedOrWaitingBookings" : {
-            "type" : "number",
-            "format" : "integer",
+            "type" : "integer",
             "nullable" : false
           },
           "unconfirmedOrWaitingGuests" : {
-            "type" : "number",
-            "format" : "integer",
+            "type" : "integer",
             "nullable" : false
           },
           "pendingParticipantGuests" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "Number of pending guests of type \"participant\"",
-            "format" : "integer",
             "nullable" : false
           },
           "confirmedBookings" : {
-            "type" : "number",
-            "format" : "integer",
+            "type" : "integer",
             "nullable" : false
           },
           "confirmedGuests" : {
-            "type" : "number",
-            "format" : "integer",
+            "type" : "integer",
             "nullable" : false
           },
           "confirmedParticipantGuests" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "Number of confirmed guests of type \"participant\"",
-            "format" : "integer",
             "nullable" : false
           },
           "totalBookings" : {
-            "type" : "number",
-            "format" : "integer",
+            "type" : "integer",
             "nullable" : false
           },
           "totalGuests" : {
-            "type" : "number",
-            "format" : "integer",
+            "type" : "integer",
             "nullable" : false
           },
           "availableSpots" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "Number of bookable spots, based on the \"max. part\" or *null* in case this is not set",
-            "format" : "integer",
             "nullable" : true
           }
         }
@@ -3765,9 +3756,8 @@
             "$ref" : "#/components/schemas/DetailedEventAndDateStatistics_guests"
           },
           "availableSpots" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "Number of bookable spots available, based on the \"max. part\" or *null* in case this is not set",
-            "format" : "integer",
             "nullable" : true
           }
         }
@@ -3776,33 +3766,28 @@
         "type" : "object",
         "properties" : {
           "total" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "Total number of items, including canceled ones",
-            "format" : "integer",
             "nullable" : false
           },
           "pending" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "Number of items in status \"Pending\"",
-            "format" : "integer",
             "nullable" : false
           },
           "confirmed" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "Number of items in status \"Confirmed\"",
-            "format" : "integer",
             "nullable" : false
           },
           "waiting" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "Number of items in status \"Wait list\"",
-            "format" : "integer",
             "nullable" : false
           },
           "canceled" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "Number of items in status \"Canceled\"",
-            "format" : "integer",
             "nullable" : false
           }
         }
@@ -6324,9 +6309,8 @@
         "type" : "object",
         "properties" : {
           "total" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "Number of all guests, including canceled ones, not considering their guest type",
-            "format" : "integer",
             "nullable" : false
           },
           "participants" : {
