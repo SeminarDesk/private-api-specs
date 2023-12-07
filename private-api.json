@@ -2946,10 +2946,10 @@
         }
       },
       "BaseModelProperties" : {
-        "required" : [ "id", "objectInfo" ],
         "type" : "object",
         "properties" : {
           "id" : {
+            "nullable" : false,
             "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NumericPrimaryKey"
