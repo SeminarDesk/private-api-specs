@@ -1,0 +1,3626 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "SeminarDesk Public API (unreleased next version)",
+    "description" : "Provides information about events, dates and prices, allows creation of bookings as well as access to booker online accounts.",
+    "contact" : {
+      "name" : "SeminarDesk support",
+      "url" : "https://www.seminardesk.de",
+      "email" : "support@seminardesk.de"
+    },
+    "version" : "v1-next"
+  },
+  "servers" : [ {
+    "url" : "https://{tenantId}.seminardesk.de/api",
+    "variables" : {
+      "tenantId" : {
+        "description" : "Unique tenant ID assigned to each customer by SeminarDesk",
+        "default" : "demo"
+      }
+    }
+  } ],
+  "paths" : {
+    "/tenant" : {
+      "get" : {
+        "tags" : [ "Tenant" ],
+        "summary" : "Retrieve general information about the tenant like name, logo, available salutations, labels etc.",
+        "operationId" : "getTenant",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response - contains information about tenant",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Tenant"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eventDates" : {
+      "get" : {
+        "tags" : [ "Event Dates" ],
+        "summary" : "Retrieve list of all upcoming, published event dates",
+        "operationId" : "getEventDates",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response - contains list of event dates including some details of the events they belong to",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EventDatesList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eventDates/upcoming" : {
+      "get" : {
+        "tags" : [ "Event Dates" ],
+        "summary" : "Retrieve list of all upcoming, published event dates",
+        "operationId" : "getUpcomingEventDates",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response - contains list of event dates including some details of the events they belong to",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UpcomingEventDatesList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/eventDates/past" : {
+      "get" : {
+        "tags" : [ "Event Dates" ],
+        "summary" : "Retrieve list of all past, published event dates",
+        "operationId" : "getPastEventDates",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response - contains list of event dates including some details of the events they belong to",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PastEventDatesList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{eventId}" : {
+      "get" : {
+        "tags" : [ "Events" ],
+        "summary" : "Retrieve information about a single event",
+        "operationId" : "getEventDetails",
+        "parameters" : [ {
+          "name" : "eventId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/EventId"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful response - contains all details about a single event",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Event"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/priceSummary" : {
+      "post" : {
+        "tags" : [ "Prices" ],
+        "summary" : "Retrieve calculated price summary for one or more event dates and one or more guests",
+        "operationId" : "getPriceSummary",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RetrievePriceSummaryPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response - contains price details for each event date and guest",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RetrievePriceSummaryResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Error response - price query invalid, maybe invalid voucher code was provided"
+          }
+        }
+      }
+    },
+    "/prices" : {
+      "post" : {
+        "tags" : [ "Prices" ],
+        "summary" : "Retrieve calculated prices for one event date and one guest",
+        "operationId" : "getPrices",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RetrievePricesPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful response - contains price details for different items",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RetrievePricesResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Error response - price query invalid, maybe invalid voucher code was provided"
+          }
+        }
+      }
+    },
+    "/booking" : {
+      "post" : {
+        "tags" : [ "Bookings" ],
+        "summary" : "Create a new booking with the provided details",
+        "operationId" : "createBooking",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateBookingPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Successful response - booking was created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateBookingResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Error response - booking could not be created. See `message` for details."
+          }
+        }
+      }
+    },
+    "/accounts" : {
+      "post" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Create a new account",
+        "operationId" : "createAccount",
+        "requestBody" : {
+          "description" : "Note: `password` is optional",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateAccountPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Account was created. A confirmation email was sent to the provided email address. **Note**: Due to security reasons, this will always return an account ID, even if the given email address was already registered.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateAccountResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/accounts/{accountId}/profile" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Retrieve the account's profile",
+        "operationId" : "getAccountProfile",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Profile data",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserProfileResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "put" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Update the account's profile",
+        "description" : "*Note*: The profile's email address cannot be changed.",
+        "operationId" : "updateAccountProfile",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateProfilePayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Update successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserProfileResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/password" : {
+      "put" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Update the account's password",
+        "operationId" : "updateAccountPassword",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdatePasswordPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Update successful"
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/2fa" : {
+      "post" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Enable TOTP-based 2FA for this account",
+        "operationId" : "enableAccount2fa",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EnableTwoFactorAuthPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "2FA enabled successfully, list of recovery codes is returned",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EnableTwoFactorAuthResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request, e.g. 2FA is not available or secret or code were missing or invalid"
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          },
+          "404" : {
+            "description" : "Account was not found"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Disable 2FA for this account. Existing recovery codes will be deleted",
+        "operationId" : "disableAccount2fa",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "2FA disabled successfully"
+          },
+          "400" : {
+            "description" : "Bad request, e.g. 2FA is not available"
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          },
+          "404" : {
+            "description" : "Account was not found"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/logout" : {
+      "post" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Invalidate the authentication token.",
+        "operationId" : "accountLogout",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Logout successful"
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/delete" : {
+      "post" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Request the deletion of the account",
+        "description" : "The current password has to be sent in the request body.",
+        "operationId" : "deleteAccount",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DeleteAccountPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Account deletion was successfully requested"
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/files" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Retrieve the list of files",
+        "operationId" : "getAccountFiles",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "List of files",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListFilesResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Upload a file to the account",
+        "description" : "Allowed file types: PDF, PNG, JPEG.  Maximum size per file: 10 MB.",
+        "operationId" : "addAccountFile",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateFilePayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "File was created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateFileResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/files/{fileId}" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Retrieve the file's contents",
+        "operationId" : "getAccountFile",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        }, {
+          "name" : "fileId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "File's binary contents",
+            "content" : {
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          },
+          "404" : {
+            "description" : "File was not found"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Delete a file",
+        "operationId" : "deleteAccountFile",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        }, {
+          "name" : "fileId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "File was deleted"
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          },
+          "404" : {
+            "description" : "File was not found"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/inbox" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Retrieve the list of inbox files",
+        "operationId" : "getAccountInboxFiles",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "List of inbox files",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListInboxFilesResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/inbox/{fileId}" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Retrieve the inbox file's contents",
+        "operationId" : "getAccountInboxFile",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        }, {
+          "name" : "fileId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Inbox file's binary contents",
+            "content" : {
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          },
+          "404" : {
+            "description" : "Inbox file was not found"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/documents" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Retrieve the list of documents related to event dates",
+        "operationId" : "getAccountDocuments",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "List of documents",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListDocumentsResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/documents/{fileId}" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Retrieve the document's contents",
+        "operationId" : "getAccountDocument",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        }, {
+          "name" : "fileId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Dcoument's binary contents",
+            "content" : {
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          },
+          "404" : {
+            "description" : "Document was not found"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/{accountId}/bookings" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Retrieve the list of bookings",
+        "operationId" : "getAccountBookings",
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of bookings",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ListBookingsResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts/login" : {
+      "post" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Authenticate via the given email and password",
+        "description" : "Returns \"current user\" information including authentication token and profile.",
+        "operationId" : "accountLogin",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LoginPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Authentication successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CurrentUserResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Authentication incomplete (2FA enabled)",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LoginTwoFactorAuthResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Authentication token was missing or invalid"
+          }
+        }
+      }
+    },
+    "/accounts/login/verify" : {
+      "post" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Validate the given 2FA token",
+        "operationId" : "verifyAccount2fa",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LoginTwoFactorAuthPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Authentication successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CurrentUserResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Authentication unsuccessful, token or 2FA code invalid/expired"
+          }
+        }
+      }
+    },
+    "/accounts/password" : {
+      "post" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Trigger a \"reset password\" request for the given email address",
+        "operationId" : "resetAccountPassword",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ResetPasswordPayload"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "202" : {
+            "description" : "Password reset request was successfully created. If there was a user account with the given email address, a confirmation email was sent to this address"
+          }
+        }
+      }
+    },
+    "/accounts/password/{passwordResetToken}" : {
+      "put" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Set the password for the account that is related to the given reset token",
+        "operationId" : "setAccountPassword",
+        "parameters" : [ {
+          "name" : "passwordResetToken",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SetPasswordPayload"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Password was set successfully"
+          },
+          "403" : {
+            "description" : "Password reset token was invalid"
+          }
+        }
+      }
+    },
+    "/accounts/confirmation/{accountConfirmationToken}" : {
+      "get" : {
+        "tags" : [ "Accounts" ],
+        "summary" : "Check whether the given account confirmation token is valid",
+        "operationId" : "validateAccountConfirmationToken",
+        "parameters" : [ {
+          "name" : "accountConfirmationToken",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Token is valid. See payload for account status",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AccountConfirmationTokenResponse"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Token is invalid"
+          }
+        }
+      }
+    },
+    "/facilitators" : {
+      "get" : {
+        "tags" : [ "Facilitators" ],
+        "summary" : "Retrieve a list of facilitators",
+        "operationId" : "getFacilitators",
+        "responses" : {
+          "200" : {
+            "description" : "Successful response - contains list of facilitators",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FacilitatorsList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/facilitators/{facilitatorId}" : {
+      "get" : {
+        "tags" : [ "Facilitators" ],
+        "summary" : "Retrieve details about the facilitator",
+        "operationId" : "getFacilitator",
+        "parameters" : [ {
+          "name" : "facilitatorId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful response - contains details about facilitator",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetFacilitatorResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Element was not found"
+          }
+        }
+      }
+    },
+    "/facilitators/{facilitatorId}/eventDates" : {
+      "get" : {
+        "tags" : [ "Facilitators" ],
+        "summary" : "Retrieve event dates related to the facilitator",
+        "operationId" : "getFacilitatorEventDates",
+        "parameters" : [ {
+          "name" : "facilitatorId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful response - contains list of event dates related to the facilitator",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GetFacilitatorEventDatesResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Element was not found"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Tenant" : {
+        "required" : [ "availableLabelGroups", "customContent", "info", "status" ],
+        "type" : "object",
+        "properties" : {
+          "info" : {
+            "$ref" : "#/components/schemas/TenantInfo"
+          },
+          "availableLabelGroups" : {
+            "$ref" : "#/components/schemas/AvailableLabelGroups"
+          },
+          "customContent" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CustomContent"
+            }
+          },
+          "status" : {
+            "type" : "string"
+          }
+        }
+      },
+      "EventDatesList" : {
+        "required" : [ "dates", "meta", "status" ],
+        "type" : "object",
+        "properties" : {
+          "dates" : {
+            "type" : "array",
+            "description" : "Contains the array of upcoming event dates including some details of the event the dates belong to",
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateWithEventDetails"
+            }
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/EventDatesList_meta"
+          },
+          "status" : {
+            "type" : "string"
+          }
+        }
+      },
+      "UpcomingEventDatesList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "dates" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/EventDateWithEventDetails"
+              }
+            }
+          }
+        } ]
+      },
+      "PastEventDatesList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "dates" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/EventDateWithEventDetails"
+              }
+            }
+          }
+        } ]
+      },
+      "BaseList" : {
+        "type" : "object",
+        "properties" : {
+          "meta" : {
+            "$ref" : "#/components/schemas/BaseList_meta"
+          }
+        }
+      },
+      "EventDate" : {
+        "required" : [ "attendanceType", "beginDate", "endDate", "id", "registrationAvailable", "registrationBeginDate", "registrationEndDate", "registrationPeriodAvailable", "status", "title" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "eventDateNumber" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "available", "limited", "fully_booked", "wait_list", "just_on_list", "canceled" ]
+          },
+          "beginDate" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "endDate" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "title" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "venue" : {
+            "$ref" : "#/components/schemas/Venue"
+          },
+          "labels" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Label"
+            }
+          },
+          "registrationAvailable" : {
+            "type" : "boolean"
+          },
+          "registrationPeriodAvailable" : {
+            "type" : "boolean"
+          },
+          "registrationBeginDate" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "registrationEndDate" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "attendanceType" : {
+            "type" : "string",
+            "enum" : [ "ONLINE", "ON_SITE", "SELECTABLE" ]
+          },
+          "additionalInfo" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "priceInfo" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "additionalPriceInfo" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "contactPersons" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ContactPerson"
+            }
+          },
+          "facilitators" : {
+            "type" : "array",
+            "items" : {
+              "allOf" : [ {
+                "required" : [ "order" ],
+                "type" : "object",
+                "properties" : {
+                  "additionalInfo" : {
+                    "$ref" : "#/components/schemas/LocalizedString"
+                  },
+                  "order" : {
+                    "minimum" : 1,
+                    "type" : "integer",
+                    "description" : "Order of this facilitator assignment"
+                  }
+                }
+              }, {
+                "$ref" : "#/components/schemas/Facilitator"
+              } ]
+            }
+          }
+        }
+      },
+      "EventDateWithEventDetails" : {
+        "allOf" : [ {
+          "required" : [ "eventInfo" ],
+          "type" : "object",
+          "properties" : {
+            "eventInfo" : {
+              "$ref" : "#/components/schemas/EventEventDateInfo"
+            },
+            "eventDateTitle" : {
+              "$ref" : "#/components/schemas/LocalizedString"
+            }
+          }
+        }, {
+          "required" : [ "detailpageAvailable", "titleSlug" ],
+          "type" : "object",
+          "properties" : {
+            "detailpageAvailable" : {
+              "type" : "boolean"
+            },
+            "titleSlug" : {
+              "$ref" : "#/components/schemas/LocalizedString"
+            },
+            "subtitle" : {
+              "$ref" : "#/components/schemas/LocalizedString"
+            },
+            "teaser" : {
+              "$ref" : "#/components/schemas/LocalizedString"
+            },
+            "teaserPictureUrl" : {
+              "$ref" : "#/components/schemas/LocalizedString"
+            },
+            "description" : {
+              "$ref" : "#/components/schemas/LocalizedString"
+            }
+          }
+        }, {
+          "$ref" : "#/components/schemas/EventDate"
+        } ]
+      },
+      "AdditionalFieldWithValue" : {
+        "required" : [ "field", "value" ],
+        "type" : "object",
+        "properties" : {
+          "field" : {
+            "$ref" : "#/components/schemas/AdditionalField"
+          },
+          "value" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/AdditionalFieldValue"
+            } ]
+          }
+        }
+      },
+      "AdditionalField" : {
+        "required" : [ "id", "name", "order" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "order" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "AdditionalFieldValue" : {
+        "anyOf" : [ {
+          "type" : "string"
+        }, {
+          "type" : "number"
+        }, {
+          "type" : "integer"
+        }, {
+          "type" : "boolean"
+        }, {
+          "type" : "array",
+          "items" : {
+            "anyOf" : [ {
+              "type" : "string"
+            }, {
+              "type" : "number"
+            }, {
+              "type" : "integer"
+            } ]
+          }
+        } ]
+      },
+      "EventDateWithDetails" : {
+        "allOf" : [ {
+          "required" : [ "accommodationOptional", "allowFlexibleAttendance", "attendanceEndFrom", "attendanceStartUntil", "earlyArrivalMode", "hasBoard", "hasLodging", "hasMisc", "lateDepartureMode", "maxAttendanceLength", "mealsOptional", "minAttendanceLength" ],
+          "type" : "object",
+          "properties" : {
+            "hasBoard" : {
+              "type" : "boolean"
+            },
+            "hasLodging" : {
+              "type" : "boolean"
+            },
+            "hasMisc" : {
+              "type" : "boolean"
+            },
+            "lodgingOptional" : {
+              "type" : "boolean"
+            },
+            "boardOptional" : {
+              "type" : "boolean"
+            },
+            "attendanceFees" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/AttendanceFeeInfo"
+              }
+            },
+            "availableLodging" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Lodging"
+              }
+            },
+            "availableBoard" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Board"
+              }
+            },
+            "availableMisc" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Misc"
+              }
+            },
+            "availableExtras" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Extra"
+              }
+            },
+            "allowFlexibleAttendance" : {
+              "type" : "boolean"
+            },
+            "attendanceStartUntil" : {
+              "type" : "string",
+              "format" : "date",
+              "nullable" : true
+            },
+            "attendanceEndFrom" : {
+              "type" : "string",
+              "format" : "date",
+              "nullable" : true
+            },
+            "minAttendanceLength" : {
+              "type" : "integer",
+              "nullable" : true
+            },
+            "maxAttendanceLength" : {
+              "type" : "integer",
+              "nullable" : true
+            },
+            "earlyArrivalMode" : {
+              "$ref" : "#/components/schemas/EarlyArrivalMode"
+            },
+            "lateDepartureMode" : {
+              "$ref" : "#/components/schemas/LateDepartureMode"
+            },
+            "additionalFields" : {
+              "type" : "array",
+              "nullable" : true,
+              "items" : {
+                "$ref" : "#/components/schemas/AdditionalFieldWithValue"
+              }
+            }
+          }
+        }, {
+          "$ref" : "#/components/schemas/EventDate"
+        } ]
+      },
+      "EarlyArrivalMode" : {
+        "type" : "integer",
+        "enum" : [ 0, 1, 2, 3 ]
+      },
+      "LateDepartureMode" : {
+        "type" : "integer",
+        "enum" : [ 0, 1, 2, 3 ]
+      },
+      "Lodging" : {
+        "required" : [ "id", "order", "prices", "title" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "example" : "DZ"
+          },
+          "title" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "prices" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PricePoint"
+            }
+          },
+          "order" : {
+            "type" : "integer"
+          },
+          "externalDescription" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          }
+        }
+      },
+      "Board" : {
+        "required" : [ "id", "order", "prices", "title" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "title" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "prices" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PricePoint"
+            }
+          },
+          "order" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "Misc" : {
+        "required" : [ "ageFrom", "ageTo", "id", "prices", "title" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "title" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "prices" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "ageFrom" : {
+            "type" : "integer",
+            "example" : 12
+          },
+          "ageTo" : {
+            "type" : "integer",
+            "example" : 99
+          }
+        }
+      },
+      "Extra" : {
+        "required" : [ "id", "prices", "title" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "title" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "prices" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          }
+        }
+      },
+      "PricePoint" : {
+        "required" : [ "ageFrom", "price", "priceGross", "priceLevelId", "priceNet" ],
+        "type" : "object",
+        "properties" : {
+          "ageFrom" : {
+            "type" : "integer",
+            "example" : 18
+          },
+          "priceLevelId" : {
+            "type" : "integer",
+            "description" : "The ID of the price level"
+          },
+          "price" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "priceNet" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "priceGross" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
+      "AttendanceFeeInfo" : {
+        "required" : [ "ageFrom", "isSelfAssessment", "priceDefault" ],
+        "type" : "object",
+        "properties" : {
+          "ageFrom" : {
+            "type" : "integer",
+            "example" : 18
+          },
+          "earlyBirdDate" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "priceDefault" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "priceDefaultNet" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "priceDefaultGross" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "priceReduced" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceReducedNet" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceReducedGross" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceEarlyBird" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceEarlyBirdNet" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceEarlyBirdGross" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceRangeFrom" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceRangeFromNet" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceRangeFromGross" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceRangeTo" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceRangeToNet" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "priceRangeToGross" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "isSelfAssessment" : {
+            "type" : "boolean"
+          },
+          "priceLevelId" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "isPerDay" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "EventEventDateInfo" : {
+        "required" : [ "detailpageAvailable", "id", "titleSlug" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/EventId"
+          },
+          "detailpageAvailable" : {
+            "type" : "boolean"
+          },
+          "titleSlug" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "subtitle" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "teaser" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "teaserPictureUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "description" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "contactPersons" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ContactPerson"
+            }
+          },
+          "dateCount" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "firstDateBegin" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "lastDateEnd" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          }
+        }
+      },
+      "Event" : {
+        "required" : [ "additionalQuestions", "contactPersons", "dates", "description", "facilitators", "headerPictureUrl", "id", "infoBoardLodging", "infoDatesPrices", "infoMisc", "labels", "settings", "status", "subtitle", "teaser", "title", "titleSlug" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/EventId"
+          },
+          "settings" : {
+            "$ref" : "#/components/schemas/EventSettings"
+          },
+          "title" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "titleSlug" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "subtitle" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "teaser" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "description" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "headerPictureUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "infoDatesPrices" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "infoBoardLodging" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "infoMisc" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "facilitators" : {
+            "type" : "array",
+            "items" : {
+              "allOf" : [ {
+                "required" : [ "order" ],
+                "type" : "object",
+                "properties" : {
+                  "order" : {
+                    "minimum" : 1,
+                    "type" : "integer",
+                    "description" : "Order based on the natural order of this event's dates and the order of their facilitator assignments"
+                  }
+                }
+              }, {
+                "$ref" : "#/components/schemas/Facilitator"
+              } ]
+            }
+          },
+          "contactPersons" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ContactPerson"
+            }
+          },
+          "contactInfo" : {
+            "type" : "string"
+          },
+          "dates" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateWithDetails"
+            }
+          },
+          "additionalQuestions" : {
+            "$ref" : "#/components/schemas/AdditionalQuestions"
+          },
+          "labels" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Label"
+            }
+          },
+          "bookingPaymentMethods" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/BookingPaymentMethod"
+            }
+          },
+          "guestTypes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/GuestType"
+            }
+          },
+          "externalRegistrationUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "priceLevels" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PriceLevel"
+            }
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "additionalFields" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/AdditionalFieldWithValue"
+            }
+          }
+        }
+      },
+      "GuestType" : {
+        "required" : [ "externalDescription", "externalName", "id", "type", "useForAttendance", "useForAttendanceFee" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "externalName" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "externalDescription" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "useForAttendance" : {
+            "type" : "boolean"
+          },
+          "useForAttendanceFee" : {
+            "type" : "boolean"
+          },
+          "type" : {
+            "type" : "integer",
+            "enum" : [ 1, 2, 3, 4 ]
+          }
+        }
+      },
+      "PriceLevel" : {
+        "required" : [ "description", "id", "name", "order" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "order" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "description" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          }
+        }
+      },
+      "BookingPaymentMethod" : {
+        "required" : [ "accountDataRequired", "externalDescription", "externalName", "id" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "externalName" : {
+            "type" : "string"
+          },
+          "externalDescription" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "accountDataRequired" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "AdditionalQuestions" : {
+        "required" : [ "perAdult", "perBooking", "perChild" ],
+        "type" : "object",
+        "properties" : {
+          "perBooking" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AdditionalQuestion"
+            }
+          },
+          "perAdult" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AdditionalQuestion"
+            }
+          },
+          "perChild" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AdditionalQuestion"
+            }
+          }
+        }
+      },
+      "AdditionalQuestion" : {
+        "required" : [ "hint", "id", "name", "options", "required", "type" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "hint" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "single_choice", "multiple_selection", "bool", "text", "multiline_text" ]
+          },
+          "requird" : {
+            "type" : "boolean"
+          },
+          "options" : {
+            "minItems" : 0,
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AdditionalQuestion_options"
+            }
+          }
+        }
+      },
+      "CustomContent" : {
+        "required" : [ "id", "menuTitle", "pages" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "menuTitle" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "pages" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CustomContentPage"
+            }
+          }
+        }
+      },
+      "CustomContentPage" : {
+        "required" : [ "id", "pageContent", "pageTitle" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "pageTitle" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "pageContent" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          }
+        }
+      },
+      "BookingGuest" : {
+        "required" : [ "firstName", "lastName" ],
+        "type" : "object",
+        "properties" : {
+          "address" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "billingAddress" : {
+            "type" : "object",
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Address"
+            }, {
+              "required" : [ "nameOrCompany" ],
+              "type" : "object",
+              "properties" : {
+                "nameOrCompany" : {
+                  "type" : "string"
+                },
+                "email" : {
+                  "type" : "string",
+                  "format" : "email"
+                },
+                "careOf" : {
+                  "type" : "string",
+                  "nullable" : true
+                }
+              }
+            } ]
+          },
+          "dateOfBirth" : {
+            "type" : "string",
+            "format" : "date",
+            "example" : "1980-12-24"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email"
+          },
+          "eventDates" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/BookingGuestEventDate"
+            }
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "isChild" : {
+            "type" : "boolean"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "salutation" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Address" : {
+        "type" : "object",
+        "properties" : {
+          "city" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string",
+            "description" : "ISO 3166-1 Alpha-2 code"
+          },
+          "street" : {
+            "type" : "string"
+          },
+          "street2" : {
+            "type" : "string"
+          },
+          "zip" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CreateBookingPayload" : {
+        "required" : [ "booker" ],
+        "type" : "object",
+        "properties" : {
+          "additionalGuests" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/BookingGuest"
+            }
+          },
+          "additionalQuestions" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/CreateBookingPayload_additionalQuestions"
+            }
+          },
+          "booker" : {
+            "$ref" : "#/components/schemas/BookingGuest"
+          },
+          "language" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "newsletter" : {
+            "type" : "boolean",
+            "nullable" : true
+          },
+          "notice" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "voucherCode" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "externalIdentifier" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Some arbitrary external identifier for this booking",
+            "nullable" : true
+          },
+          "paymentMethod" : {
+            "type" : "integer",
+            "nullable" : true
+          },
+          "accountData" : {
+            "$ref" : "#/components/schemas/CreateBookingPayload_accountData"
+          }
+        }
+      },
+      "CreateBookingResponse" : {
+        "type" : "object",
+        "properties" : {
+          "confirmationEmailSent" : {
+            "type" : "boolean"
+          },
+          "errors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/CreateBookingResponse_errors"
+            }
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "EventSettings" : {
+        "type" : "object",
+        "properties" : {
+          "childrenAllowed" : {
+            "type" : "boolean"
+          },
+          "allowAdditionalAdultGuests" : {
+            "type" : "boolean"
+          },
+          "datesAreCoherent" : {
+            "type" : "boolean"
+          },
+          "registrationAvailable" : {
+            "type" : "boolean"
+          },
+          "showAttendanceFees" : {
+            "type" : "boolean"
+          },
+          "showTotalPrices" : {
+            "type" : "boolean"
+          },
+          "onlyBoardAndLodging" : {
+            "type" : "boolean"
+          },
+          "allowBookingForMultipleDates" : {
+            "type" : "boolean"
+          },
+          "showExtras" : {
+            "type" : "boolean"
+          },
+          "showFacilitators" : {
+            "type" : "boolean"
+          },
+          "showNewsletterCheckbox" : {
+            "type" : "boolean"
+          },
+          "allowVoucher" : {
+            "type" : "boolean"
+          },
+          "showPriceAsTotal" : {
+            "type" : "boolean"
+          },
+          "showBoardAndLodgingAndMiscSummarized" : {
+            "type" : "boolean"
+          },
+          "mandatoryFieldsBooker" : {
+            "$ref" : "#/components/schemas/EventSettings_mandatoryFieldsBooker"
+          },
+          "mandatoryFieldsAdult" : {
+            "$ref" : "#/components/schemas/EventSettings_mandatoryFieldsAdult"
+          },
+          "mandatoryFieldsChild" : {
+            "$ref" : "#/components/schemas/EventSettings_mandatoryFieldsChild"
+          },
+          "showPriceRangeForAccommodationAndMeals" : {
+            "type" : "boolean"
+          },
+          "showNetPrices" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "RetrievePricesPayload" : {
+        "required" : [ "eventDateId", "isChild" ],
+        "type" : "object",
+        "properties" : {
+          "eventDateId" : {
+            "type" : "integer"
+          },
+          "guestTypeId" : {
+            "type" : "integer"
+          },
+          "priceLevelId" : {
+            "type" : "integer"
+          },
+          "dateOfBirth" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "isChild" : {
+            "type" : "boolean"
+          },
+          "attendanceStart" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "attendanceEnd" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "attendanceFee" : {
+            "type" : "number"
+          },
+          "earlyArrivalMode" : {
+            "$ref" : "#/components/schemas/EarlyArrivalMode"
+          },
+          "lateDepartureMode" : {
+            "$ref" : "#/components/schemas/LateDepartureMode"
+          }
+        }
+      },
+      "RetrievePricesResponse" : {
+        "type" : "object",
+        "properties" : {
+          "totalNights" : {
+            "type" : "integer"
+          },
+          "totalDaysOnSite" : {
+            "type" : "integer"
+          },
+          "totalDaysAttendance" : {
+            "type" : "integer"
+          },
+          "effectiveAge" : {
+            "type" : "integer"
+          },
+          "arrivalDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "departureDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "attendanceStart" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "attendanceEnd" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "lodging" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RetrievePricesResponse_lodging"
+            }
+          },
+          "board" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RetrievePricesResponse_board"
+            }
+          },
+          "misc" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RetrievePricesResponse_misc"
+            }
+          }
+        }
+      },
+      "RetrievePriceSummaryPayload" : {
+        "required" : [ "guests" ],
+        "type" : "object",
+        "properties" : {
+          "guests" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RetrievePriceSummaryGuestItem"
+            }
+          },
+          "voucherCode" : {
+            "type" : "string"
+          }
+        }
+      },
+      "RetrievePriceSummaryGuestItem" : {
+        "required" : [ "eventDates", "id", "isChild" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "dateOfBirth" : {
+            "type" : "string",
+            "description" : "Guest's date of birth in format YYYY-MM-DD",
+            "format" : "date",
+            "nullable" : true
+          },
+          "isChild" : {
+            "type" : "boolean"
+          },
+          "eventDates" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/BookingGuestEventDate"
+            }
+          }
+        }
+      },
+      "BookingGuestEventDate" : {
+        "required" : [ "id" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "guestTypeId" : {
+            "type" : "integer",
+            "description" : "ID of the guest type. If not provided, the first guest type of logical type \"participant\" will be used"
+          },
+          "Lodging" : {
+            "type" : "string"
+          },
+          "boardTypeId" : {
+            "type" : "integer"
+          },
+          "priceLevelId" : {
+            "type" : "integer"
+          },
+          "attendanceFee" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "extras" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer"
+            }
+          },
+          "attendanceStart" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "attendanceEnd" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "attendanceType" : {
+            "type" : "string",
+            "description" : "If event date allows attendance type selection, it can be set to either \"online\" or \"on-site\"",
+            "enum" : [ "ONLINE", "ON_SITE" ]
+          }
+        }
+      },
+      "RetrievePriceSummaryResponse" : {
+        "required" : [ "code", "eventDates", "status" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer"
+          },
+          "eventDates" : {
+            "$ref" : "#/components/schemas/RetrievePriceSummaryResponse_eventDates"
+          },
+          "status" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TenantInfo" : {
+        "required" : [ "headerImageUrl", "headerText", "id", "languages", "legalNoticeUrl", "logoUrl", "name", "onlineAccountInfo", "pricesInfo", "privacyUrl", "termsAndConditionsUrl", "websiteUrl" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "logoUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "headerImageUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "headerText" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "affiliateCode" : {
+            "type" : "string"
+          },
+          "termsAndConditionsUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "legalNoticeUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "privacyUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "websiteUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "pricesInfo" : {
+            "$ref" : "#/components/schemas/TenantInfo_pricesInfo"
+          },
+          "languages" : {
+            "$ref" : "#/components/schemas/TenantInfo_languages"
+          },
+          "availablePrefixes" : {
+            "type" : "array",
+            "description" : "List of salutation options that can be used for guests.",
+            "items" : {
+              "$ref" : "#/components/schemas/SalutationOption"
+            }
+          },
+          "availableTitles" : {
+            "type" : "array",
+            "description" : "List of available (academic) titles, e.g. \"Dr.\", \"PhD\" etc. that can be used for guests.",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "onlineAccountInfo" : {
+            "$ref" : "#/components/schemas/TenantInfo_onlineAccountInfo"
+          },
+          "newsletterSignup" : {
+            "$ref" : "#/components/schemas/TenantInfo_newsletterSignup"
+          },
+          "faviconUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "contactEmailAddress" : {
+            "type" : "string",
+            "format" : "email",
+            "nullable" : true
+          },
+          "showFacilitatorList" : {
+            "type" : "boolean"
+          },
+          "customBookingPageDomainName" : {
+            "type" : "string",
+            "nullable" : true,
+            "example" : "events.customer.de"
+          }
+        }
+      },
+      "SalutationOption" : {
+        "required" : [ "code", "gender", "language" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "language" : {
+            "type" : "string"
+          },
+          "gender" : {
+            "type" : "string",
+            "enum" : [ "F", "M", "U", "D" ]
+          }
+        }
+      },
+      "LocalizedString" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/LocalizedStringItem"
+        }
+      },
+      "LocalizedStringItem" : {
+        "required" : [ "language" ],
+        "type" : "object",
+        "properties" : {
+          "language" : {
+            "type" : "string",
+            "description" : "The language code",
+            "example" : "DE"
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "The text in the given language",
+            "example" : "Text auf"
+          }
+        }
+      },
+      "Facilitator" : {
+        "required" : [ "id", "lastName", "name", "salutation" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "salutation" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "about" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "pictureUrl" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ContactPerson" : {
+        "required" : [ "email", "firstName", "lastName", "phone" ],
+        "type" : "object",
+        "properties" : {
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Venue" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "street1" : {
+            "type" : "string"
+          },
+          "street2" : {
+            "type" : "string"
+          },
+          "zip" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          },
+          "weblink" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AvailableLabelGroups" : {
+        "type" : "object",
+        "properties" : {
+          "eventOrDate" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/LabelGroup"
+            }
+          },
+          "profile" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/LabelGroup"
+            }
+          },
+          "booking" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/LabelGroup"
+            }
+          }
+        }
+      },
+      "LabelGroup" : {
+        "required" : [ "abbreviation", "description", "id", "labels", "name", "pictureUrl" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "abbreviation" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "pictureUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "labels" : {
+            "$ref" : "#/components/schemas/Label"
+          },
+          "showAsFilter" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "Label" : {
+        "required" : [ "abbreviation", "description", "id", "name", "pictureUrl" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "abbreviation" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "pictureUrl" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          }
+        }
+      },
+      "EventId" : {
+        "type" : "string",
+        "description" : "UUID minus the `-`",
+        "example" : "37eb4c5704f8461b83dcf0723ab983e8"
+      },
+      "Timestamp" : {
+        "type" : "integer",
+        "description" : "Epoch timestamp in milliseconds",
+        "example" : 1602144000000
+      },
+      "AccountId" : {
+        "type" : "string",
+        "format" : "uuid"
+      },
+      "LoginPayload" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "format" : "email"
+          },
+          "password" : {
+            "type" : "string"
+          }
+        }
+      },
+      "LoginTwoFactorAuthResponse" : {
+        "type" : "object",
+        "properties" : {
+          "reason" : {
+            "type" : "string",
+            "enum" : [ "2FA_CODE_REQUIRED" ]
+          },
+          "token" : {
+            "type" : "string",
+            "description" : "Temporary token that can be used to complete 2FA login",
+            "format" : "uuid"
+          }
+        }
+      },
+      "LoginTwoFactorAuthPayload" : {
+        "type" : "object",
+        "properties" : {
+          "token" : {
+            "type" : "string",
+            "description" : "The temporary token that was returned during login",
+            "format" : "uuid"
+          },
+          "code" : {
+            "type" : "string",
+            "description" : "The 2FA verification code"
+          }
+        }
+      },
+      "CurrentUserResponse" : {
+        "required" : [ "accountId", "profile", "tenantId", "token" ],
+        "type" : "object",
+        "properties" : {
+          "accountId" : {
+            "$ref" : "#/components/schemas/AccountId"
+          },
+          "token" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "b3a0525d-1c37-4ffb-9ab8-f7e77bf2c9e7"
+          },
+          "tenantId" : {
+            "type" : "string",
+            "example" : "demo"
+          },
+          "twoFactorAuthenticationEnabled" : {
+            "type" : "boolean"
+          },
+          "profile" : {
+            "$ref" : "#/components/schemas/UserProfileResponse"
+          }
+        }
+      },
+      "BaseUserProfile" : {
+        "required" : [ "firstName", "lastName", "salutation" ],
+        "properties" : {
+          "salutation" : {
+            "type" : "string",
+            "example" : "Mrs."
+          },
+          "title" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "firstName" : {
+            "type" : "string",
+            "example" : "Alex"
+          },
+          "lastName" : {
+            "type" : "string",
+            "example" : "James"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "dateOfBirth" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true,
+            "example" : "1980-03-23"
+          },
+          "address" : {
+            "$ref" : "#/components/schemas/Address"
+          },
+          "billingAddress" : {
+            "type" : "object",
+            "nullable" : true,
+            "allOf" : [ {
+              "type" : "object",
+              "properties" : {
+                "nameOrCompany" : {
+                  "type" : "string",
+                  "nullable" : false
+                },
+                "careOf" : {
+                  "type" : "string",
+                  "nullable" : true
+                },
+                "email" : {
+                  "type" : "string",
+                  "nullable" : true
+                }
+              }
+            }, {
+              "$ref" : "#/components/schemas/Address"
+            } ]
+          },
+          "subscribedToNewsletter" : {
+            "type" : "boolean"
+          },
+          "labelIds" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer"
+            }
+          }
+        }
+      },
+      "FullUserProfile" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseUserProfile"
+        }, {
+          "required" : [ "email" ],
+          "type" : "object",
+          "properties" : {
+            "email" : {
+              "type" : "string",
+              "format" : "email",
+              "example" : "alex_james@example.com"
+            }
+          }
+        } ]
+      },
+      "UserProfileResponse" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/FullUserProfile"
+        } ]
+      },
+      "File" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "My document"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "My File 123.pdf"
+          },
+          "type" : {
+            "type" : "string",
+            "example" : "application/pdf"
+          },
+          "size" : {
+            "type" : "number",
+            "example" : 5432
+          },
+          "creationDate" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          }
+        }
+      },
+      "BookingInfo" : {
+        "type" : "object",
+        "properties" : {
+          "bookingNumber" : {
+            "type" : "number"
+          },
+          "creationDate" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "bookerName" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "PENDING", "CONFIRMED", "WAIT_LIST", "CANCELED", "WAIT_LIST_CANCELED", "NO_SHOW" ]
+          },
+          "guests" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "totalAmount" : {
+            "type" : "number"
+          },
+          "currentBalance" : {
+            "type" : "number"
+          },
+          "eventDates" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateInfo"
+            }
+          }
+        }
+      },
+      "EventDateInfo" : {
+        "required" : [ "begin", "end", "title" ],
+        "type" : "object",
+        "properties" : {
+          "title" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "eventDateTitle" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "subtitle" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "begin" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "end" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "number" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "venue" : {
+            "$ref" : "#/components/schemas/EventDateInfo_venue"
+          }
+        }
+      },
+      "ListFilesResponse" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/File"
+        }
+      },
+      "ListInboxFilesResponse" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/File"
+        }
+      },
+      "ListDocumentsResponse" : {
+        "type" : "array",
+        "items" : {
+          "type" : "object",
+          "allOf" : [ {
+            "required" : [ "eventDate" ],
+            "type" : "object",
+            "properties" : {
+              "eventDate" : {
+                "$ref" : "#/components/schemas/EventDateInfo"
+              }
+            }
+          }, {
+            "$ref" : "#/components/schemas/File"
+          } ]
+        }
+      },
+      "ListBookingsResponse" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/BookingInfo"
+        }
+      },
+      "CreateFilePayload" : {
+        "required" : [ "content", "fileName", "title" ],
+        "type" : "object",
+        "properties" : {
+          "fileName" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "content" : {
+            "type" : "string",
+            "format" : "binary"
+          }
+        }
+      },
+      "CreateFileResponse" : {
+        "$ref" : "#/components/schemas/File"
+      },
+      "CreateAccountPayload" : {
+        "required" : [ "confirmationUrl", "email", "firstName", "lastName" ],
+        "type" : "object",
+        "properties" : {
+          "salutation" : {
+            "type" : "string",
+            "example" : "Mr."
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "example" : "alex.fisher@example.com"
+          },
+          "password" : {
+            "type" : "string",
+            "nullable" : true,
+            "example" : "secret123"
+          },
+          "firstName" : {
+            "type" : "string",
+            "example" : "Alex"
+          },
+          "lastName" : {
+            "type" : "string",
+            "example" : "Fisher"
+          },
+          "confirmationUrl" : {
+            "type" : "string",
+            "description" : "Note: The API will replace the string `{token}` with the confirmation token",
+            "format" : "uri",
+            "example" : "https://booking.seminardesk.de/demo/confirmation/{token}"
+          },
+          "labelIds" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "type" : "integer"
+            }
+          },
+          "subscribedToNewsletter" : {
+            "type" : "boolean",
+            "nullable" : true
+          }
+        }
+      },
+      "CreateAccountResponse" : {
+        "required" : [ "accountId" ],
+        "type" : "object",
+        "properties" : {
+          "accountId" : {
+            "$ref" : "#/components/schemas/AccountId"
+          }
+        }
+      },
+      "AccountConfirmationTokenResponse" : {
+        "required" : [ "accountId", "status" ],
+        "type" : "object",
+        "properties" : {
+          "accountId" : {
+            "$ref" : "#/components/schemas/AccountId"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "CONFIRMED", "PASSWORD_REQUIRED" ]
+          }
+        }
+      },
+      "UpdateProfilePayload" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseUserProfile"
+        } ]
+      },
+      "ResetPasswordPayload" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "format" : "email"
+          },
+          "passwordUrl" : {
+            "type" : "string",
+            "description" : "Note: The API will replace the string `{token}` with the reset token",
+            "format" : "uri",
+            "example" : "https://booking.seminardesk.de/demo/account/password/{token}"
+          }
+        }
+      },
+      "SetPasswordPayload" : {
+        "type" : "object",
+        "properties" : {
+          "password" : {
+            "minLength" : 8,
+            "type" : "string",
+            "example" : "MySuperSecretPassword"
+          }
+        }
+      },
+      "UpdatePasswordPayload" : {
+        "type" : "object",
+        "properties" : {
+          "currentPassword" : {
+            "minLength" : 8,
+            "type" : "string",
+            "example" : "MyOldPassword"
+          },
+          "newPassword" : {
+            "minLength" : 8,
+            "type" : "string",
+            "example" : "MySuperSecretNewPassword"
+          }
+        }
+      },
+      "EnableTwoFactorAuthPayload" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "2FA code"
+          },
+          "secret" : {
+            "type" : "string",
+            "description" : "Base32 encoded secret",
+            "format" : "byte"
+          }
+        }
+      },
+      "EnableTwoFactorAuthResponse" : {
+        "type" : "object",
+        "properties" : {
+          "backupCodes" : {
+            "type" : "array",
+            "description" : "List of 10 single use verification codes",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "DeleteAccountPayload" : {
+        "type" : "object",
+        "properties" : {
+          "password" : {
+            "minLength" : 8,
+            "type" : "string",
+            "example" : "MyCurrentPassword"
+          }
+        }
+      },
+      "GetListResponseMeta" : {
+        "required" : [ "totalCount" ],
+        "type" : "object",
+        "properties" : {
+          "totalCount" : {
+            "type" : "integer"
+          }
+        },
+        "description" : "Provides some meta information about the response"
+      },
+      "FacilitatorsList" : {
+        "required" : [ "data", "meta" ],
+        "type" : "object",
+        "properties" : {
+          "meta" : {
+            "$ref" : "#/components/schemas/GetListResponseMeta"
+          },
+          "data" : {
+            "type" : "array",
+            "description" : "Contains the list of facilitators",
+            "items" : {
+              "$ref" : "#/components/schemas/Facilitator"
+            }
+          }
+        }
+      },
+      "GetFacilitatorResponse" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Facilitator"
+        } ]
+      },
+      "GetFacilitatorEventDatesResponse" : {
+        "required" : [ "data", "meta" ],
+        "type" : "object",
+        "properties" : {
+          "meta" : {
+            "$ref" : "#/components/schemas/GetListResponseMeta"
+          },
+          "data" : {
+            "type" : "array",
+            "description" : "Contains the list of event dates related to this facilitator",
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateWithEventDetails"
+            }
+          }
+        }
+      },
+      "EventDatesList_meta" : {
+        "type" : "object",
+        "properties" : {
+          "totalCount" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "BaseList_meta" : {
+        "type" : "object",
+        "properties" : {
+          "totalCount" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "example" : 42
+          },
+          "page" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "default" : 1
+          },
+          "size" : {
+            "maximum" : 100,
+            "minimum" : 1,
+            "type" : "integer",
+            "default" : 20
+          },
+          "totalPages" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "example" : 3
+          },
+          "firstPage" : {
+            "type" : "string",
+            "description" : "Link to the first page of this list",
+            "format" : "url",
+            "example" : "https://{{tenantId}}.seminardesk.de/api/eventDates/upcoming?page[number]=1&page[size]=20"
+          },
+          "lastPage" : {
+            "type" : "string",
+            "description" : "Link to the last page of this list",
+            "format" : "url",
+            "example" : "https://{{tenantId}}.seminardesk.de/api/eventDates/upcoming?page[number]=3&page[size]=20"
+          },
+          "nextPage" : {
+            "type" : "string",
+            "description" : "Link to the next page of this list – or null if it is already the last one",
+            "format" : "url",
+            "example" : "https://{{tenantId}}.seminardesk.de/api/eventDates/upcoming?page[number]=2&page[size]=20"
+          },
+          "previousPage" : {
+            "type" : "string",
+            "description" : "Link to the previous page of this list – or null if it is already the first one",
+            "format" : "url",
+            "example" : "null"
+          }
+        }
+      },
+      "AdditionalQuestion_options" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          }
+        }
+      },
+      "CreateBookingPayload_additionalQuestions" : {
+        "required" : [ "answer", "id" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "answer" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CreateBookingPayload_accountData" : {
+        "type" : "object",
+        "properties" : {
+          "iban" : {
+            "type" : "string"
+          },
+          "bic" : {
+            "type" : "string"
+          },
+          "accountHolder" : {
+            "type" : "string"
+          },
+          "bankName" : {
+            "type" : "string"
+          }
+        },
+        "nullable" : true
+      },
+      "CreateBookingResponse_errors" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer"
+          },
+          "field" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "EventSettings_mandatoryFieldsBooker" : {
+        "type" : "object",
+        "properties" : {
+          "gender" : {
+            "type" : "boolean"
+          },
+          "birthdate" : {
+            "type" : "boolean"
+          },
+          "homeAddress" : {
+            "type" : "boolean"
+          },
+          "billingAddress" : {
+            "type" : "boolean"
+          },
+          "phone" : {
+            "type" : "boolean"
+          },
+          "guestType" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "EventSettings_mandatoryFieldsAdult" : {
+        "type" : "object",
+        "properties" : {
+          "gender" : {
+            "type" : "boolean"
+          },
+          "birthdate" : {
+            "type" : "boolean"
+          },
+          "email" : {
+            "type" : "boolean"
+          },
+          "guestType" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "EventSettings_mandatoryFieldsChild" : {
+        "type" : "object",
+        "properties" : {
+          "gender" : {
+            "type" : "boolean"
+          },
+          "birthdate" : {
+            "type" : "boolean"
+          },
+          "guestType" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "RetrievePricesResponse_lodging" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "number"
+          }
+        }
+      },
+      "RetrievePricesResponse_meals" : {
+        "type" : "object",
+        "properties" : {
+          "date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "breakfast" : {
+            "type" : "boolean"
+          },
+          "break1" : {
+            "type" : "boolean"
+          },
+          "lunch" : {
+            "type" : "boolean"
+          },
+          "break2" : {
+            "type" : "boolean"
+          },
+          "dinner" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "RetrievePricesResponse_board" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "price" : {
+            "type" : "number"
+          },
+          "meals" : {
+            "$ref" : "#/components/schemas/RetrievePricesResponse_meals"
+          }
+        }
+      },
+      "RetrievePricesResponse_misc" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "title" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "price" : {
+            "type" : "number"
+          }
+        }
+      },
+      "RetrievePriceSummaryResponse_eventDates_guests" : {
+        "required" : [ "attendanceFee", "attendanceIncluded", "boardIncluded", "boardPriceTotal", "extrasIncluded", "extrasPriceTotal", "id", "lodgingIncluded", "lodgingPriceTotal", "miscIncluded", "miscPriceTotal", "total" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "attendanceFee" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "attendanceIncluded" : {
+            "type" : "boolean"
+          },
+          "lodgingPriceTotal" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "lodgingIncluded" : {
+            "type" : "boolean"
+          },
+          "boardPriceTotal" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "boardIncluded" : {
+            "type" : "boolean"
+          },
+          "miscPriceTotal" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "miscIncluded" : {
+            "type" : "boolean"
+          },
+          "extrasPriceTotal" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "extrasIncluded" : {
+            "type" : "boolean"
+          },
+          "total" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
+      "RetrievePriceSummaryResponse_eventDates" : {
+        "required" : [ "guests", "id", "total" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "total" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "guests" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RetrievePriceSummaryResponse_eventDates_guests"
+            }
+          }
+        }
+      },
+      "TenantInfo_pricesInfo_curency" : {
+        "required" : [ "code", "name", "symbol" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "symbol" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TenantInfo_pricesInfo" : {
+        "required" : [ "currency" ],
+        "type" : "object",
+        "properties" : {
+          "curency" : {
+            "$ref" : "#/components/schemas/TenantInfo_pricesInfo_curency"
+          }
+        }
+      },
+      "TenantInfo_languages" : {
+        "required" : [ "available", "defaultFallback" ],
+        "type" : "object",
+        "properties" : {
+          "available" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "defaultFallback" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TenantInfo_onlineAccountInfo" : {
+        "type" : "object",
+        "properties" : {
+          "active" : {
+            "type" : "boolean"
+          },
+          "allowFileupload" : {
+            "type" : "boolean"
+          },
+          "inboxActive" : {
+            "type" : "boolean"
+          },
+          "creationInfo" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "profileInfo" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          },
+          "twoFactorAuthenticationAvailable" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "TenantInfo_newsletterSignup" : {
+        "type" : "object",
+        "properties" : {
+          "enabled" : {
+            "type" : "boolean"
+          },
+          "checkboxText" : {
+            "$ref" : "#/components/schemas/LocalizedString"
+          }
+        }
+      },
+      "EventDateInfo_venue" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          }
+        },
+        "nullable" : true
+      }
+    },
+    "responses" : {
+      "UnauthorizedError" : {
+        "description" : "Authentication token was missing or invalid"
+      },
+      "AccountNotFoundError" : {
+        "description" : "Account was not found"
+      },
+      "NotFoundError" : {
+        "description" : "Element was not found"
+      }
+    },
+    "parameters" : {
+      "eventIdParam" : {
+        "name" : "eventId",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/EventId"
+        }
+      },
+      "accountIdParam" : {
+        "name" : "accountId",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/AccountId"
+        }
+      },
+      "fileIdParam" : {
+        "name" : "fileId",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "string",
+          "format" : "uuid"
+        }
+      },
+      "facilitatorIdParam" : {
+        "name" : "facilitatorId",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "description" : "Authentication token provided after successful login",
+        "scheme" : "bearer"
+      }
+    }
+  }
+}
