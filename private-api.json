@@ -4840,11 +4840,12 @@
           "value" : {
             "nullable" : true,
             "allOf" : [ {
-              "$ref" : "#/components/schemas/AdditionalFieldValue"
+              "$ref" : "#/components/schemas/AnyValue"
             } ]
           }
         }
       },
+      "AnyValue" : { },
       "AdditionalField" : {
         "required" : [ "id", "isDisplayedInLists", "name", "order", "type" ],
         "type" : "object",
