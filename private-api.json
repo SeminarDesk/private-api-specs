@@ -1,0 +1,6279 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "SeminarDesk Private API (BETA)",
+    "description" : "Provides access to resources like events, dates, profiles, bookings and invoices. <br>**Note**: This is the upcoming version which is not yet released.\n",
+    "termsOfService" : "https://www.seminardesk.de/nutzungsbedingungen/",
+    "contact" : {
+      "name" : "SeminarDesk support",
+      "url" : "https://www.seminardesk.de",
+      "email" : "support@seminardesk.de"
+    },
+    "version" : "v1"
+  },
+  "servers" : [ {
+    "url" : "https://{tenantId}.seminardesk.de/private-api",
+    "variables" : {
+      "tenantId" : {
+        "description" : "Unique tenant ID assigned to each customer by SeminarDesk",
+        "default" : "demo"
+      }
+    }
+  } ],
+  "security" : [ {
+    "ApiKeyAuth" : [ ]
+  } ],
+  "paths" : {
+    "/events" : {
+      "get" : {
+        "tags" : [ "Events" ],
+        "summary" : "Retrieves a list of events",
+        "operationId" : "getEvents",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EventsList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Events" ],
+        "summary" : "Creates a new event",
+        "operationId" : "createEvent",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateEvent"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            },
+            "links" : {
+              "GetEventById" : {
+                "operationId" : "getEvent",
+                "parameters" : {
+                  "id" : "$response.body#/id"
+                },
+                "description" : "The `id` value returned can be used as the `id` parameter in `GET /events/{id}`\n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}" : {
+      "get" : {
+        "tags" : [ "Events" ],
+        "summary" : "Retrieves the details of an event",
+        "operationId" : "getEvent",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Events" ],
+        "summary" : "Deletes an event",
+        "operationId" : "deleteEvent",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted successfully"
+          },
+          "409" : {
+            "description" : "Request cannot be completed due to conflict",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Events" ],
+        "summary" : "Updates one or more properties of an event",
+        "operationId" : "patchEvent",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchEvent"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}/dates" : {
+      "get" : {
+        "tags" : [ "Events", "Dates" ],
+        "summary" : "Retrieves the list of dates of an event",
+        "operationId" : "getEventEventDates",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EventDatesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Events", "Dates" ],
+        "summary" : "Creates a new event date",
+        "operationId" : "createEventDate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateEventDate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            },
+            "links" : {
+              "GetEventDateById" : {
+                "operationId" : "getEventDate",
+                "parameters" : {
+                  "id" : "$response.body#/id"
+                },
+                "description" : "The `id` value returned can be used as the `id` parameter in `GET /dates/{id}`\n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dates" : {
+      "get" : {
+        "tags" : [ "Dates" ],
+        "summary" : "Retrieves a list of event dates",
+        "operationId" : "getEventDates",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EventDatesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dates/{id}" : {
+      "get" : {
+        "tags" : [ "Dates" ],
+        "summary" : "Retrieves the details of an event date",
+        "operationId" : "getEventDate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EventDate"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Dates" ],
+        "summary" : "Deletes an event date",
+        "operationId" : "deleteEventDate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted successfully"
+          },
+          "409" : {
+            "description" : "Request cannot be completed due to conflict",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Dates" ],
+        "summary" : "Updates one or more properties of an event date",
+        "operationId" : "patchEventDate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchEventDate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dates/{id}/bookings" : {
+      "get" : {
+        "tags" : [ "Dates", "Bookings" ],
+        "summary" : "Retrieves the bookings for an event date",
+        "operationId" : "getEventDateBookings",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingsList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles" : {
+      "get" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Retrieves a list of profiles",
+        "operationId" : "getProfiles",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfilesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles/{id}" : {
+      "get" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Retrieves the details of a profile",
+        "operationId" : "getProfile",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Profile"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles/{id}/bookings" : {
+      "get" : {
+        "tags" : [ "Profiles", "Bookings" ],
+        "summary" : "Retrieves the bookings for a profile",
+        "operationId" : "getProfileBookings",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingsList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles/{id}/invoices" : {
+      "get" : {
+        "tags" : [ "Profiles", "Invoices" ],
+        "summary" : "Retrieves a list of invoices for a profile",
+        "operationId" : "getProfileInvoices",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingOrProfileInvoicesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/persons" : {
+      "get" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Retrieves a list of person profiles",
+        "operationId" : "getPersonProfiles",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PersonProfilesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/persons/{id}" : {
+      "get" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Retrieves the details of a person profile",
+        "operationId" : "getPersonProfile",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PersonProfile"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/facilitators" : {
+      "get" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Retrieves a list of facilitator profiles",
+        "operationId" : "getFacilitatorProfiles",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FacilitatorProfilesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/facilitators/{id}" : {
+      "get" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Retrieves the details of a facilitator profile",
+        "operationId" : "getFacilitatorProfile",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FacilitatorProfile"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations" : {
+      "get" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Retrieves a list of organization/company profiles",
+        "operationId" : "getOrganizationProfiles",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OrganizationProfilesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{id}" : {
+      "get" : {
+        "tags" : [ "Profiles" ],
+        "summary" : "Retrieves the details of an organization/company profile",
+        "operationId" : "getOrganizationProfile",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OrganizationProfile"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bookings" : {
+      "get" : {
+        "tags" : [ "Bookings" ],
+        "summary" : "Retrieves a list of bookings",
+        "operationId" : "getBookings",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingsList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Bookings" ],
+        "summary" : "Creates a new booking",
+        "operationId" : "createBooking",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateBooking"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            },
+            "links" : {
+              "GetBookingById" : {
+                "operationId" : "getBooking",
+                "parameters" : {
+                  "id" : "$response.body#/id"
+                },
+                "description" : "The `id` value returned can be used as the `id` parameter in `GET /bookings/{id}`\n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{id}" : {
+      "get" : {
+        "tags" : [ "Bookings" ],
+        "summary" : "Retrieves the details of a booking",
+        "operationId" : "getBooking",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Booking"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{id}/guests" : {
+      "get" : {
+        "tags" : [ "Bookings" ],
+        "summary" : "Retrieves the guests of a booking",
+        "operationId" : "getBookingGuests",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingGuestsList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{id}/invoices" : {
+      "get" : {
+        "tags" : [ "Bookings", "Invoices" ],
+        "summary" : "Retrieves a list of invoices for a booking",
+        "operationId" : "getBookingInvoices",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingOrProfileInvoicesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices" : {
+      "get" : {
+        "tags" : [ "Invoices" ],
+        "summary" : "Retrieves a list of invoices",
+        "operationId" : "getInvoices",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/PaginationParameters"
+          }
+        }, {
+          "name" : "searchTerm",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InvoicesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/{id}" : {
+      "get" : {
+        "tags" : [ "Invoices" ],
+        "summary" : "Retrieves the details of an invoice",
+        "operationId" : "getInvoice",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Invoice"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/{id}/payments" : {
+      "post" : {
+        "tags" : [ "Invoices", "Payments" ],
+        "summary" : "Adds a payment to an invoice",
+        "description" : "Note: In the background, payments will be added to the related source (e.g. a booking) instead of the invoice directly. So this method can only be used for invoices with one single source.\n",
+        "operationId" : "addPaymentToInvoice",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreatePayment"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Payment"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/{id}/pdf" : {
+      "get" : {
+        "tags" : [ "Invoices" ],
+        "summary" : "Retrieves the PDF file contents of an invoice",
+        "operationId" : "getInvoicePdf",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/octet-stream" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "BaseList" : {
+        "type" : "object",
+        "properties" : {
+          "meta" : {
+            "$ref" : "#/components/schemas/BaseList_meta"
+          }
+        }
+      },
+      "BaseModelProperties" : {
+        "required" : [ "id", "objectInfo" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
+          "notes" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Note"
+            }
+          },
+          "tasks" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Task"
+            }
+          },
+          "objectInfo" : {
+            "nullable" : false,
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ObjectMetaInfo"
+            } ]
+          }
+        }
+      },
+      "ProfilesList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Profile"
+              }
+            }
+          }
+        } ]
+      },
+      "PersonProfilesList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/PersonProfile"
+              }
+            }
+          }
+        } ]
+      },
+      "FacilitatorProfilesList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/FacilitatorProfile"
+              }
+            }
+          }
+        } ]
+      },
+      "OrganizationProfilesList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/OrganizationProfile"
+              }
+            }
+          }
+        } ]
+      },
+      "BookingGuestsList" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/BookingGuest"
+        }
+      },
+      "BookingsList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Booking"
+              }
+            }
+          }
+        } ]
+      },
+      "CreateBooking" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Booking"
+        } ]
+      },
+      "CreatePayment" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PaymentProperties"
+        }, {
+          "$ref" : "#/components/schemas/PaymentRequiredProperties"
+        } ]
+      },
+      "Booking" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseModelProperties"
+        }, {
+          "$ref" : "#/components/schemas/BookingProperties"
+        }, {
+          "$ref" : "#/components/schemas/BookingRequiredProperties"
+        } ]
+      },
+      "BookingRequiredProperties" : {
+        "required" : [ "booker", "guests", "status" ],
+        "type" : "object"
+      },
+      "BookingProperties" : {
+        "type" : "object",
+        "properties" : {
+          "booker" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "status" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BookingStatus"
+            } ],
+            "default" : "PENDING"
+          },
+          "externalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "internalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "paymentMethod" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/PaymentMethod"
+            } ]
+          },
+          "specialRequestsPriceList" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "labels" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Label"
+            }
+          },
+          "marker" : {
+            "type" : "string",
+            "nullable" : true,
+            "example" : "Sample Marker"
+          },
+          "referenceNumbers" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "voucherCode" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "guests" : {
+            "minItems" : 1,
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/BookingGuest"
+            }
+          },
+          "numberOfInvoices" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "openBalance" : {
+            "type" : "number",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "payments" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Payment"
+            }
+          }
+        }
+      },
+      "Payment" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PaymentProperties"
+        }, {
+          "$ref" : "#/components/schemas/PaymentRequiredProperties"
+        } ]
+      },
+      "PaymentRequiredProperties" : {
+        "required" : [ "amount", "date", "method" ],
+        "type" : "object"
+      },
+      "PaymentProperties" : {
+        "type" : "object",
+        "properties" : {
+          "amount" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "method" : {
+            "$ref" : "#/components/schemas/PaymentMethod"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "remarks" : {
+            "type" : "string"
+          }
+        }
+      },
+      "BookingStatus" : {
+        "type" : "string",
+        "enum" : [ "PENDING", "CONFIRMED", "WAIT_LIST", "CANCELED", "WAIT_LIST_CANCELED", "NO_SHOW" ]
+      },
+      "BookingGuest" : {
+        "required" : [ "eventDate", "guest" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "guest" : {
+            "$ref" : "#/components/schemas/BookingGuest_guest"
+          },
+          "eventDate" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "status" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BookingStatus"
+            } ]
+          },
+          "guestType" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/GuestType"
+            } ]
+          },
+          "priceLevel" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "specialRequests" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            }
+          },
+          "teachingUnits" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "nullable" : true
+          },
+          "marker" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "attendanceType" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BookingGuestAttendanceType"
+            } ]
+          },
+          "items" : {
+            "type" : "array",
+            "nullable" : false,
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/BookingGuestItem"
+            }
+          },
+          "begin" : {
+            "description" : "If not provided, will default to begin of event date",
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "end" : {
+            "description" : "If not provided, will default to end of event date",
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "voucherCode" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
+      "BookingGuestItem" : {
+        "required" : [ "begin", "end", "status", "type" ],
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BookingGuestItemType"
+            } ]
+          },
+          "status" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BookingStatus"
+            } ]
+          },
+          "begin" : {
+            "description" : "If not provided, will default to begin of booking guest",
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "end" : {
+            "description" : "If not provided, will default to end of booking guest",
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "text" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "priceList" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "calculatedPrice" : {
+            "type" : "number",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "actualPrice" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "taxRate" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/TaxRate"
+            } ]
+          }
+        }
+      },
+      "BookingGuestItemType" : {
+        "type" : "object",
+        "properties" : {
+          "type" : {
+            "type" : "string",
+            "enum" : [ "EVENT", "ACCOMMODATION", "MEALS", "MISC", "RENT", "CREDIT", "PAYMENT_FEE" ]
+          },
+          "logicalType" : {
+            "type" : "string",
+            "readOnly" : true,
+            "enum" : [ "EVENT", "ACCOMMODATION", "MEALS", "MISC", "PAYMENT_FEE" ]
+          }
+        }
+      },
+      "GuestType" : {
+        "required" : [ "name", "type" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "PARTICIPANT", "FACILITATOR", "ASSISTANT", "COMPANION" ]
+          }
+        }
+      },
+      "PaymentMethod" : {
+        "required" : [ "code", "name" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "Unique code of this payment method",
+            "nullable" : false
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true
+          }
+        }
+      },
+      "EventsList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Event"
+              }
+            }
+          }
+        } ]
+      },
+      "CreateEvent" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventIncludingDates"
+        } ]
+      },
+      "CreateResourceResponse" : {
+        "required" : [ "id" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "description" : "ID of the created element",
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          }
+        }
+      },
+      "CreateEventDate" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventDate"
+        } ]
+      },
+      "PatchEvent" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventProperties"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "notes" : {
+              "readOnly" : true
+            },
+            "tasks" : {
+              "readOnly" : true
+            },
+            "attendanceFeePriceLists" : {
+              "readOnly" : true
+            }
+          }
+        } ]
+      },
+      "PatchEventDate" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/EventDateProperties"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "notes" : {
+              "readOnly" : true
+            },
+            "tasks" : {
+              "readOnly" : true
+            },
+            "facilitators" : {
+              "readOnly" : true
+            },
+            "equipment" : {
+              "readOnly" : true
+            },
+            "revenues" : {
+              "readOnly" : true
+            },
+            "costs" : {
+              "readOnly" : true
+            },
+            "externalAccommodations" : {
+              "readOnly" : true
+            },
+            "roomContingents" : {
+              "readOnly" : true
+            },
+            "timetableEntries" : {
+              "readOnly" : true
+            },
+            "functionRoomBookings" : {
+              "readOnly" : true
+            }
+          }
+        } ]
+      },
+      "EventIncludingDates" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Event"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "dates" : {
+              "type" : "array",
+              "nullable" : true,
+              "items" : {
+                "$ref" : "#/components/schemas/EventDate"
+              }
+            }
+          }
+        } ]
+      },
+      "EventDatesList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/EventDate"
+              }
+            }
+          }
+        } ]
+      },
+      "Event" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseModelProperties"
+        }, {
+          "$ref" : "#/components/schemas/EventProperties"
+        }, {
+          "$ref" : "#/components/schemas/EventRequiredProperties"
+        } ]
+      },
+      "EventRequiredProperties" : {
+        "required" : [ "bookingSettings", "internalOrganizer", "name", "publishingSettings" ],
+        "type" : "object"
+      },
+      "EventProperties" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "example" : "My Sample Event Name 2023"
+          },
+          "shortName" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "nullable" : true,
+            "example" : "MSEN 2023"
+          },
+          "dateCount" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "nextDateBegin" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "firstDateBegin" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "lastDateEnd" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "usesDefaultEmailSettings" : {
+            "type" : "boolean",
+            "readOnly" : true
+          },
+          "usesDefaultPublishingSettings" : {
+            "type" : "boolean",
+            "readOnly" : true
+          },
+          "isPublished" : {
+            "type" : "boolean",
+            "readOnly" : true
+          },
+          "facilitators" : {
+            "type" : "array",
+            "nullable" : true,
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/FacilitatorInfo"
+            }
+          },
+          "notes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Note"
+            }
+          },
+          "tasks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Task"
+            }
+          },
+          "contactPersons" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          },
+          "assignedUsers" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          },
+          "internalOrganizer" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Organization"
+            } ]
+          },
+          "externalOrganizer" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "contractPartner" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "color" : {
+            "type" : "string",
+            "nullable" : true,
+            "example" : "#FF0000"
+          },
+          "labels" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Label"
+            }
+          },
+          "invoiceTemplate" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "bookingSettings" : {
+            "$ref" : "#/components/schemas/EventProperties_bookingSettings"
+          },
+          "attendanceFeePriceLists" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AttendanceFeePriceList"
+            }
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "additionalFields" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AdditionalFieldWithValue"
+            }
+          },
+          "publishingSettings" : {
+            "$ref" : "#/components/schemas/EventProperties_publishingSettings"
+          }
+        }
+      },
+      "Note" : {
+        "required" : [ "scope", "text" ],
+        "type" : "object",
+        "properties" : {
+          "scope" : {
+            "type" : "string",
+            "enum" : [ "GENERAL", "EVENT", "MEALS", "ACCOMMODATION" ]
+          },
+          "text" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Task" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Note"
+        }, {
+          "required" : [ "dueDate" ],
+          "type" : "object",
+          "properties" : {
+            "dueDate" : {
+              "type" : "string",
+              "format" : "date"
+            },
+            "assignedTo" : {
+              "nullable" : true,
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/User"
+              } ]
+            }
+          }
+        } ]
+      },
+      "AttendanceFeePriceList" : {
+        "required" : [ "details", "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "earlyBookingDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "remarks" : {
+            "type" : "string"
+          },
+          "details" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AttendanceFeePriceListDetail"
+            }
+          }
+        }
+      },
+      "AttendanceFeePriceListDetail" : {
+        "required" : [ "calculationMode", "grossPrice", "isPublished", "isSelfAssessment", "minAge", "priceLevel", "taxRate" ],
+        "type" : "object",
+        "properties" : {
+          "priceLevel" : {
+            "$ref" : "#/components/schemas/NamedIdReference"
+          },
+          "minAge" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "default" : 18
+          },
+          "grossPrice" : {
+            "minimum" : 0,
+            "type" : "number",
+            "format" : "double"
+          },
+          "grossRoomRent" : {
+            "minimum" : 0,
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "calculationMode" : {
+            "type" : "string",
+            "enum" : [ "PER_ATTENDANCE", "PER_DAY" ]
+          },
+          "isSelfAssessment" : {
+            "type" : "boolean"
+          },
+          "grossSelfAssessmentMinPrice" : {
+            "minimum" : 0,
+            "format" : "double",
+            "nullable" : true
+          },
+          "grossSelfAssessmentMaxPrice" : {
+            "minimum" : 0,
+            "format" : "double",
+            "nullable" : true
+          },
+          "taxRate" : {
+            "$ref" : "#/components/schemas/TaxRate"
+          },
+          "isPublished" : {
+            "type" : "boolean",
+            "default" : true
+          },
+          "publicName" : {
+            "type" : "string"
+          }
+        }
+      },
+      "EventDate" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseModelProperties"
+        }, {
+          "$ref" : "#/components/schemas/EventDateProperties"
+        }, {
+          "$ref" : "#/components/schemas/EventDateRequiredProperties"
+        } ]
+      },
+      "EventDateRequiredProperties" : {
+        "required" : [ "begin", "end", "name", "status" ],
+        "type" : "object"
+      },
+      "EventDateProperties" : {
+        "type" : "object",
+        "properties" : {
+          "eventId" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
+          "notes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Note"
+            }
+          },
+          "tasks" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Task"
+            }
+          },
+          "name" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : false,
+            "example" : "My Sample Event Date Name"
+          },
+          "shortName" : {
+            "maxLength" : 25,
+            "type" : "string",
+            "nullable" : true,
+            "example" : "Event Date #1"
+          },
+          "status" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/EventDateStatus"
+            } ]
+          },
+          "begin" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "end" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "attendanceType" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/AttendanceType"
+            } ]
+          },
+          "venue" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Venue"
+            } ]
+          },
+          "teachingUnits" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "nullable" : true
+          },
+          "minParticipants" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "nullable" : true
+          },
+          "targetParticipants" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "nullable" : true
+          },
+          "maxParticipants" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "nullable" : true
+          },
+          "costCenter" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "nullable" : true
+          },
+          "eventCode" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "number" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "receptionSettings" : {
+            "$ref" : "#/components/schemas/EventDateProperties_receptionSettings"
+          },
+          "serviceAndPriceSettings" : {
+            "$ref" : "#/components/schemas/EventDateProperties_serviceAndPriceSettings"
+          },
+          "publishingSettings" : {
+            "$ref" : "#/components/schemas/EventDateProperties_publishingSettings"
+          },
+          "additionalInfo" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "labels" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Label"
+            }
+          },
+          "additionalFields" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/AdditionalFieldWithValue"
+            }
+          },
+          "facilitators" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateFacilitator"
+            }
+          },
+          "equipment" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateEquipment"
+            }
+          },
+          "revenues" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/RevenueItem"
+            }
+          },
+          "costs" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateCost"
+            }
+          },
+          "externalAccommodations" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateExternalAccommodation"
+            }
+          },
+          "roomContingents" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateRoomContingent"
+            }
+          },
+          "timetableEntries" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateTimeTableEntry"
+            }
+          },
+          "documents" : {
+            "type" : "array",
+            "nullable" : true,
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateDocument"
+            }
+          },
+          "functionRoomBookings" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/EventDateFunctionRoomBooking"
+            }
+          }
+        }
+      },
+      "EventDateStatus" : {
+        "required" : [ "id" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "name" : {
+            "type" : "string",
+            "readOnly" : true
+          },
+          "bookingAllowed" : {
+            "type" : "boolean",
+            "readOnly" : true
+          },
+          "isCanceled" : {
+            "type" : "boolean",
+            "readOnly" : true
+          },
+          "publicationAllowed" : {
+            "type" : "boolean",
+            "readOnly" : true
+          }
+        }
+      },
+      "AttendanceType" : {
+        "type" : "string",
+        "enum" : [ "ONLINE", "ON_SITE", "SELECTABLE" ]
+      },
+      "BookingGuestAttendanceType" : {
+        "type" : "string",
+        "enum" : [ "ONLINE", "ON_SITE" ]
+      },
+      "EventDateFunctionRoomBooking" : {
+        "required" : [ "begin", "end", "functionRoom", "isInternal", "status" ],
+        "type" : "object",
+        "properties" : {
+          "functionRoom" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/FunctionRoom"
+            } ]
+          },
+          "status" : {
+            "type" : "string",
+            "nullable" : false,
+            "enum" : [ "CONFIRMED", "REQUESTED", "BLOCKED", "OUT_OF_SERVICE", "DELETED" ]
+          },
+          "isInternal" : {
+            "type" : "boolean",
+            "nullable" : false
+          },
+          "begin" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "end" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "text" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
+      "FunctionRoom" : {
+        "required" : [ "cleaningFee", "dailyRent", "id", "isActive", "name", "order", "organization", "taxRate" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "dailyRent" : {
+            "minimum" : 0,
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "cleaningFee" : {
+            "minimum" : 0,
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "taxRate" : {
+            "nullable" : true,
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/TaxRate"
+            } ]
+          },
+          "costCenter" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "bookingAccount" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "organization" : {
+            "nullable" : true,
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Organization"
+            } ]
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "order" : {
+            "type" : "integer",
+            "nullable" : false,
+            "readOnly" : true
+          }
+        }
+      },
+      "EventDateDocument" : {
+        "required" : [ "fileUrl", "isPublished" ],
+        "type" : "object",
+        "properties" : {
+          "fileUrl" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "isPublished" : {
+            "type" : "boolean",
+            "description" : "If \"true\", then this document will be made available for all confirmed participants with booking page account"
+          }
+        }
+      },
+      "EventDateTimeTableEntry" : {
+        "required" : [ "begin", "end", "location", "teachingUnits", "type" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "CLASS", "BREAK", "EXAM" ]
+          },
+          "begin" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "end" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "location" : {
+            "type" : "string"
+          },
+          "teachingUnits" : {
+            "maximum" : 99,
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "facilitator" : {
+            "$ref" : "#/components/schemas/FacilitatorInfo"
+          },
+          "topic" : {
+            "type" : "string"
+          },
+          "remarks" : {
+            "type" : "string"
+          }
+        }
+      },
+      "EventDateRoomContingent" : {
+        "required" : [ "begin", "end", "name", "rooms", "status" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "nullable" : false,
+            "example" : "Example room contingent"
+          },
+          "status" : {
+            "type" : "string",
+            "nullable" : false,
+            "enum" : [ "BOOKED", "DELETED" ]
+          },
+          "begin" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : false
+          },
+          "end" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : false
+          },
+          "color" : {
+            "type" : "string",
+            "nullable" : true,
+            "example" : "#FFF000"
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "rooms" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/Room"
+            }
+          }
+        }
+      },
+      "Room" : {
+        "required" : [ "bedCount", "building", "hasSingleBeds", "id", "isActive", "name", "order", "roomType" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "name" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "description" : "Unique name or number of the room",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "roomType" : {
+            "nullable" : false,
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/RoomType"
+            } ]
+          },
+          "bedCount" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "hasSingleBeds" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "building" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "location" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "roomProvider" : {
+            "nullable" : true,
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "order" : {
+            "type" : "integer",
+            "nullable" : true,
+            "readOnly" : true
+          }
+        }
+      },
+      "RoomType" : {
+        "required" : [ "code", "isGuestFlatRate", "name", "nameOnInvoice", "order" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "maxLength" : 10,
+            "type" : "string",
+            "description" : "Unique code for the room type"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "nameOnInvoice" : {
+            "type" : "string"
+          },
+          "externalDescription" : {
+            "type" : "string"
+          },
+          "isGuestFlatRate" : {
+            "type" : "boolean"
+          },
+          "order" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "EventDateExternalAccommodation" : {
+        "required" : [ "capacity", "count", "externalAccommodation", "roomType" ],
+        "type" : "object",
+        "properties" : {
+          "externalAccommodation" : {
+            "$ref" : "#/components/schemas/ExternalAccommodation"
+          },
+          "roomType" : {
+            "type" : "string"
+          },
+          "capacity" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "count" : {
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "hasSingleBeds" : {
+            "type" : "boolean"
+          },
+          "cancelationDate" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          }
+        }
+      },
+      "ExternalAccommodation" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true
+          }
+        }
+      },
+      "EventDateCost" : {
+        "required" : [ "grossAmount", "organization", "taxRate" ],
+        "type" : "object",
+        "properties" : {
+          "grossAmount" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "taxRate" : {
+            "$ref" : "#/components/schemas/TaxRate"
+          },
+          "dateOfService" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          },
+          "text" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "costCenter" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "costType" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "account" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "organization" : {
+            "$ref" : "#/components/schemas/Organization"
+          },
+          "invoiceAvailable" : {
+            "type" : "boolean",
+            "nullable" : true
+          },
+          "paymentDate" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          },
+          "profile" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "bankAccountData" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BankAccountData"
+            } ]
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
+      "BankAccountData" : {
+        "type" : "object",
+        "properties" : {
+          "bankName" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "country" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Country"
+            } ]
+          },
+          "iban" : {
+            "type" : "string",
+            "nullable" : true,
+            "example" : "DE91100000000123456789"
+          },
+          "bic" : {
+            "type" : "string",
+            "nullable" : true,
+            "example" : "AABSDE31"
+          },
+          "accountHolder" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
+      "RevenueItem" : {
+        "required" : [ "grossAmount", "organization", "status", "taxRate" ],
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "readOnly" : true,
+            "enum" : [ "POSTED", "INVOICED" ]
+          },
+          "grossAmount" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "taxRate" : {
+            "$ref" : "#/components/schemas/TaxRate"
+          },
+          "dateOfService" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "text" : {
+            "type" : "string"
+          },
+          "costCenter" : {
+            "maxLength" : 50,
+            "type" : "string"
+          },
+          "costType" : {
+            "type" : "string"
+          },
+          "account" : {
+            "type" : "string"
+          },
+          "organization" : {
+            "$ref" : "#/components/schemas/Organization"
+          },
+          "numberOfParticipants" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "payments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RevenueItem_payments"
+            }
+          },
+          "remarks" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TaxRate" : {
+        "required" : [ "name", "value" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true,
+            "example" : "German Default VAT rate"
+          },
+          "value" : {
+            "maximum" : 1,
+            "minimum" : 0,
+            "type" : "number",
+            "format" : "double",
+            "nullable" : false,
+            "example" : 0.19
+          }
+        }
+      },
+      "EventDateEquipment" : {
+        "required" : [ "begin", "count", "end", "equipment" ],
+        "type" : "object",
+        "properties" : {
+          "equipment" : {
+            "$ref" : "#/components/schemas/Equipment"
+          },
+          "count" : {
+            "type" : "integer"
+          },
+          "begin" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "end" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "remarks" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Equipment" : {
+        "required" : [ "id", "name", "quantity" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "quantity" : {
+            "type" : "integer",
+            "nullable" : false,
+            "readOnly" : true
+          }
+        }
+      },
+      "EventDateFacilitator" : {
+        "required" : [ "profile" ],
+        "type" : "object",
+        "properties" : {
+          "profile" : {
+            "$ref" : "#/components/schemas/FacilitatorInfo"
+          },
+          "fee" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "internalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "additionalInfo" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
+      "YesNoOptional" : {
+        "type" : "string",
+        "enum" : [ "YES", "NO", "OPTIONAL" ]
+      },
+      "Venue" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "streetAddress" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "streetAddress2" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "zipCode" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "city" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "country" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "phone" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "website" : {
+            "type" : "string",
+            "format" : "uri",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "directionMapUrl" : {
+            "type" : "string",
+            "format" : "uri",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "readOnly" : true
+          }
+        }
+      },
+      "Timestamp" : {
+        "type" : "integer",
+        "description" : "Epoch timestamp in milliseconds",
+        "example" : 1602144000000
+      },
+      "EarlyArrivalMode" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "enum" : [ "NOT_AVAILABLE", "NO_MEALS", "INCL_BREAKFAST", "INCL_DINNER_BREAKFAST" ]
+          },
+          "value" : {
+            "type" : "integer",
+            "enum" : [ 0, 1, 2, 3 ]
+          }
+        }
+      },
+      "LateDepartureMode" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "enum" : [ "NOT_AVAILABLE", "NO_MEALS", "INCL_DINNER", "INCL_DINNER_BREAKFAST" ]
+          },
+          "value" : {
+            "type" : "integer",
+            "enum" : [ 0, 1, 2, 3 ]
+          }
+        }
+      },
+      "ObjectMetaInfo" : {
+        "required" : [ "changedAt", "changedBy", "createdAt", "createdBy" ],
+        "type" : "object",
+        "properties" : {
+          "createdAt" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "createdBy" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "changedAt" : {
+            "$ref" : "#/components/schemas/Timestamp"
+          },
+          "changedBy" : {
+            "$ref" : "#/components/schemas/User"
+          }
+        }
+      },
+      "AdditionalFieldWithValue" : {
+        "required" : [ "field", "value" ],
+        "type" : "object",
+        "properties" : {
+          "field" : {
+            "$ref" : "#/components/schemas/AdditionalField"
+          },
+          "value" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/AdditionalFieldValue"
+            } ]
+          }
+        }
+      },
+      "AdditionalFieldValue" : {
+        "anyOf" : [ {
+          "type" : "string"
+        }, {
+          "type" : "number"
+        }, {
+          "type" : "integer"
+        }, {
+          "type" : "boolean"
+        }, {
+          "type" : "array",
+          "items" : {
+            "anyOf" : [ {
+              "type" : "string"
+            }, {
+              "type" : "number"
+            }, {
+              "type" : "integer"
+            } ]
+          }
+        } ]
+      },
+      "AdditionalField" : {
+        "required" : [ "id", "isDisplayedInLists", "name", "order", "type" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "type" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true,
+            "enum" : [ "TEXT_SINGLE_LINE", "TEXT_MULTI_LINE", "DATE", "NUMBER", "BOOLEAN", "SELECTION_SINGLE", "SELECTION_MULTI", "HEADING", "CURRENCY", "FORMATTED_TEXT" ]
+          },
+          "description" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "defaultValue" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "isDisplayedInLists" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "order" : {
+            "type" : "integer",
+            "nullable" : false,
+            "readOnly" : true
+          }
+        }
+      },
+      "ProfileAdditionalField" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AdditionalField"
+        }, {
+          "required" : [ "usableForObjectType" ],
+          "type" : "object",
+          "properties" : {
+            "usableForObjectType" : {
+              "type" : "string",
+              "nullable" : false,
+              "enum" : [ "PERSON", "ORGANIZATION", "BOTH" ]
+            },
+            "category" : {
+              "type" : "string",
+              "nullable" : true
+            },
+            "restrictedToUserGroups" : {
+              "type" : "array",
+              "nullable" : true,
+              "items" : {
+                "$ref" : "#/components/schemas/UserGroup"
+              }
+            }
+          }
+        } ]
+      },
+      "NamedIdReference" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
+          "name" : {
+            "type" : "string",
+            "readOnly" : true
+          }
+        }
+      },
+      "Label" : {
+        "required" : [ "abbreviation", "externalName", "id", "internalName", "order" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
+          "abbreviation" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "internalName" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "externalName" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "externalDescription" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "imageUrl" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "color" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true,
+            "example" : "#FF0000"
+          },
+          "order" : {
+            "type" : "integer",
+            "nullable" : false,
+            "readOnly" : true
+          }
+        }
+      },
+      "LabelIncludingGroup" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Label"
+        }, {
+          "required" : [ "group" ],
+          "type" : "object",
+          "properties" : {
+            "group" : {
+              "$ref" : "#/components/schemas/LabelGroup"
+            }
+          }
+        } ]
+      },
+      "LabelGroup" : {
+        "required" : [ "abbreviation", "externalName", "id", "internalName" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "abbreviation" : {
+            "type" : "string"
+          },
+          "internalName" : {
+            "type" : "string"
+          },
+          "externalName" : {
+            "type" : "string"
+          },
+          "externalDescription" : {
+            "type" : "string"
+          },
+          "imageUrl" : {
+            "type" : "string"
+          },
+          "isPublic" : {
+            "type" : "boolean"
+          },
+          "useForEventsDates" : {
+            "type" : "boolean"
+          },
+          "useForBookings" : {
+            "type" : "boolean"
+          },
+          "useForProfiles" : {
+            "type" : "boolean"
+          },
+          "isActive" : {
+            "type" : "boolean"
+          },
+          "showAsFilter" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "LabelGroupIncludingLabels" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/LabelGroup"
+        }, {
+          "required" : [ "labels" ],
+          "type" : "object",
+          "properties" : {
+            "labels" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Label"
+              }
+            }
+          }
+        } ]
+      },
+      "Organization" : {
+        "required" : [ "code", "name" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "nullable" : false,
+            "example" : "MyOrganization"
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true,
+            "example" : "My Organization Name"
+          }
+        }
+      },
+      "Salutation" : {
+        "required" : [ "gender", "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "gender" : {
+            "$ref" : "#/components/schemas/Gender"
+          }
+        }
+      },
+      "Gender" : {
+        "type" : "string",
+        "enum" : [ "UNKNOWN", "DIVERSE", "FEMALE", "MALE" ]
+      },
+      "Profile" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseModelProperties"
+        }, {
+          "$ref" : "#/components/schemas/ProfileProperties"
+        }, {
+          "$ref" : "#/components/schemas/ProfileRequiredProperties"
+        } ]
+      },
+      "ProfileRequiredProperties" : {
+        "required" : [ "name", "objectType", "salutation" ],
+        "type" : "object"
+      },
+      "ProfileProperties" : {
+        "type" : "object",
+        "properties" : {
+          "objectType" : {
+            "type" : "string",
+            "nullable" : false,
+            "enum" : [ "PersonProfile", "OrganizationProfile", "FacilitatorProfile" ]
+          },
+          "salutation" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Salutation"
+            } ]
+          },
+          "language" : {
+            "type" : "string",
+            "description" : "Language code",
+            "nullable" : true
+          },
+          "labels" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Label"
+            }
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "nullable" : true
+          },
+          "alternativeEmail" : {
+            "type" : "string",
+            "format" : "email",
+            "nullable" : true
+          },
+          "website" : {
+            "type" : "string",
+            "format" : "uri",
+            "nullable" : true
+          },
+          "phone1" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "phone2" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "phone3" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "faxNumber" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "primaryAddress" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/PostalAddress"
+            } ]
+          },
+          "billingAddress" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BillingAddress"
+            } ]
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "information" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "isBlocked" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "default" : false
+          },
+          "blockedReason" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "securitySettings" : {
+            "$ref" : "#/components/schemas/ProfileProperties_securitySettings"
+          },
+          "bankAccountData" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BankAccountData"
+            } ]
+          },
+          "taxNumber" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "vatId" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "customerNumber" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "additionalFields" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/AdditionalFieldWithValue"
+            }
+          },
+          "dataProtection" : {
+            "$ref" : "#/components/schemas/ProfileProperties_dataProtection"
+          },
+          "linkedProfiles" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ProfileLink"
+            }
+          },
+          "revenues" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/RevenueItem"
+            }
+          },
+          "numberOfBookings" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "numberOfInvoices" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "numberOfPossibleDuplicates" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "readOnly" : true
+          }
+        }
+      },
+      "PersonProfileActivity" : {
+        "required" : [ "begin", "category", "title", "type" ],
+        "type" : "object",
+        "properties" : {
+          "category" : {
+            "type" : "string",
+            "readOnly" : true,
+            "enum" : [ "SYSTEM", "MANUAL" ]
+          },
+          "type" : {
+            "$ref" : "#/components/schemas/PersonProfileActivity_type"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "begin" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "end" : {
+            "type" : "string",
+            "format" : "date-time",
+            "nullable" : true
+          },
+          "actor" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/User"
+            } ]
+          },
+          "remarks" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ProfileConsentHistoryEntry" : {
+        "required" : [ "consentType", "date", "isPermitted", "source" ],
+        "type" : "object",
+        "properties" : {
+          "consentType" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ConsentType"
+            } ]
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date-time",
+            "nullable" : false
+          },
+          "source" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "comment" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "isPermitted" : {
+            "type" : "boolean"
+          },
+          "legalBasis" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/LegalBasis"
+            } ]
+          }
+        }
+      },
+      "ConsentType" : {
+        "required" : [ "defaultValue", "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "defaultValue" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "LegalBasis" : {
+        "required" : [ "gdprReference", "name", "retentionPeriod" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "gdprReference" : {
+            "type" : "string"
+          },
+          "retentionPeriod" : {
+            "$ref" : "#/components/schemas/LegalBasis_retentionPeriod"
+          }
+        }
+      },
+      "ProfileLegalBasis" : {
+        "required" : [ "legalBasis", "validFrom" ],
+        "type" : "object",
+        "properties" : {
+          "legalBasis" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/LegalBasis"
+            } ]
+          },
+          "validFrom" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : false
+          },
+          "validTo" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          },
+          "source" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
+      "PostalAddress" : {
+        "type" : "object",
+        "properties" : {
+          "careOf" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "streetAddress" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "streetAddress2" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "zipCode" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "city" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "province" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "country" : {
+            "$ref" : "#/components/schemas/Country"
+          }
+        }
+      },
+      "BillingAddress" : {
+        "allOf" : [ {
+          "type" : "object",
+          "properties" : {
+            "nameOrCompany" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "$ref" : "#/components/schemas/PostalAddress"
+        } ]
+      },
+      "Country" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "description" : "ISO country code"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Country name",
+            "example" : "Germany"
+          },
+          "localizedName" : {
+            "type" : "string",
+            "description" : "Localized country name, depending on the system's locale",
+            "example" : "Allemagne"
+          }
+        },
+        "nullable" : true
+      },
+      "PersonProfile" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Profile"
+        }, {
+          "$ref" : "#/components/schemas/PersonProfileProperties"
+        }, {
+          "$ref" : "#/components/schemas/PersonProfileRequiredProperties"
+        } ]
+      },
+      "PersonProfileRequiredProperties" : {
+        "required" : [ "lastName" ],
+        "type" : "object"
+      },
+      "PersonProfileProperties" : {
+        "type" : "object",
+        "properties" : {
+          "firstName" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "additionalTitle" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "dateOfBirth" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          },
+          "profession" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "salutationSettings" : {
+            "$ref" : "#/components/schemas/PersonProfileProperties_salutationSettings"
+          },
+          "preferredEmail" : {
+            "type" : "string",
+            "enum" : [ "PRIVATE", "ALTERNATIVE", "INVOICE", "PRIMARY_ORGANIZATION" ]
+          },
+          "preferredPhone" : {
+            "type" : "string",
+            "enum" : [ "PRIVATE", "ALTERNATIVE", "BUSINESS", "PRIMARY_ORGANIZATION" ]
+          },
+          "preferredAddress" : {
+            "type" : "string",
+            "enum" : [ "PRIVATE", "INVOICE", "PRIMARY_ORGANIZATION" ]
+          },
+          "preferredBillingAddress" : {
+            "type" : "string",
+            "enum" : [ "PRIVATE", "INVOICE", "PRIMARY_ORGANIZATION" ]
+          },
+          "isSubscribedToNewsletter" : {
+            "type" : "boolean"
+          },
+          "hasOnlineAccount" : {
+            "type" : "boolean"
+          },
+          "activities" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PersonProfileActivity"
+            }
+          }
+        }
+      },
+      "ProfileLink" : {
+        "required" : [ "isPrimary", "role", "target" ],
+        "type" : "object",
+        "properties" : {
+          "target" : {
+            "$ref" : "#/components/schemas/NamedIdReference"
+          },
+          "role" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "department" : {
+            "type" : "string"
+          },
+          "addition" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "isPrimary" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "OrganizationProfile" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Profile"
+        }, {
+          "$ref" : "#/components/schemas/OrganizationProfileProperties"
+        }, {
+          "$ref" : "#/components/schemas/OrganizationProfileRequiredProperties"
+        } ]
+      },
+      "OrganizationProfileRequiredProperties" : {
+        "required" : [ "name" ],
+        "type" : "object"
+      },
+      "OrganizationProfileProperties" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "name2" : {
+            "type" : "string"
+          },
+          "contactPerson" : {
+            "type" : "string"
+          },
+          "preferredEmail" : {
+            "type" : "string",
+            "enum" : [ "BUSINESS", "ALTERNATIVE", "INVOICE" ]
+          },
+          "parentOrganization" : {
+            "$ref" : "#/components/schemas/OrganizationProfile"
+          },
+          "preferredPhone" : {
+            "type" : "string",
+            "enum" : [ "PHONE1", "PHONE2", "PHONE3" ]
+          },
+          "preferredAddress" : {
+            "type" : "string",
+            "enum" : [ "BUSINESS", "INVOICE" ]
+          },
+          "preferredBillingAddress" : {
+            "type" : "string",
+            "enum" : [ "BUSINESS", "INVOICE" ]
+          }
+        }
+      },
+      "FacilitatorProfile" : {
+        "type" : "object",
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Profile"
+        }, {
+          "$ref" : "#/components/schemas/FacilitatorProfileProperties"
+        } ]
+      },
+      "FacilitatorProfileProperties" : {
+        "type" : "object",
+        "properties" : {
+          "qualifications" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Qualification"
+            }
+          },
+          "remarks" : {
+            "type" : "string"
+          },
+          "portraitPictureUrl" : {
+            "type" : "string",
+            "format" : "uri"
+          },
+          "isActive" : {
+            "type" : "boolean"
+          },
+          "isPublished" : {
+            "type" : "boolean"
+          },
+          "info" : {
+            "type" : "string"
+          },
+          "assignedEventDates" : {
+            "type" : "array",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            }
+          }
+        }
+      },
+      "Qualification" : {
+        "required" : [ "isActive", "name", "order" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "isActive" : {
+            "type" : "boolean"
+          },
+          "order" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "FacilitatorInfo" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "name" : {
+            "type" : "string",
+            "readOnly" : true,
+            "example" : "Felicitas Facilitator"
+          }
+        }
+      },
+      "User" : {
+        "required" : [ "isActive", "isContactPerson", "roleName", "username" ],
+        "type" : "object",
+        "properties" : {
+          "username" : {
+            "type" : "string",
+            "description" : "Unique username",
+            "nullable" : false,
+            "example" : "JaneDoe"
+          },
+          "firstName" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true,
+            "example" : "Jane"
+          },
+          "lastName" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true,
+            "example" : "Doe"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "nullable" : true,
+            "readOnly" : true,
+            "example" : "example@seminardesk.com"
+          },
+          "phone" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "department" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true,
+            "example" : "Event Management"
+          },
+          "roleName" : {
+            "type" : "string",
+            "nullable" : false,
+            "readOnly" : true,
+            "example" : "Administration"
+          },
+          "isContactPerson" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "readOnly" : true
+          },
+          "memberOf" : {
+            "type" : "array",
+            "nullable" : true,
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/UserGroup"
+            }
+          }
+        }
+      },
+      "UserGroup" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "nullable" : false,
+            "example" : "Sample Group Name"
+          },
+          "remarks" : {
+            "type" : "string"
+          }
+        }
+      },
+      "UserGroupIncludingMembers" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/User"
+        }, {
+          "required" : [ "members" ],
+          "type" : "object",
+          "properties" : {
+            "members" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        } ]
+      },
+      "NumericPrimaryKey" : {
+        "type" : "integer",
+        "format" : "int64",
+        "example" : 42
+      },
+      "BookingOrProfileInvoicesList" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Invoice"
+            }
+          }
+        }
+      },
+      "InvoicesList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Invoice"
+              }
+            }
+          }
+        } ]
+      },
+      "InvoiceProperties" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "nullable" : false,
+            "enum" : [ "DRAFT", "POSTED", "CANCELED" ]
+          },
+          "organization" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Organization"
+            } ]
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : false
+          },
+          "type" : {
+            "type" : "string",
+            "nullable" : false,
+            "enum" : [ "INVOICE", "CREDIT_INVOICE", "CANCELATION_INVOICE" ]
+          },
+          "recipient" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            }, {
+              "type" : "object",
+              "properties" : {
+                "customerNumber" : {
+                  "type" : "string",
+                  "nullable" : true
+                }
+              }
+            } ]
+          },
+          "recipientName" : {
+            "type" : "string",
+            "description" : "The recipient's name copied during invoice posting",
+            "readOnly" : true
+          },
+          "billingAddress" : {
+            "description" : "The recipient's billing address (structured) copied during invoice posting",
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BillingAddress"
+            } ]
+          },
+          "billingAddressFormatted" : {
+            "type" : "string",
+            "description" : "The recipient's billing address (formatted) copied during invoice posting",
+            "readOnly" : true
+          },
+          "number" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "template" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "introductionText" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "closingText" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "isSplitInvoice" : {
+            "type" : "boolean",
+            "nullable" : false
+          },
+          "totalAmount" : {
+            "type" : "number",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "paymentAmountAtCreation" : {
+            "type" : "number",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "currentPaymentAmount" : {
+            "type" : "number",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "lastPaymentAt" : {
+            "type" : "string",
+            "format" : "date",
+            "readOnly" : true
+          },
+          "balanceAtCreation" : {
+            "type" : "number",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "currentBalance" : {
+            "type" : "number",
+            "format" : "double",
+            "readOnly" : true
+          },
+          "lastEmailSentAt" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "items" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/InvoiceItem"
+            }
+          },
+          "referenceNumbers" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      },
+      "InvoiceRequiredProperties" : {
+        "required" : [ "amount", "date", "isSplitInvoice", "items", "organization", "recipient", "status", "template", "type" ],
+        "type" : "object"
+      },
+      "Invoice" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseModelProperties"
+        }, {
+          "$ref" : "#/components/schemas/InvoiceProperties"
+        }, {
+          "$ref" : "#/components/schemas/InvoiceRequiredProperties"
+        } ]
+      },
+      "InvoiceItem" : {
+        "required" : [ "grossAmount", "number", "sources", "taxRate", "text" ],
+        "type" : "object",
+        "properties" : {
+          "number" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "text" : {
+            "type" : "string",
+            "nullable" : false
+          },
+          "grossAmount" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : false
+          },
+          "discountAmount" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "taxRate" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/TaxRate"
+            } ]
+          },
+          "eventDateName" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "guestName" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "sources" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            }
+          },
+          "revenueSplitItems" : {
+            "type" : "array",
+            "nullable" : false,
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/RevenueSplitItem"
+            }
+          }
+        }
+      },
+      "RevenueSplitItem" : {
+        "type" : "object",
+        "properties" : {
+          "costCenter" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "nullable" : true
+          },
+          "name" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "nullable" : false
+          },
+          "amount" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : false
+          },
+          "bookingAccount" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "nullable" : true
+          },
+          "taxRate" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/TaxRate"
+            } ]
+          },
+          "costType" : {
+            "maxLength" : 50,
+            "type" : "string",
+            "nullable" : true
+          },
+          "invoiceText" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
+      "PaginationParameters" : {
+        "type" : "object",
+        "properties" : {
+          "number" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "description" : "Page number",
+            "default" : 1
+          },
+          "size" : {
+            "maximum" : 100,
+            "minimum" : 1,
+            "type" : "integer",
+            "description" : "Size of the page",
+            "default" : 20
+          }
+        }
+      },
+      "Error" : {
+        "required" : [ "code", "message" ],
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "description" : "The HTTP status code associated with the problem"
+          },
+          "message" : {
+            "type" : "string",
+            "description" : "Details about the problem's cause",
+            "nullable" : false
+          },
+          "code" : {
+            "type" : "integer",
+            "description" : "An optional error code representing the type of problem",
+            "nullable" : true
+          }
+        },
+        "readOnly" : true
+      },
+      "filter" : {
+        "type" : "object",
+        "properties" : {
+          "beginAfter" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "beginBefore" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "endAfter" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "venueId" : {
+            "type" : "integer",
+            "nullable" : true
+          },
+          "facilitatorId" : {
+            "type" : "integer",
+            "nullable" : true
+          },
+          "statusId" : {
+            "type" : "integer",
+            "nullable" : true
+          },
+          "eventId" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
+          "attendanceType" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BookingGuestAttendanceType"
+            } ]
+          },
+          "onlyPublished" : {
+            "type" : "boolean",
+            "nullable" : true
+          }
+        }
+      },
+      "BaseList_meta" : {
+        "type" : "object",
+        "properties" : {
+          "totalCount" : {
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "page" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "default" : 1
+          },
+          "size" : {
+            "maximum" : 100,
+            "minimum" : 1,
+            "type" : "integer",
+            "default" : 20
+          },
+          "totalPages" : {
+            "minimum" : 1,
+            "type" : "integer"
+          }
+        }
+      },
+      "BookingGuest_guest" : {
+        "type" : "object",
+        "properties" : {
+          "profile" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "age" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "nullable" : true
+          },
+          "gender" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Gender"
+            } ]
+          }
+        },
+        "description" : "Either a profile OR name, age and gender",
+        "nullable" : false
+      },
+      "EventProperties_bookingSettings" : {
+        "required" : [ "allowChildren", "isMultiPart", "mode" ],
+        "type" : "object",
+        "properties" : {
+          "allowChildren" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "default" : false
+          },
+          "isMultiPart" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "default" : false
+          },
+          "mode" : {
+            "type" : "string",
+            "nullable" : false,
+            "default" : "SEPARATE_BOOKING_PER_DATE",
+            "enum" : [ "SEPARATE_BOOKING_PER_DATE", "SINGLE_BOOKING" ]
+          },
+          "specialRequestsList" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "additionalFieldsList" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "additionalFieldsAdultsList" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "additionalFieldsChildrenList" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "invoiceTemplate" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        },
+        "nullable" : false
+      },
+      "EventProperties_publishingSettings" : {
+        "required" : [ "bookingPageUrl", "status", "title" ],
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "enum" : [ "UNPUBLISHED", "PUBLISHED" ]
+          },
+          "bookingPageUrl" : {
+            "type" : "string",
+            "format" : "uri",
+            "readOnly" : true
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "subTitle" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        },
+        "description" : "At the moment, contains just base information from the \"booking page settings\". Might be extended in the future.",
+        "nullable" : false
+      },
+      "EventDateProperties_receptionSettings" : {
+        "required" : [ "begin", "end", "hasReception" ],
+        "type" : "object",
+        "properties" : {
+          "hasReception" : {
+            "type" : "boolean",
+            "nullable" : false
+          },
+          "begin" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "end" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "staff" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "location" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        },
+        "nullable" : true
+      },
+      "EventDateProperties_serviceAndPriceSettings" : {
+        "type" : "object",
+        "properties" : {
+          "hasAttendanceFees" : {
+            "type" : "boolean",
+            "readOnly" : true,
+            "default" : false
+          },
+          "attendanceFeePriceList" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "hasMisc" : {
+            "type" : "boolean",
+            "readOnly" : true,
+            "default" : false
+          },
+          "miscPriceList" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "hasAccommodation" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/YesNoOptional"
+            } ],
+            "default" : "NO"
+          },
+          "accommodationPriceList" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "hasMeals" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/YesNoOptional"
+            } ],
+            "default" : "NO"
+          },
+          "mealsPriceList" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          }
+        },
+        "nullable" : true
+      },
+      "EventDateProperties_publishingSettings" : {
+        "type" : "object",
+        "properties" : {
+          "title" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : true,
+            "example" : "My Booking Page Sample Event Date Name"
+          },
+          "priceInfo" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : true
+          },
+          "status" : {
+            "type" : "string",
+            "nullable" : false,
+            "default" : "available",
+            "enum" : [ "available", "limited", "wait_list", "fully_booked", "hidden", "hidden_on_list", "canceled" ]
+          },
+          "autoUpdateStatus" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "default" : false
+          },
+          "registrationPeriodBegin" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "registrationPeriodEnd" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "publishingPeriodBegin" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "publishingPeriodEnd" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Timestamp"
+            } ]
+          },
+          "allowFlexibleAttendance" : {
+            "type" : "boolean",
+            "nullable" : false
+          },
+          "attendanceStartUntil" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          },
+          "attendanceEndFrom" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          },
+          "minAttendanceLength" : {
+            "type" : "integer",
+            "nullable" : true
+          },
+          "maxAttendanceLength" : {
+            "type" : "integer",
+            "nullable" : true
+          },
+          "allowFlexibleStay" : {
+            "type" : "boolean",
+            "nullable" : false
+          },
+          "earlyArrivalMode" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/EarlyArrivalMode"
+            } ]
+          },
+          "lateDepartureMode" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/LateDepartureMode"
+            } ]
+          },
+          "additionalInfo" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        },
+        "nullable" : true
+      },
+      "RevenueItem_payments" : {
+        "required" : [ "amount", "date", "method" ],
+        "type" : "object",
+        "properties" : {
+          "method" : {
+            "type" : "string",
+            "enum" : [ "CASH", "BANK_TRANSFER" ]
+          },
+          "amount" : {
+            "minimum" : 0,
+            "type" : "number",
+            "format" : "double"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }
+      },
+      "ProfileProperties_securitySettings" : {
+        "type" : "object",
+        "properties" : {
+          "isVisibilityRestricted" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "default" : false
+          },
+          "visibleFor" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/UserGroup"
+            }
+          },
+          "sensitiveFieldsVisibility" : {
+            "type" : "string",
+            "nullable" : false,
+            "default" : "UNRESTRICTED",
+            "enum" : [ "UNRESTRICTED", "RESTRICTED" ]
+          }
+        },
+        "nullable" : true
+      },
+      "ProfileProperties_dataProtection" : {
+        "type" : "object",
+        "properties" : {
+          "legalBasisEntries" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ProfileLegalBasis"
+            }
+          },
+          "consentHistoryEntries" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ProfileConsentHistoryEntry"
+            }
+          }
+        },
+        "nullable" : true
+      },
+      "PersonProfileActivity_type" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "LegalBasis_retentionPeriod" : {
+        "required" : [ "isStandard", "name", "numberOfDays" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "numberOfDays" : {
+            "minimum" : -1,
+            "type" : "integer",
+            "description" : "Number of days after inactive profiles should be deleted. 0 indicates immediate delete, -1 indicates no deletion"
+          },
+          "isStandard" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "PersonProfileProperties_salutationSettings" : {
+        "required" : [ "preferredSalutation" ],
+        "type" : "object",
+        "properties" : {
+          "preferredSalutation" : {
+            "type" : "string",
+            "enum" : [ "INFORMAL", "FORMAL" ]
+          },
+          "formalSalutation" : {
+            "type" : "string"
+          },
+          "informalSalutation" : {
+            "type" : "string"
+          },
+          "letterSalutation" : {
+            "type" : "string",
+            "description" : "The letter salutation is used in the address section of a letter naming the recipient of the letter"
+          }
+        }
+      }
+    },
+    "responses" : {
+      "UnauthorizedError" : {
+        "description" : "API key is missing or invalid",
+        "headers" : {
+          "WWW_Authenticate" : {
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        },
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "ForbiddenError" : {
+        "description" : "API key does not have required permissions",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFoundError" : {
+        "description" : "The resource does not exist",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "BadRequestError" : {
+        "description" : "Request cannot be completed due to invalid input or because",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "ConflictError" : {
+        "description" : "Request cannot be completed due to conflict",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotImplementedError" : {
+        "description" : "Request cannot be handled, private API not active",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "ItemId" : {
+        "name" : "id",
+        "in" : "path",
+        "description" : "Numeric ID of the item",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "minimum" : 1,
+          "type" : "integer"
+        },
+        "example" : 42
+      },
+      "Pagination" : {
+        "name" : "page",
+        "in" : "query",
+        "required" : false,
+        "style" : "deepObject",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/PaginationParameters"
+        }
+      },
+      "SearchTerm" : {
+        "name" : "searchTerm",
+        "in" : "query",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "EventDateFilter" : {
+        "name" : "filter",
+        "in" : "query",
+        "required" : false,
+        "style" : "deepObject",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/filter"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "ApiKeyAuth" : {
+        "type" : "apiKey",
+        "description" : "API key generated in SeminarDesk backend",
+        "name" : "X-API-Key",
+        "in" : "header"
+      }
+    }
+  }
+}
