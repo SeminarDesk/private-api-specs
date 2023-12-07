@@ -4845,20 +4845,6 @@
           }
         }
       },
-      "AdditionalFieldValue" : {
-        "oneOf" : [ {
-          "type" : "string"
-        }, {
-          "type" : "number"
-        }, {
-          "type" : "integer"
-        }, {
-          "type" : "boolean"
-        }, {
-          "type" : "array",
-          "items" : { }
-        } ]
-      },
       "AdditionalField" : {
         "required" : [ "id", "isDisplayedInLists", "name", "order", "type" ],
         "type" : "object",
