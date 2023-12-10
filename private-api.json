@@ -47,6 +47,15 @@
           "schema" : {
             "type" : "string"
           }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -473,7 +482,7 @@
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/filter"
+            "$ref" : "#/components/schemas/filter_1"
           }
         } ],
         "responses" : {
@@ -667,7 +676,7 @@
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/filter"
+            "$ref" : "#/components/schemas/filter_1"
           }
         } ],
         "responses" : {
@@ -3228,7 +3237,7 @@
         "enum" : [ "PENDING", "CONFIRMED", "WAIT_LIST", "CANCELED", "WAIT_LIST_CANCELED", "NO_SHOW" ]
       },
       "BookingGuest" : {
-        "required" : [ "eventDate", "guest" ],
+        "required" : [ "event", "eventDate", "guest" ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -3238,6 +3247,12 @@
             "$ref" : "#/components/schemas/BookingGuest_guest"
           },
           "eventDate" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "event" : {
             "nullable" : false,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NamedIdReference"
@@ -6112,6 +6127,27 @@
       "filter" : {
         "type" : "object",
         "properties" : {
+          "additionalField" : {
+            "type" : "string",
+            "description" : "Filter by additional field, based on its ID",
+            "nullable" : true,
+            "example" : "23:MyFieldValue"
+          },
+          "attendanceType" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BookingGuestAttendanceType"
+            } ]
+          },
+          "onlyPublished" : {
+            "type" : "boolean",
+            "nullable" : true
+          }
+        }
+      },
+      "filter_1" : {
+        "type" : "object",
+        "properties" : {
           "beginAfter" : {
             "type" : "string",
             "format" : "date-time",
@@ -6127,23 +6163,29 @@
             "format" : "date-time",
             "nullable" : true
           },
-          "venueId" : {
+          "venue.id" : {
             "type" : "integer",
             "nullable" : true
           },
-          "facilitatorId" : {
+          "facilitator.id" : {
             "type" : "integer",
             "nullable" : true
           },
-          "statusId" : {
+          "status.id" : {
             "type" : "integer",
             "nullable" : true
           },
-          "eventId" : {
+          "event.id" : {
             "nullable" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NumericPrimaryKey"
             } ]
+          },
+          "event.additionalField" : {
+            "type" : "string",
+            "description" : "Filter by event's additional field, based on its ID",
+            "nullable" : true,
+            "example" : "23:MyFieldValue"
           },
           "attendanceType" : {
             "nullable" : true,
@@ -6740,7 +6782,7 @@
           "type" : "string"
         }
       },
-      "EventDateFilter" : {
+      "EventFilter" : {
         "name" : "filter",
         "in" : "query",
         "required" : false,
@@ -6748,6 +6790,16 @@
         "explode" : false,
         "schema" : {
           "$ref" : "#/components/schemas/filter"
+        }
+      },
+      "EventDateFilter" : {
+        "name" : "filter",
+        "in" : "query",
+        "required" : false,
+        "style" : "deepObject",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/filter_1"
         }
       }
     },
