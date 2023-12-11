@@ -4928,7 +4928,7 @@
         } ]
       },
       "NamedIdReference" : {
-        "required" : [ "id", "name" ],
+        "required" : [ "id" ],
         "type" : "object",
         "properties" : {
           "id" : {
