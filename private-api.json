@@ -6132,16 +6132,6 @@
             "description" : "Filter by additional field, based on its ID",
             "nullable" : true,
             "example" : "23:MyFieldValue"
-          },
-          "attendanceType" : {
-            "nullable" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/BookingGuestAttendanceType"
-            } ]
-          },
-          "onlyPublished" : {
-            "type" : "boolean",
-            "nullable" : true
           }
         }
       },
@@ -6323,7 +6313,7 @@
         "nullable" : false
       },
       "EventProperties_publishingSettings" : {
-        "required" : [ "bookingPageUrl", "status", "title" ],
+        "required" : [ "status", "title" ],
         "type" : "object",
         "properties" : {
           "status" : {
