@@ -209,7 +209,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -288,7 +289,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -370,7 +372,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -454,7 +457,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         }, {
@@ -560,7 +564,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -746,7 +751,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -815,7 +821,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -897,7 +904,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -981,7 +989,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         }, {
@@ -1157,7 +1166,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -1238,7 +1248,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         }, {
@@ -1337,7 +1348,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         }, {
@@ -1503,7 +1515,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -1661,7 +1674,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -1819,7 +1833,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -2062,7 +2077,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -2143,7 +2159,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -2225,7 +2242,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -2326,7 +2344,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         }, {
@@ -2502,7 +2521,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -2581,7 +2601,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -2672,7 +2693,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -2774,7 +2796,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -2875,7 +2898,8 @@
           "explode" : false,
           "schema" : {
             "minimum" : 1,
-            "type" : "integer"
+            "type" : "integer",
+            "format" : "int64"
           },
           "example" : 42
         } ],
@@ -4939,6 +4963,7 @@
           },
           "name" : {
             "type" : "string",
+            "nullable" : false,
             "readOnly" : true
           }
         }
@@ -6748,7 +6773,8 @@
         "explode" : false,
         "schema" : {
           "minimum" : 1,
-          "type" : "integer"
+          "type" : "integer",
+          "format" : "int64"
         },
         "example" : 42
       },
