@@ -5069,7 +5069,6 @@
           "code" : {
             "type" : "string",
             "nullable" : false,
-            "readOnly" : true,
             "example" : "MyOrganizationCode"
           },
           "name" : {
