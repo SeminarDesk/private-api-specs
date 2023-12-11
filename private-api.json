@@ -5063,13 +5063,14 @@
         } ]
       },
       "Organization" : {
-        "required" : [ "code", "name" ],
+        "required" : [ "code" ],
         "type" : "object",
         "properties" : {
           "code" : {
             "type" : "string",
             "nullable" : false,
-            "example" : "MyOrganization"
+            "readOnly" : true,
+            "example" : "MyOrganizationCode"
           },
           "name" : {
             "type" : "string",
