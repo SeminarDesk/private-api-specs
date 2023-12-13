@@ -33,11 +33,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -46,7 +45,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         }, {
           "name" : "filter",
@@ -466,11 +466,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -479,7 +478,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         }, {
           "name" : "filter",
@@ -662,11 +662,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -675,7 +674,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         }, {
           "name" : "filter",
@@ -1000,11 +1000,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -1013,7 +1012,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         } ],
         "responses" : {
@@ -1088,11 +1088,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -1101,7 +1100,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         }, {
           "name" : "filter",
@@ -1270,11 +1270,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -1283,7 +1282,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         } ],
         "responses" : {
@@ -1371,11 +1371,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -1384,7 +1383,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         } ],
         "responses" : {
@@ -1531,11 +1531,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -1544,7 +1543,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         }, {
           "name" : "filter",
@@ -1700,11 +1700,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -1713,7 +1712,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         }, {
           "name" : "filter",
@@ -1869,11 +1869,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -1882,7 +1881,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         }, {
           "name" : "filter",
@@ -2038,11 +2038,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -2051,7 +2050,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         } ],
         "responses" : {
@@ -2481,11 +2481,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -2494,7 +2493,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         } ],
         "responses" : {
@@ -2569,11 +2569,10 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
-          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/PaginationParameters"
+            "$ref" : "#/components/schemas/page"
           }
         }, {
           "name" : "searchTerm",
@@ -2582,7 +2581,8 @@
           "style" : "form",
           "explode" : true,
           "schema" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           }
         } ],
         "responses" : {
@@ -6326,6 +6326,12 @@
         },
         "readOnly" : true
       },
+      "page" : {
+        "nullable" : true,
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PaginationParameters"
+        } ]
+      },
       "filter" : {
         "type" : "object",
         "properties" : {
@@ -6389,7 +6395,8 @@
             "type" : "boolean",
             "nullable" : true
           }
-        }
+        },
+        "nullable" : true
       },
       "filter_2" : {
         "type" : "object",
@@ -6412,7 +6419,8 @@
             "nullable" : true,
             "example" : "42:MyFieldValue"
           }
-        }
+        },
+        "nullable" : true
       },
       "BaseList_meta" : {
         "type" : "object",
@@ -6982,11 +6990,10 @@
         "name" : "page",
         "in" : "query",
         "required" : false,
-        "allowEmptyValue" : true,
         "style" : "deepObject",
         "explode" : false,
         "schema" : {
-          "$ref" : "#/components/schemas/PaginationParameters"
+          "$ref" : "#/components/schemas/page"
         }
       },
       "SearchTerm" : {
@@ -6996,7 +7003,8 @@
         "style" : "form",
         "explode" : true,
         "schema" : {
-          "type" : "string"
+          "type" : "string",
+          "nullable" : true
         }
       },
       "EventFilter" : {
