@@ -33,6 +33,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -465,6 +466,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -660,6 +662,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -997,6 +1000,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -1084,6 +1088,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -1265,6 +1270,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -1365,6 +1371,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -1524,6 +1531,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -1692,6 +1700,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -1860,6 +1869,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -2028,6 +2038,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -2470,6 +2481,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -2557,6 +2569,7 @@
           "name" : "page",
           "in" : "query",
           "required" : false,
+          "allowEmptyValue" : true,
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
@@ -6969,6 +6982,7 @@
         "name" : "page",
         "in" : "query",
         "required" : false,
+        "allowEmptyValue" : true,
         "style" : "deepObject",
         "explode" : false,
         "schema" : {
