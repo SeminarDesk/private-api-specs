@@ -3346,9 +3346,7 @@
           },
           "paymentMethod" : {
             "nullable" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/PaymentMethod"
-            } ]
+            "allOf" : [ { } ]
           },
           "specialRequestsPriceList" : {
             "nullable" : true,
@@ -3417,16 +3415,28 @@
       "PaymentProperties" : {
         "type" : "object",
         "properties" : {
+          "id" : {
+            "nullable" : false,
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
           "amount" : {
             "type" : "number",
-            "format" : "double"
+            "format" : "double",
+            "nullable" : false
           },
           "method" : {
-            "$ref" : "#/components/schemas/PaymentMethod"
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/PaymentMethod"
+            } ]
           },
           "date" : {
             "type" : "string",
-            "format" : "date"
+            "format" : "date",
+            "nullable" : false
           },
           "remarks" : {
             "type" : "string"
