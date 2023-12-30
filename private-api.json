@@ -653,6 +653,178 @@
         }
       }
     },
+    "/events/{id}/attendance-fee-price-lists" : {
+      "get" : {
+        "tags" : [ "Events" ],
+        "summary" : "Retrieves the list of attendance fee price lists of an event",
+        "operationId" : "getEventAttendanceFeePriceLists",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "example" : 42
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AttendanceFeePriceListsList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Events" ],
+        "summary" : "Creates a new attendance fee price list",
+        "operationId" : "createAttendanceFeePriceList",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "example" : 42
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateAttendanceFeePriceList"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created, contains the ID of the price list",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/dates" : {
       "get" : {
         "tags" : [ "Dates" ],
@@ -3346,7 +3518,9 @@
           },
           "paymentMethod" : {
             "nullable" : true,
-            "allOf" : [ { } ]
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
           },
           "specialRequestsPriceList" : {
             "nullable" : true,
@@ -3653,9 +3827,20 @@
           }
         } ]
       },
+      "AttendanceFeePriceListsList" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/AttendanceFeePriceList"
+        }
+      },
       "CreateEvent" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/EventIncludingDates"
+        } ]
+      },
+      "CreateAttendanceFeePriceList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AttendanceFeePriceList"
         } ]
       },
       "CreateResourceResponse" : {
@@ -4056,17 +4241,21 @@
         "type" : "object",
         "properties" : {
           "name" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : false
           },
           "earlyBookingDate" : {
             "type" : "string",
-            "format" : "date"
+            "format" : "date",
+            "nullable" : true
           },
           "remarks" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           },
           "details" : {
             "type" : "array",
+            "nullable" : false,
             "items" : {
               "$ref" : "#/components/schemas/AttendanceFeePriceListDetail"
             }
@@ -4074,7 +4263,7 @@
         }
       },
       "AttendanceFeePriceListDetail" : {
-        "required" : [ "calculationMode", "grossPrice", "isPublished", "isSelfAssessment", "minAge", "priceLevel", "taxRate" ],
+        "required" : [ "calculationMode", "grossPrice", "isPublished", "minAge", "priceLevel", "taxRate" ],
         "type" : "object",
         "properties" : {
           "priceLevel" : {
@@ -4083,12 +4272,14 @@
           "minAge" : {
             "minimum" : 0,
             "type" : "integer",
+            "nullable" : false,
             "default" : 18
           },
           "grossPrice" : {
             "minimum" : 0,
             "type" : "number",
-            "format" : "double"
+            "format" : "double",
+            "nullable" : false
           },
           "grossRoomRent" : {
             "minimum" : 0,
@@ -4098,10 +4289,12 @@
           },
           "calculationMode" : {
             "type" : "string",
+            "nullable" : false,
             "enum" : [ "PER_ATTENDANCE", "PER_DAY" ]
           },
           "isSelfAssessment" : {
-            "type" : "boolean"
+            "type" : "boolean",
+            "nullable" : true
           },
           "grossSelfAssessmentMinPrice" : {
             "minimum" : 0,
@@ -4121,7 +4314,8 @@
             "default" : true
           },
           "publicName" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : false
           }
         }
       },
