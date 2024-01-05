@@ -126,7 +126,7 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the vent",
+            "description" : "Created, contains the ID of the event",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -764,7 +764,7 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the price list",
+            "description" : "Created, contains the ID of the newly created price list",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3396,9 +3396,43 @@
         } ]
       },
       "CreateBooking" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/Booking"
-        } ]
+        "required" : [ "booker", "guests" ],
+        "type" : "object",
+        "properties" : {
+          "booker" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "status" : {
+            "description" : "In case no status is provided, the booking will be created in status \"PENDING\"",
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BookingStatus"
+            } ],
+            "default" : "PENDING"
+          },
+          "internalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "labels" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Label"
+            }
+          },
+          "guests" : {
+            "minItems" : 1,
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "$ref" : "#/components/schemas/BookingGuest"
+            }
+          }
+        }
       },
       "AddBookingGuestMiscItem" : {
         "required" : [ "id" ],
@@ -3502,7 +3536,7 @@
             } ]
           },
           "status" : {
-            "nullable" : false,
+            "nullable" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/BookingStatus"
             } ],
@@ -3626,7 +3660,10 @@
         "type" : "object",
         "properties" : {
           "id" : {
-            "$ref" : "#/components/schemas/NumericPrimaryKey"
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
           },
           "guest" : {
             "$ref" : "#/components/schemas/BookingGuest_guest"
@@ -3639,6 +3676,7 @@
           },
           "event" : {
             "nullable" : false,
+            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NamedIdReference"
             } ]
@@ -3650,7 +3688,7 @@
             } ]
           },
           "guestType" : {
-            "nullable" : false,
+            "nullable" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/GuestType"
             } ]
@@ -3697,19 +3735,20 @@
           },
           "begin" : {
             "type" : "string",
-            "description" : "If not provided, will default to begin of event date",
             "format" : "date-time",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           },
           "end" : {
             "type" : "string",
-            "description" : "If not provided, will default to end of event date",
             "format" : "date-time",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           },
           "voucherCode" : {
             "type" : "string",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           }
         }
       },
@@ -3784,14 +3823,21 @@
         }
       },
       "GuestType" : {
-        "required" : [ "name", "type" ],
+        "required" : [ "id" ],
         "type" : "object",
         "properties" : {
+          "id" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
           "name" : {
-            "type" : "string"
+            "type" : "string",
+            "readOnly" : true
           },
           "type" : {
             "type" : "string",
+            "readOnly" : true,
             "enum" : [ "PARTICIPANT", "FACILITATOR", "ASSISTANT", "COMPANION" ]
           }
         }
@@ -6681,15 +6727,18 @@
           },
           "name" : {
             "type" : "string",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           },
           "age" : {
             "minimum" : 1,
             "type" : "integer",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           },
           "gender" : {
             "nullable" : true,
+            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/Gender"
             } ]
