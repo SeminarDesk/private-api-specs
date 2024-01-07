@@ -2,7 +2,7 @@
   "openapi" : "3.0.3",
   "info" : {
     "title" : "SeminarDesk Private API (BETA)",
-    "description" : "Provides access to resources like events, dates, profiles, bookings and invoices. <br>**Note**: This is the upcoming version which is not yet released.\n",
+    "description" : "Provides access to resources like events, dates, profiles, bookings and invoices.\n",
     "termsOfService" : "https://www.seminardesk.de/nutzungsbedingungen/",
     "contact" : {
       "name" : "SeminarDesk support",
@@ -1970,91 +1970,6 @@
             }
           }
         }
-      },
-      "post" : {
-        "tags" : [ "Bookings" ],
-        "summary" : "Creates a new booking",
-        "operationId" : "createBooking",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/CreateBooking"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "201" : {
-            "description" : "Created",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
-                }
-              }
-            },
-            "links" : {
-              "GetBookingById" : {
-                "operationId" : "getBooking",
-                "parameters" : {
-                  "id" : "$response.body#/id"
-                },
-                "description" : "The `id` value returned can be used as the `id` parameter in `GET /bookings/{id}`\n"
-              }
-            }
-          },
-          "400" : {
-            "description" : "Request cannot be completed due to invalid input or because",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "API key is missing or invalid",
-            "headers" : {
-              "WWW_Authenticate" : {
-                "style" : "simple",
-                "explode" : false,
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "API key does not have required permissions",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "501" : {
-            "description" : "Request cannot be handled, private API not active",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/bookings/{id}" : {
@@ -2783,11 +2698,6 @@
               }
             }
           }
-        } ]
-      },
-      "CreateBooking" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/Booking"
         } ]
       },
       "CreatePayment" : {
