@@ -3377,7 +3377,7 @@
       "BookingGuestsList" : {
         "type" : "array",
         "items" : {
-          "$ref" : "#/components/schemas/BookingGuest"
+          "$ref" : "#/components/schemas/ListBookingGuest"
         }
       },
       "BookingsList" : {
@@ -3406,7 +3406,7 @@
             } ]
           },
           "status" : {
-            "description" : "In case no status is provided, the booking will be created in status \"PENDING\"",
+            "description" : "In case no status is provided, the booking will be created in status \"Pending\"",
             "nullable" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/BookingStatus"
@@ -3429,7 +3429,7 @@
             "type" : "array",
             "nullable" : false,
             "items" : {
-              "$ref" : "#/components/schemas/BookingGuest"
+              "$ref" : "#/components/schemas/CreateBookingGuest"
             }
           }
         }
@@ -3587,7 +3587,7 @@
             "type" : "array",
             "nullable" : false,
             "items" : {
-              "$ref" : "#/components/schemas/BookingGuest"
+              "$ref" : "#/components/schemas/ListBookingGuest"
             }
           },
           "numberOfInvoices" : {
@@ -3632,8 +3632,10 @@
           },
           "amount" : {
             "type" : "number",
+            "description" : "The amount can be a negative or positive number",
             "format" : "double",
-            "nullable" : false
+            "nullable" : false,
+            "example" : 23.42
           },
           "method" : {
             "nullable" : false,
@@ -3655,8 +3657,32 @@
         "type" : "string",
         "enum" : [ "PENDING", "CONFIRMED", "WAIT_LIST", "CANCELED", "WAIT_LIST_CANCELED", "NO_SHOW" ]
       },
+      "CreateBookingGuest" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BookingGuest"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "guest" : {
+              "$ref" : "#/components/schemas/CreateBookingGuest_guest"
+            }
+          }
+        } ]
+      },
+      "ListBookingGuest" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BookingGuest"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "guest" : {
+              "$ref" : "#/components/schemas/ListBookingGuest_guest"
+            }
+          }
+        } ]
+      },
       "BookingGuest" : {
-        "required" : [ "event", "eventDate", "guest" ],
+        "required" : [ "eventDate", "guest" ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -3664,9 +3690,6 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/NumericPrimaryKey"
             } ]
-          },
-          "guest" : {
-            "$ref" : "#/components/schemas/BookingGuest_guest"
           },
           "eventDate" : {
             "nullable" : false,
@@ -3682,6 +3705,7 @@
             } ]
           },
           "status" : {
+            "nullable" : false,
             "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/BookingStatus"
@@ -6716,7 +6740,35 @@
           }
         }
       },
-      "BookingGuest_guest" : {
+      "CreateBookingGuest_guest" : {
+        "type" : "object",
+        "properties" : {
+          "profile" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "age" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "nullable" : true
+          },
+          "gender" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Gender"
+            } ]
+          }
+        },
+        "description" : "Either a profile ID has to be provided via `profile` OR at least a `name` plus optionally an `age` and `gender` in case the guest does not have a profile.",
+        "nullable" : false
+      },
+      "ListBookingGuest_guest" : {
         "type" : "object",
         "properties" : {
           "profile" : {
@@ -6744,7 +6796,7 @@
             } ]
           }
         },
-        "description" : "Either a profile OR name, age and gender",
+        "description" : "Either a profile OR name plus optionally age and gender",
         "nullable" : false
       },
       "EventProperties_bookingSettings" : {
