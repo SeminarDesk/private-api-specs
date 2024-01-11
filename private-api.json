@@ -4307,7 +4307,7 @@
         } ]
       },
       "AttendanceFeePriceList" : {
-        "required" : [ "details", "name" ],
+        "required" : [ "details", "name", "order" ],
         "type" : "object",
         "properties" : {
           "name" : {
@@ -4324,11 +4324,16 @@
             "nullable" : true
           },
           "details" : {
+            "minItems" : 1,
             "type" : "array",
             "nullable" : false,
             "items" : {
               "$ref" : "#/components/schemas/AttendanceFeePriceListDetail"
             }
+          },
+          "order" : {
+            "type" : "integer",
+            "nullable" : true
           }
         }
       },
