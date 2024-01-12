@@ -4330,10 +4330,6 @@
             "items" : {
               "$ref" : "#/components/schemas/AttendanceFeePriceListDetail"
             }
-          },
-          "order" : {
-            "type" : "integer",
-            "nullable" : true
           }
         }
       },
@@ -4391,6 +4387,10 @@
           "publicName" : {
             "type" : "string",
             "nullable" : false
+          },
+          "order" : {
+            "type" : "integer",
+            "nullable" : true
           }
         }
       },
