@@ -2440,6 +2440,7 @@
       "post" : {
         "tags" : [ "Bookings" ],
         "summary" : "Creates a new booking",
+        "description" : "Note: This could result in *multiple bookings* being created in case the payload contains guests with event dates belonging to different events.\n",
         "operationId" : "createBooking",
         "requestBody" : {
           "content" : {
@@ -2453,11 +2454,11 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the booking",
+            "description" : "Created, contains the ID(s) of the booking(s)",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/CreateResourceListResponse"
                 }
               }
             },
@@ -4088,6 +4089,20 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/NumericPrimaryKey"
             } ]
+          }
+        }
+      },
+      "CreateResourceListResponse" : {
+        "required" : [ "ids" ],
+        "type" : "object",
+        "properties" : {
+          "ids" : {
+            "minLength" : 1,
+            "type" : "array",
+            "description" : "IDs of the created elements",
+            "items" : {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            }
           }
         }
       },
