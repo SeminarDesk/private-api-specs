@@ -3075,7 +3075,7 @@
       "put" : {
         "tags" : [ "Bookings" ],
         "summary" : "Sets a booking's status to \"No-show\"",
-        "description" : "Only bookings in status \"Pending\" can be set to \"No-show\".",
+        "description" : "Only bookings in status \"Confirmed\" can be set to \"No-show\".",
         "operationId" : "markBookingAsNoShow",
         "parameters" : [ {
           "name" : "id",
@@ -3269,7 +3269,7 @@
       "put" : {
         "tags" : [ "Bookings" ],
         "summary" : "Deletes a booking",
-        "description" : "Only bookings in status \"Pending\" can be deleted.",
+        "description" : "Only bookings in status \"Pending\", \"Wait list\" or \"Canceled wait list\" can be deleted.",
         "operationId" : "deleteBooking",
         "parameters" : [ {
           "name" : "id",
