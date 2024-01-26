@@ -4165,7 +4165,10 @@
         "type" : "object",
         "properties" : {
           "id" : {
-            "$ref" : "#/components/schemas/NumericPrimaryKey"
+            "type" : "integer",
+            "description" : "ID of the misc item",
+            "format" : "int64",
+            "nullable" : false
           },
           "manualPrice" : {
             "type" : "number",
