@@ -2,7 +2,7 @@
   "openapi" : "3.0.3",
   "info" : {
     "title" : "SeminarDesk Private API (BETA – unreleased next version)",
-    "description" : "Provides access to resources like events, dates, profiles, bookings and invoices. <br>**Note**: This is the upcoming version which is not yet released.\n",
+    "description" : "Provides access to resources like events, dates, profiles, bookings and invoices. <p>**Note**: This is the upcoming version which is not yet released.</p>\n",
     "termsOfService" : "https://www.seminardesk.de/nutzungsbedingungen/",
     "contact" : {
       "name" : "SeminarDesk support",
@@ -99,7 +99,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -184,7 +184,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -265,7 +265,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -347,7 +347,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -429,7 +429,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -538,7 +538,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -636,7 +636,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -717,7 +717,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -730,7 +730,7 @@
       },
       "post" : {
         "tags" : [ "Events" ],
-        "summary" : "Creates a new attendance fee price list",
+        "summary" : "Creates a new attendance fee price list to be used for dates of this event",
         "operationId" : "createAttendanceFeePriceList",
         "parameters" : [ {
           "name" : "id",
@@ -806,7 +806,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -893,7 +893,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -964,7 +964,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1046,7 +1046,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1128,7 +1128,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1228,7 +1228,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1315,7 +1315,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1396,7 +1396,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1496,7 +1496,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1586,7 +1586,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1657,7 +1657,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1743,7 +1743,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1824,7 +1824,89 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profiles/{id}/certificates" : {
+      "get" : {
+        "tags" : [ "Profiles", "Certificates" ],
+        "summary" : "Retrieves the existing certificates of a profile",
+        "description" : "*Note*: In case the profile identified by the given ID is not a person, this will return a 400 error.",
+        "operationId" : "getCertificatesByOwner",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CertificatesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1838,7 +1920,7 @@
     },
     "/persons" : {
       "get" : {
-        "tags" : [ "Profiles" ],
+        "tags" : [ "Profiles", "Persons" ],
         "summary" : "Retrieves a list of person profiles",
         "operationId" : "getPersonProfiles",
         "parameters" : [ {
@@ -1911,7 +1993,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1925,7 +2007,7 @@
     },
     "/persons/{id}" : {
       "get" : {
-        "tags" : [ "Profiles" ],
+        "tags" : [ "Profiles", "Persons" ],
         "summary" : "Retrieves the details of a person profile",
         "operationId" : "getPersonProfile",
         "parameters" : [ {
@@ -1992,7 +2074,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2006,7 +2088,7 @@
     },
     "/facilitators" : {
       "get" : {
-        "tags" : [ "Profiles" ],
+        "tags" : [ "Profiles", "Facilitators" ],
         "summary" : "Retrieves a list of facilitator profiles",
         "operationId" : "getFacilitatorProfiles",
         "parameters" : [ {
@@ -2079,7 +2161,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2093,7 +2175,7 @@
     },
     "/facilitators/{id}" : {
       "get" : {
-        "tags" : [ "Profiles" ],
+        "tags" : [ "Profiles", "Facilitators" ],
         "summary" : "Retrieves the details of a facilitator profile",
         "operationId" : "getFacilitatorProfile",
         "parameters" : [ {
@@ -2160,7 +2242,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2247,7 +2329,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2328,7 +2410,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2406,7 +2488,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2492,7 +2574,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2573,7 +2655,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2654,7 +2736,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2756,7 +2838,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2856,7 +2938,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2957,7 +3039,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3059,7 +3141,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3151,7 +3233,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3253,7 +3335,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3348,7 +3430,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3440,7 +3522,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3518,7 +3600,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3599,7 +3681,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3681,7 +3763,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3782,7 +3864,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3884,7 +3966,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3966,7 +4048,459 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/certificates" : {
+      "get" : {
+        "tags" : [ "Certificates" ],
+        "summary" : "Retrieves a list of certificates",
+        "operationId" : "getCertificates",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/page"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CertificatesList"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Certificates" ],
+        "summary" : "Creates a certificate",
+        "description" : "*Note*: Prerequisites will not be considered, the certificate will be created with the provided data.",
+        "operationId" : "createCertificate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Certificate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Created, contains the ID of the certificate",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/certificates/{id}" : {
+      "get" : {
+        "tags" : [ "Certificates" ],
+        "summary" : "Retrieves the details of a certificate",
+        "operationId" : "getCertificate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Certificate"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Certificates" ],
+        "summary" : "Updates one or more properties of a certificate",
+        "operationId" : "patchCertificate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Certificate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/certificates/{id}/void" : {
+      "put" : {
+        "tags" : [ "Certificates" ],
+        "summary" : "Sets a certificate's status to \"Voided\"",
+        "operationId" : "markCertificateAsVoided",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SetCertificateVoided"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Status changed successfully, returns the updated certificate",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Certificate"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4104,6 +4638,96 @@
         "type" : "array",
         "items" : {
           "$ref" : "#/components/schemas/ListBookingGuest"
+        }
+      },
+      "CertificatesList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Certificate"
+              }
+            }
+          }
+        } ]
+      },
+      "Certificate" : {
+        "required" : [ "id", "objectInfo", "owner", "status", "type", "validFrom" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
+          "owner" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "type" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "validFrom" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : false
+          },
+          "validUntil" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          },
+          "status" : {
+            "type" : "string",
+            "readOnly" : true,
+            "enum" : [ "VALID", "VALID_LIMITED", "INVALID", "VOIDED" ]
+          },
+          "number" : {
+            "maxLength" : 100,
+            "type" : "string",
+            "nullable" : true
+          },
+          "additionalInfo" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "internalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "objectInfo" : {
+            "nullable" : false,
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ObjectMetaInfo"
+            } ]
+          }
+        }
+      },
+      "SetCertificateVoided" : {
+        "required" : [ "date", "reason" ],
+        "type" : "object",
+        "properties" : {
+          "reason" : {
+            "type" : "string",
+            "description" : "Reason for the status change",
+            "nullable" : false
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : false
+          }
         }
       },
       "BookingsList" : {
@@ -5106,11 +5730,14 @@
         } ]
       },
       "AttendanceFeePriceList" : {
-        "required" : [ "details", "name", "order" ],
+        "required" : [ "details", "id", "name", "order" ],
         "type" : "object",
         "properties" : {
           "id" : {
-            "$ref" : "#/components/schemas/NumericPrimaryKey"
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
           },
           "name" : {
             "type" : "string",
@@ -6113,17 +6740,25 @@
         "properties" : {
           "createdAt" : {
             "type" : "string",
-            "format" : "date-time"
+            "format" : "date-time",
+            "readOnly" : true
           },
           "createdBy" : {
-            "$ref" : "#/components/schemas/User"
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/User"
+            } ]
           },
           "changedAt" : {
             "type" : "string",
-            "format" : "date-time"
+            "format" : "date-time",
+            "readOnly" : true
           },
           "changedBy" : {
-            "$ref" : "#/components/schemas/User"
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/User"
+            } ]
           }
         }
       },
@@ -7060,8 +7695,7 @@
       },
       "NumericPrimaryKey" : {
         "type" : "integer",
-        "format" : "int64",
-        "readOnly" : true
+        "format" : "int64"
       },
       "BookingOrProfileInvoicesList" : {
         "type" : "object",
@@ -8079,7 +8713,7 @@
         }
       },
       "NotImplementedError" : {
-        "description" : "Request cannot be handled, private API not active",
+        "description" : "Request cannot be handled, private API not active or required module not enabled",
         "content" : {
           "application/json" : {
             "schema" : {
