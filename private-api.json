@@ -4656,7 +4656,7 @@
         } ]
       },
       "Certificate" : {
-        "required" : [ "id", "objectInfo", "owner", "status", "type", "validFrom" ],
+        "required" : [ "id", "isValid", "isVoided", "objectInfo", "owner", "status", "type", "validFrom" ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -4690,7 +4690,12 @@
           "status" : {
             "type" : "string",
             "readOnly" : true,
-            "enum" : [ "VALID", "VALID_LIMITED", "INVALID", "VOIDED" ]
+            "enum" : [ "VALID", "EXPIRED", "VOIDED" ]
+          },
+          "issuer" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : true
           },
           "number" : {
             "maxLength" : 100,
@@ -5730,7 +5735,7 @@
         } ]
       },
       "AttendanceFeePriceList" : {
-        "required" : [ "details", "id", "name", "order" ],
+        "required" : [ "details", "id", "isActive", "name", "order" ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -5759,6 +5764,11 @@
             "items" : {
               "$ref" : "#/components/schemas/AttendanceFeePriceListDetail"
             }
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "readOnly" : true
           }
         }
       },
@@ -8136,9 +8146,33 @@
           },
           "additionalField" : {
             "type" : "string",
-            "description" : "Filter by additional field designated by the given ID",
+            "description" : "Filter by value of additional field designated by the given ID",
             "nullable" : true,
             "example" : "42:MyFieldValue"
+          },
+          "createdBefore" : {
+            "type" : "string",
+            "description" : "Filter by creation timestamp, i.e. only items created *bore* the given datetime.",
+            "format" : "date-time",
+            "nullable" : true
+          },
+          "createdAfter" : {
+            "type" : "string",
+            "description" : "Filter by creation timestamp, i.e. only items created *after* the given datetime.",
+            "format" : "date-time",
+            "nullable" : true
+          },
+          "changedBefore" : {
+            "type" : "string",
+            "description" : "Filter by last modification timestamp, i.e. only items changed *before* the given datetime.",
+            "format" : "date-time",
+            "nullable" : true
+          },
+          "chagnedAfter" : {
+            "type" : "string",
+            "description" : "Filter by last modification timestamp, i.e. only items changed *after* the given datetime.",
+            "format" : "date-time",
+            "nullable" : true
           }
         },
         "nullable" : true
