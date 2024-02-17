@@ -1861,7 +1861,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CertificatesList"
+                  "$ref" : "#/components/schemas/ProfileCertificatesList"
                 }
               }
             }
@@ -4414,8 +4414,8 @@
     "/certificates/{id}/void" : {
       "put" : {
         "tags" : [ "Certificates" ],
-        "summary" : "Sets a certificate's status to \"Voided\"",
-        "operationId" : "markCertificateAsVoided",
+        "summary" : "Sets a certificate's status to \"Void\"",
+        "operationId" : "markCertificateAsVoid",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -4433,7 +4433,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/SetCertificateVoided"
+                "$ref" : "#/components/schemas/SetCertificateVoid"
               }
             }
           },
@@ -4640,6 +4640,12 @@
           "$ref" : "#/components/schemas/ListBookingGuest"
         }
       },
+      "ProfileCertificatesList" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Certificate"
+        }
+      },
       "CertificatesList" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/BaseList"
@@ -4655,26 +4661,52 @@
           }
         } ]
       },
+      "CertificateType" : {
+        "required" : [ "id", "name", "provider" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "provider" : {
+            "$ref" : "#/components/schemas/NamedIdReference"
+          },
+          "name" : {
+            "maxLength" : 255,
+            "type" : "string"
+          }
+        }
+      },
       "Certificate" : {
-        "required" : [ "id", "isValid", "isVoided", "objectInfo", "owner", "status", "type", "validFrom" ],
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/AbstractCertificate"
+        }, {
+          "required" : [ "owner", "type" ],
+          "type" : "object",
+          "properties" : {
+            "owner" : {
+              "nullable" : false,
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/NamedIdReference"
+              } ]
+            },
+            "type" : {
+              "nullable" : false,
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/NamedIdReference"
+              } ]
+            }
+          }
+        } ]
+      },
+      "AbstractCertificate" : {
+        "required" : [ "id", "objectInfo", "status", "validFrom" ],
         "type" : "object",
         "properties" : {
           "id" : {
             "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NumericPrimaryKey"
-            } ]
-          },
-          "owner" : {
-            "nullable" : false,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/NamedIdReference"
-            } ]
-          },
-          "type" : {
-            "nullable" : false,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/NamedIdReference"
             } ]
           },
           "validFrom" : {
@@ -4690,7 +4722,7 @@
           "status" : {
             "type" : "string",
             "readOnly" : true,
-            "enum" : [ "VALID", "EXPIRED", "VOIDED" ]
+            "enum" : [ "VALID", "VALID_LIMITED", "EXPIRED", "VOID", "PENDING" ]
           },
           "issuer" : {
             "maxLength" : 255,
@@ -4719,7 +4751,7 @@
           }
         }
       },
-      "SetCertificateVoided" : {
+      "SetCertificateVoid" : {
         "required" : [ "date", "reason" ],
         "type" : "object",
         "properties" : {
@@ -7453,6 +7485,12 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/PersonProfileActivity"
+            }
+          },
+          "certificates" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Certificate"
             }
           }
         }
