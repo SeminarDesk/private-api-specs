@@ -8168,7 +8168,7 @@
             "format" : "date-time",
             "nullable" : true
           },
-          "chagnedAfter" : {
+          "changedAfter" : {
             "type" : "string",
             "description" : "Filter by last modification timestamp, i.e. only items changed *after* the given datetime.",
             "format" : "date-time",
