@@ -2003,6 +2003,91 @@
             }
           }
         }
+      },
+      "post" : {
+        "tags" : [ "Profiles", "Persons" ],
+        "summary" : "Creates a new person profile",
+        "operationId" : "createPersonProfile",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PersonProfile"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created, contains the ID of the profile",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            },
+            "links" : {
+              "GetBookingById" : {
+                "operationId" : "getPersonProfile",
+                "parameters" : {
+                  "id" : "$response.body#/id"
+                },
+                "description" : "The `id` value returned can be used as the `id` parameter in `GET /persons/{id}`\n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/persons/{id}" : {
@@ -2445,6 +2530,15 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter_3"
           }
         } ],
         "responses" : {
@@ -3558,6 +3652,15 @@
             "type" : "string",
             "nullable" : true
           }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter_4"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -3906,12 +4009,113 @@
           "required" : true
         },
         "responses" : {
-          "200" : {
+          "201" : {
             "description" : "OK",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/Payment"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/{id}/external-references" : {
+      "post" : {
+        "tags" : [ "Invoices" ],
+        "summary" : "Adds an external reference to an invoice",
+        "operationId" : "addExternalReferenceToInvoice",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExternalReference"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created, contains the ID of the external reference",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
                 }
               }
             }
@@ -4631,6 +4835,13 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/ObjectMetaInfo"
             } ]
+          },
+          "externalReferences" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ExternalReference"
+            }
           }
         }
       },
@@ -4925,6 +5136,13 @@
             "nullable" : false,
             "items" : {
               "$ref" : "#/components/schemas/CreateBookingGuest"
+            }
+          },
+          "externalReferences" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ExternalReference"
             }
           }
         }
@@ -5596,6 +5814,31 @@
         }, {
           "$ref" : "#/components/schemas/EventRequiredProperties"
         } ]
+      },
+      "ExternalReference" : {
+        "required" : [ "externalId", "id", "system" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
+          "system" : {
+            "$ref" : "#/components/schemas/NamedIdReference"
+          },
+          "externalId" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : false
+          },
+          "url" : {
+            "maxLength" : 2083,
+            "type" : "string",
+            "nullable" : true
+          }
+        }
       },
       "EventRequiredProperties" : {
         "required" : [ "bookingSettings", "internalOrganizer", "name", "publishingSettings" ],
@@ -7163,7 +7406,10 @@
             "example" : "Frau"
           },
           "gender" : {
-            "$ref" : "#/components/schemas/Gender"
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Gender"
+            } ]
           }
         }
       },
@@ -7191,6 +7437,7 @@
           "objectType" : {
             "type" : "string",
             "nullable" : false,
+            "readOnly" : true,
             "enum" : [ "PersonProfile", "OrganizationProfile", "FacilitatorProfile" ]
           },
           "salutation" : {
@@ -7305,6 +7552,7 @@
           "linkedProfiles" : {
             "type" : "array",
             "nullable" : true,
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/ProfileLink"
             }
@@ -7312,6 +7560,7 @@
           "revenues" : {
             "type" : "array",
             "nullable" : true,
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/RevenueItem"
             }
@@ -7545,7 +7794,8 @@
             "nullable" : true
           },
           "lastName" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : false
           },
           "title" : {
             "type" : "string",
@@ -7569,34 +7819,45 @@
           },
           "preferredEmail" : {
             "type" : "string",
+            "nullable" : true,
+            "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "ALTERNATIVE", "INVOICE", "PRIMARY_ORGANIZATION" ]
           },
           "preferredPhone" : {
             "type" : "string",
+            "nullable" : true,
+            "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "ALTERNATIVE", "BUSINESS", "PRIMARY_ORGANIZATION" ]
           },
           "preferredAddress" : {
             "type" : "string",
+            "nullable" : true,
+            "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "INVOICE", "PRIMARY_ORGANIZATION" ]
           },
           "preferredBillingAddress" : {
             "type" : "string",
+            "nullable" : true,
+            "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "INVOICE", "PRIMARY_ORGANIZATION" ]
           },
           "isSubscribedToNewsletter" : {
             "type" : "boolean"
           },
           "hasOnlineAccount" : {
-            "type" : "boolean"
+            "type" : "boolean",
+            "readOnly" : true
           },
           "activities" : {
             "type" : "array",
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/PersonProfileActivity"
             }
           },
           "certificates" : {
             "type" : "array",
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/Certificate"
             }
@@ -8217,6 +8478,12 @@
             "description" : "Filter by additional field, based on its ID",
             "nullable" : true,
             "example" : "23:MyFieldValue"
+          },
+          "externalId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
           }
         }
       },
@@ -8271,6 +8538,12 @@
           "onlyPublished" : {
             "type" : "boolean",
             "nullable" : true
+          },
+          "externalId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
           }
         },
         "nullable" : true
@@ -8296,32 +8569,36 @@
             "nullable" : true,
             "example" : "42:MyFieldValue"
           },
-          "createdBefore" : {
+          "externalId" : {
             "type" : "string",
-            "description" : "Filter by creation timestamp, i.e. only items created *bore* the given datetime.",
-            "format" : "date-time",
-            "nullable" : true
-          },
-          "createdAfter" : {
-            "type" : "string",
-            "description" : "Filter by creation timestamp, i.e. only items created *after* the given datetime.",
-            "format" : "date-time",
-            "nullable" : true
-          },
-          "changedBefore" : {
-            "type" : "string",
-            "description" : "Filter by last modification timestamp, i.e. only items changed *before* the given datetime.",
-            "format" : "date-time",
-            "nullable" : true
-          },
-          "changedAfter" : {
-            "type" : "string",
-            "description" : "Filter by last modification timestamp, i.e. only items changed *after* the given datetime.",
-            "format" : "date-time",
-            "nullable" : true
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
           }
         },
         "nullable" : true
+      },
+      "filter_3" : {
+        "type" : "object",
+        "properties" : {
+          "externalId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
+          }
+        }
+      },
+      "filter_4" : {
+        "type" : "object",
+        "properties" : {
+          "externalId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
+          }
+        }
       },
       "BaseList_meta" : {
         "type" : "object",
@@ -8759,7 +9036,8 @@
             }
           }
         },
-        "nullable" : true
+        "nullable" : true,
+        "readOnly" : true
       },
       "PersonProfileActivity_type" : {
         "required" : [ "name" ],
@@ -8959,6 +9237,26 @@
         "explode" : false,
         "schema" : {
           "$ref" : "#/components/schemas/filter"
+        }
+      },
+      "InvoiceFilter" : {
+        "name" : "filter",
+        "in" : "query",
+        "required" : false,
+        "style" : "deepObject",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/filter_4"
+        }
+      },
+      "BookingFilter" : {
+        "name" : "filter",
+        "in" : "query",
+        "required" : false,
+        "style" : "deepObject",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/filter_3"
         }
       },
       "ProfileFilter" : {
