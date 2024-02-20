@@ -4957,7 +4957,7 @@
         }
       },
       "CertificateType" : {
-        "required" : [ "id", "isActive", "name", "provider" ],
+        "required" : [ "id", "isActive", "name", "officialType", "provider" ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -4968,7 +4968,14 @@
           },
           "name" : {
             "maxLength" : 255,
-            "type" : "string"
+            "type" : "string",
+            "nullable" : false
+          },
+          "officialTitle" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Title or code as given by the provider",
+            "nullable" : false
           },
           "defaultValidity" : {
             "type" : "number",
@@ -5041,7 +5048,7 @@
           "status" : {
             "type" : "string",
             "readOnly" : true,
-            "enum" : [ "VALID", "VALID_LIMITED", "EXPIRED", "VOID", "PENDING" ]
+            "enum" : [ "VALID", "EXPIRED", "VOID", "PENDING" ]
           },
           "issuer" : {
             "maxLength" : 255,
@@ -5330,6 +5337,7 @@
             }
           },
           "marker" : {
+            "maxLength" : 255,
             "type" : "string",
             "nullable" : true,
             "example" : "Sample Marker"
@@ -5366,6 +5374,11 @@
             "items" : {
               "$ref" : "#/components/schemas/Payment"
             }
+          },
+          "externalIdentifier" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : true
           }
         }
       },
