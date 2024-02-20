@@ -2844,7 +2844,7 @@
     },
     "/guests/{id}/misc-items" : {
       "post" : {
-        "tags" : [ "Guests", "Booking Items" ],
+        "tags" : [ "Booking Guest Items" ],
         "summary" : "Adds a miscelleaneous item to the booking guest",
         "description" : "Note: Properties of the misc item (i.e. age and price level) will be considered, in case they do not match the guest, a 400 error will be returned.\n",
         "operationId" : "addMiscItemToGuest",
@@ -2944,11 +2944,11 @@
         }
       }
     },
-    "/misc-booking-items/{id}" : {
+    "/misc-guest-items/{id}" : {
       "patch" : {
-        "tags" : [ "Booking Items" ],
-        "summary" : "Updates one or more properties of a misc booking item",
-        "operationId" : "patchMiscBookingItem",
+        "tags" : [ "Booking Guest Items" ],
+        "summary" : "Updates one or more properties of a misc guest item",
+        "operationId" : "patchMiscGuestItem",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -2966,7 +2966,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/PatchMiscBookingItem"
+                "$ref" : "#/components/schemas/PatchMiscBookingGuestItem"
               }
             }
           },
@@ -5832,7 +5832,7 @@
           }
         } ]
       },
-      "PatchMiscBookingItem" : {
+      "PatchMiscBookingGuestItem" : {
         "type" : "object",
         "properties" : {
           "quantity" : {
