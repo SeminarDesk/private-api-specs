@@ -2844,7 +2844,7 @@
     },
     "/guests/{id}/misc-items" : {
       "post" : {
-        "tags" : [ "Guests" ],
+        "tags" : [ "Guests", "Booking Items" ],
         "summary" : "Adds a miscelleaneous item to the booking guest",
         "description" : "Note: Properties of the misc item (i.e. age and price level) will be considered, in case they do not match the guest, a 400 error will be returned.\n",
         "operationId" : "addMiscItemToGuest",
@@ -2888,6 +2888,97 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/misc-booking-items/{id}" : {
+      "patch" : {
+        "tags" : [ "Booking Items" ],
+        "summary" : "Updates one or more properties of a misc booking item",
+        "operationId" : "patchMiscBookingItem",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchMiscBookingItem"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK, returns the updated item",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingGuestItem"
                 }
               }
             }
@@ -5119,7 +5210,7 @@
             } ]
           },
           "status" : {
-            "description" : "In case no status is provided, the booking will be created in status \"Pending\"",
+            "description" : "In case no status is provided, the booking will be created with status \"Pending\"",
             "nullable" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/BookingStatus"
@@ -5740,6 +5831,17 @@
             }
           }
         } ]
+      },
+      "PatchMiscBookingItem" : {
+        "type" : "object",
+        "properties" : {
+          "quantity" : {
+            "minimum" : 0,
+            "type" : "number",
+            "format" : "integer",
+            "nullable" : true
+          }
+        }
       },
       "PatchProfileAdditionalField" : {
         "required" : [ "value" ],
