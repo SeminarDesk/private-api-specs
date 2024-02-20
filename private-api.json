@@ -5151,6 +5151,11 @@
             "items" : {
               "$ref" : "#/components/schemas/ExternalReference"
             }
+          },
+          "externalIdentifier" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : true
           }
         }
       },
@@ -8492,7 +8497,7 @@
             "nullable" : true,
             "example" : "23:MyFieldValue"
           },
-          "externalId" : {
+          "externalSystemId" : {
             "type" : "string",
             "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
@@ -8552,7 +8557,7 @@
             "type" : "boolean",
             "nullable" : true
           },
-          "externalId" : {
+          "externalSystemId" : {
             "type" : "string",
             "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
@@ -8582,7 +8587,7 @@
             "nullable" : true,
             "example" : "42:MyFieldValue"
           },
-          "externalId" : {
+          "externalSystemId" : {
             "type" : "string",
             "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
@@ -8594,7 +8599,7 @@
       "filter_3" : {
         "type" : "object",
         "properties" : {
-          "externalId" : {
+          "externalSystemId" : {
             "type" : "string",
             "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
@@ -8605,7 +8610,7 @@
       "filter_4" : {
         "type" : "object",
         "properties" : {
-          "externalId" : {
+          "externalSystemId" : {
             "type" : "string",
             "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
