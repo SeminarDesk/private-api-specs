@@ -1839,8 +1839,8 @@
     "/profiles/{id}/certificates" : {
       "get" : {
         "tags" : [ "Profiles", "Certificates" ],
-        "summary" : "Retrieves the existing certificates of a profile",
-        "description" : "*Note*: In case the profile identified by the given ID is not a person, this will return a 400 error.",
+        "summary" : "Retrieves the existing certificates of a person/facilitator profile",
+        "description" : "*Note*: In case the profile identified by the given ID is not a person/facilitator, this will return a 400 error.",
         "operationId" : "getCertificatesByOwner",
         "parameters" : [ {
           "name" : "id",
@@ -5048,7 +5048,7 @@
         }
       },
       "CertificateType" : {
-        "required" : [ "id", "isActive", "name", "officialType", "provider" ],
+        "required" : [ "id", "isActive", "name", "officialTitle", "provider" ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -5068,26 +5068,39 @@
             "description" : "Title or code as given by the provider",
             "nullable" : false
           },
-          "defaultValidity" : {
+          "defaultValidityInMonths" : {
             "type" : "number",
-            "format" : "integer"
+            "description" : "If present, indicates the number of months a certificate will be valid after issuing",
+            "format" : "integer",
+            "nullable" : true
           },
-          "gracePeriod" : {
+          "takeoverPeriodInDays" : {
             "type" : "number",
-            "format" : "integer"
+            "format" : "integer",
+            "nullable" : true
           },
-          "takeoverPeriod" : {
-            "type" : "number",
-            "format" : "integer"
+          "takeoverSource" : {
+            "type" : "string",
+            "description" : "Determines whether the takeover period should only consider certificates of the same type (ONLY_SAME_TYPE) or also the certificates from the requirements (REQUIREMENTS)",
+            "nullable" : true,
+            "enum" : [ "ONLY_SAME_TYPE", "REQUIREMENTS" ]
           },
-          "prerequisites" : {
+          "requirements" : {
             "type" : "array",
+            "nullable" : true,
             "items" : {
               "$ref" : "#/components/schemas/CertificateType"
             }
           },
+          "requirementsAggregation" : {
+            "type" : "string",
+            "description" : "Determines whether ALL or at least one (ANY) requirement must be fulfilled",
+            "nullable" : true,
+            "enum" : [ "ALL", "ANY" ]
+          },
           "remarks" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           },
           "isActive" : {
             "type" : "boolean"
@@ -5136,28 +5149,54 @@
             "format" : "date",
             "nullable" : true
           },
+          "usedTakeover" : {
+            "type" : "number",
+            "format" : "integer",
+            "nullable" : true
+          },
           "status" : {
             "type" : "string",
             "readOnly" : true,
-            "enum" : [ "VALID", "EXPIRED", "VOID", "PENDING" ]
+            "enum" : [ "UPCOMING", "VALID", "EXPIRED", "VOID" ]
           },
-          "issuer" : {
+          "yieldedBy" : {
+            "type" : "string",
+            "enum" : [ "INTERNAL", "EXTERNAL" ]
+          },
+          "externalIssuer" : {
             "maxLength" : 255,
             "type" : "string",
             "nullable" : true
           },
-          "number" : {
-            "maxLength" : 100,
-            "type" : "string",
-            "nullable" : true
+          "yieldedByEventDate" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
           },
-          "additionalInfo" : {
+          "externalNumber" : {
             "type" : "string",
             "nullable" : true
           },
           "internalRemarks" : {
             "type" : "string",
             "nullable" : true
+          },
+          "externalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "voidAt" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          },
+          "voidReason" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "eligibilityCheckOverwritten" : {
+            "type" : "boolean"
           },
           "objectInfo" : {
             "nullable" : false,
