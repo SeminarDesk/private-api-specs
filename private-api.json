@@ -99,7 +99,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -184,7 +184,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -265,7 +265,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -347,7 +347,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -429,7 +429,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -538,7 +538,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -636,7 +636,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -717,7 +717,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -730,7 +730,7 @@
       },
       "post" : {
         "tags" : [ "Events" ],
-        "summary" : "Creates a new attendance fee price list",
+        "summary" : "Creates a new attendance fee price list to be used for dates of this event",
         "operationId" : "createAttendanceFeePriceList",
         "parameters" : [ {
           "name" : "id",
@@ -806,7 +806,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -893,7 +893,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -964,7 +964,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1046,7 +1046,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1128,7 +1128,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1228,7 +1228,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1263,15 +1263,6 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
-          }
-        }, {
-          "name" : "filter",
-          "in" : "query",
-          "required" : false,
-          "style" : "deepObject",
-          "explode" : false,
-          "schema" : {
-            "$ref" : "#/components/schemas/filter_2"
           }
         } ],
         "responses" : {
@@ -1315,7 +1306,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1396,7 +1387,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1496,7 +1487,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1586,7 +1577,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1657,7 +1648,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1743,7 +1734,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1824,7 +1815,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1838,7 +1829,7 @@
     },
     "/persons" : {
       "get" : {
-        "tags" : [ "Profiles" ],
+        "tags" : [ "Profiles", "Persons" ],
         "summary" : "Retrieves a list of person profiles",
         "operationId" : "getPersonProfiles",
         "parameters" : [ {
@@ -1859,15 +1850,6 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
-          }
-        }, {
-          "name" : "filter",
-          "in" : "query",
-          "required" : false,
-          "style" : "deepObject",
-          "explode" : false,
-          "schema" : {
-            "$ref" : "#/components/schemas/filter_2"
           }
         } ],
         "responses" : {
@@ -1911,7 +1893,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1925,7 +1907,7 @@
     },
     "/persons/{id}" : {
       "get" : {
-        "tags" : [ "Profiles" ],
+        "tags" : [ "Profiles", "Persons" ],
         "summary" : "Retrieves the details of a person profile",
         "operationId" : "getPersonProfile",
         "parameters" : [ {
@@ -1992,7 +1974,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2006,7 +1988,7 @@
     },
     "/facilitators" : {
       "get" : {
-        "tags" : [ "Profiles" ],
+        "tags" : [ "Profiles", "Facilitators" ],
         "summary" : "Retrieves a list of facilitator profiles",
         "operationId" : "getFacilitatorProfiles",
         "parameters" : [ {
@@ -2027,15 +2009,6 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
-          }
-        }, {
-          "name" : "filter",
-          "in" : "query",
-          "required" : false,
-          "style" : "deepObject",
-          "explode" : false,
-          "schema" : {
-            "$ref" : "#/components/schemas/filter_2"
           }
         } ],
         "responses" : {
@@ -2079,7 +2052,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2093,7 +2066,7 @@
     },
     "/facilitators/{id}" : {
       "get" : {
-        "tags" : [ "Profiles" ],
+        "tags" : [ "Profiles", "Facilitators" ],
         "summary" : "Retrieves the details of a facilitator profile",
         "operationId" : "getFacilitatorProfile",
         "parameters" : [ {
@@ -2160,7 +2133,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2195,15 +2168,6 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
-          }
-        }, {
-          "name" : "filter",
-          "in" : "query",
-          "required" : false,
-          "style" : "deepObject",
-          "explode" : false,
-          "schema" : {
-            "$ref" : "#/components/schemas/filter_2"
           }
         } ],
         "responses" : {
@@ -2247,7 +2211,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2328,7 +2292,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2363,6 +2327,15 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter_2"
           }
         } ],
         "responses" : {
@@ -2406,7 +2379,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2492,7 +2465,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2573,7 +2546,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2654,109 +2627,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/guests/{id}/misc-items" : {
-      "post" : {
-        "tags" : [ "Guests" ],
-        "summary" : "Adds a miscelleaneous item to the booking guest",
-        "description" : "Note: Properties of the misc item (i.e. age and price level) will be considered, in case they do not match the guest, a 400 error will be returned.\n",
-        "operationId" : "addMiscItemToGuest",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Numeric ID of the item",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "minimum" : 1,
-            "type" : "integer",
-            "format" : "int64"
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/AddBookingGuestMiscItem"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "201" : {
-            "description" : "Created, contains the ID of the booking item",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "API key is missing or invalid",
-            "headers" : {
-              "WWW_Authenticate" : {
-                "style" : "simple",
-                "explode" : false,
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "API key does not have required permissions",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "The resource does not exist",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2856,7 +2727,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2957,7 +2828,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3059,7 +2930,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3151,7 +3022,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3253,7 +3124,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3348,7 +3219,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3440,7 +3311,109 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/guests/{id}/misc-items" : {
+      "post" : {
+        "tags" : [ "Booking Guest Items" ],
+        "summary" : "Adds a miscelleaneous item to the booking guest",
+        "description" : "Note: Properties of the misc item (i.e. age and price level) will be considered, in case they do not match the guest, a 400 error will be returned.\n",
+        "operationId" : "addMiscItemToGuest",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AddBookingGuestMiscItem"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created, contains the ID of the booking item",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3475,6 +3448,15 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter_3"
           }
         } ],
         "responses" : {
@@ -3518,7 +3500,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3599,7 +3581,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3681,7 +3663,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3782,7 +3764,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3824,7 +3806,7 @@
           "required" : true
         },
         "responses" : {
-          "200" : {
+          "201" : {
             "description" : "OK",
             "content" : {
               "application/json" : {
@@ -3884,7 +3866,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -3966,7 +3948,7 @@
             }
           },
           "501" : {
-            "description" : "Request cannot be handled, private API not active",
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4132,7 +4114,7 @@
             } ]
           },
           "status" : {
-            "description" : "In case no status is provided, the booking will be created in status \"Pending\"",
+            "description" : "In case no status is provided, the booking will be created with status \"Pending\"",
             "nullable" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/BookingStatus"
@@ -4157,6 +4139,11 @@
             "items" : {
               "$ref" : "#/components/schemas/CreateBookingGuest"
             }
+          },
+          "externalIdentifier" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : true
           }
         }
       },
@@ -4343,6 +4330,7 @@
             }
           },
           "marker" : {
+            "maxLength" : 255,
             "type" : "string",
             "nullable" : true,
             "example" : "Sample Marker"
@@ -4379,6 +4367,11 @@
             "items" : {
               "$ref" : "#/components/schemas/Payment"
             }
+          },
+          "externalIdentifier" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : true
           }
         }
       },
@@ -4735,6 +4728,17 @@
             }
           }
         } ]
+      },
+      "PatchMiscBookingGuestItem" : {
+        "type" : "object",
+        "properties" : {
+          "quantity" : {
+            "minimum" : 0,
+            "type" : "number",
+            "format" : "integer",
+            "nullable" : true
+          }
+        }
       },
       "PatchProfileAdditionalField" : {
         "required" : [ "value" ],
@@ -5106,11 +5110,14 @@
         } ]
       },
       "AttendanceFeePriceList" : {
-        "required" : [ "details", "name", "order" ],
+        "required" : [ "details", "id", "isActive", "name", "order" ],
         "type" : "object",
         "properties" : {
           "id" : {
-            "$ref" : "#/components/schemas/NumericPrimaryKey"
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
           },
           "name" : {
             "type" : "string",
@@ -5132,6 +5139,11 @@
             "items" : {
               "$ref" : "#/components/schemas/AttendanceFeePriceListDetail"
             }
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "nullable" : false,
+            "readOnly" : true
           }
         }
       },
@@ -5922,15 +5934,9 @@
         }
       },
       "TaxRate" : {
-        "required" : [ "name", "value" ],
+        "required" : [ "value" ],
         "type" : "object",
         "properties" : {
-          "name" : {
-            "type" : "string",
-            "nullable" : false,
-            "readOnly" : true,
-            "example" : "German Default VAT rate"
-          },
           "value" : {
             "maximum" : 1,
             "minimum" : 0,
@@ -6113,17 +6119,25 @@
         "properties" : {
           "createdAt" : {
             "type" : "string",
-            "format" : "date-time"
+            "format" : "date-time",
+            "readOnly" : true
           },
           "createdBy" : {
-            "$ref" : "#/components/schemas/User"
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/User"
+            } ]
           },
           "changedAt" : {
             "type" : "string",
-            "format" : "date-time"
+            "format" : "date-time",
+            "readOnly" : true
           },
           "changedBy" : {
-            "$ref" : "#/components/schemas/User"
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/User"
+            } ]
           }
         }
       },
@@ -6378,7 +6392,10 @@
             "example" : "Frau"
           },
           "gender" : {
-            "$ref" : "#/components/schemas/Gender"
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/Gender"
+            } ]
           }
         }
       },
@@ -6406,6 +6423,7 @@
           "objectType" : {
             "type" : "string",
             "nullable" : false,
+            "readOnly" : true,
             "enum" : [ "PersonProfile", "OrganizationProfile", "FacilitatorProfile" ]
           },
           "salutation" : {
@@ -6520,6 +6538,7 @@
           "linkedProfiles" : {
             "type" : "array",
             "nullable" : true,
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/ProfileLink"
             }
@@ -6527,6 +6546,7 @@
           "revenues" : {
             "type" : "array",
             "nullable" : true,
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/RevenueItem"
             }
@@ -6760,7 +6780,8 @@
             "nullable" : true
           },
           "lastName" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : false
           },
           "title" : {
             "type" : "string",
@@ -6784,28 +6805,38 @@
           },
           "preferredEmail" : {
             "type" : "string",
+            "nullable" : true,
+            "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "ALTERNATIVE", "INVOICE", "PRIMARY_ORGANIZATION" ]
           },
           "preferredPhone" : {
             "type" : "string",
+            "nullable" : true,
+            "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "ALTERNATIVE", "BUSINESS", "PRIMARY_ORGANIZATION" ]
           },
           "preferredAddress" : {
             "type" : "string",
+            "nullable" : true,
+            "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "INVOICE", "PRIMARY_ORGANIZATION" ]
           },
           "preferredBillingAddress" : {
             "type" : "string",
+            "nullable" : true,
+            "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "INVOICE", "PRIMARY_ORGANIZATION" ]
           },
           "isSubscribedToNewsletter" : {
             "type" : "boolean"
           },
           "hasOnlineAccount" : {
-            "type" : "boolean"
+            "type" : "boolean",
+            "readOnly" : true
           },
           "activities" : {
             "type" : "array",
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/PersonProfileActivity"
             }
@@ -7060,8 +7091,7 @@
       },
       "NumericPrimaryKey" : {
         "type" : "integer",
-        "format" : "int64",
-        "readOnly" : true
+        "format" : "int64"
       },
       "BookingOrProfileInvoicesList" : {
         "type" : "object",
@@ -7427,6 +7457,12 @@
             "description" : "Filter by additional field, based on its ID",
             "nullable" : true,
             "example" : "23:MyFieldValue"
+          },
+          "externalSystemId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
           }
         }
       },
@@ -7481,6 +7517,12 @@
           "onlyPublished" : {
             "type" : "boolean",
             "nullable" : true
+          },
+          "externalSystemId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
           }
         },
         "nullable" : true
@@ -7488,26 +7530,24 @@
       "filter_2" : {
         "type" : "object",
         "properties" : {
-          "isSubscribedToNewsletter" : {
-            "type" : "boolean",
-            "nullable" : true
-          },
-          "isBlocked" : {
-            "type" : "boolean",
-            "nullable" : true
-          },
-          "customerNumber" : {
+          "externalSystemId" : {
             "type" : "string",
-            "nullable" : true
-          },
-          "additionalField" : {
-            "type" : "string",
-            "description" : "Filter by additional field designated by the given ID",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
-            "example" : "42:MyFieldValue"
+            "example" : "102"
           }
-        },
-        "nullable" : true
+        }
+      },
+      "filter_3" : {
+        "type" : "object",
+        "properties" : {
+          "externalSystemId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
+          }
+        }
       },
       "BaseList_meta" : {
         "type" : "object",
@@ -7945,7 +7985,8 @@
             }
           }
         },
-        "nullable" : true
+        "nullable" : true,
+        "readOnly" : true
       },
       "PersonProfileActivity_type" : {
         "required" : [ "name" ],
@@ -8079,7 +8120,7 @@
         }
       },
       "NotImplementedError" : {
-        "description" : "Request cannot be handled, private API not active",
+        "description" : "Request cannot be handled, private API not active or required module not enabled",
         "content" : {
           "application/json" : {
             "schema" : {
@@ -8147,7 +8188,17 @@
           "$ref" : "#/components/schemas/filter"
         }
       },
-      "ProfileFilter" : {
+      "InvoiceFilter" : {
+        "name" : "filter",
+        "in" : "query",
+        "required" : false,
+        "style" : "deepObject",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/filter_3"
+        }
+      },
+      "BookingFilter" : {
         "name" : "filter",
         "in" : "query",
         "required" : false,
