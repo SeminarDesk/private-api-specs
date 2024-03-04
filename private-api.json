@@ -5094,7 +5094,7 @@
           },
           "requirementsAggregation" : {
             "type" : "string",
-            "description" : "Determines whether ALL or at least one (ANY) requirement must be fulfilled",
+            "description" : "Determines whether all or only at least one of the requirements must be fulfilled",
             "nullable" : true,
             "enum" : [ "ALL", "ANY" ]
           },
@@ -7101,15 +7101,9 @@
         }
       },
       "TaxRate" : {
-        "required" : [ "name", "value" ],
+        "required" : [ "value" ],
         "type" : "object",
         "properties" : {
-          "name" : {
-            "type" : "string",
-            "nullable" : false,
-            "readOnly" : true,
-            "example" : "German Default VAT rate"
-          },
           "value" : {
             "maximum" : 1,
             "minimum" : 0,
