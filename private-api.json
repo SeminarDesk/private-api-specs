@@ -1840,8 +1840,8 @@
       "get" : {
         "tags" : [ "Profiles", "Certificates" ],
         "summary" : "Retrieves the existing certificates of a person/facilitator profile",
-        "description" : "*Note*: In case the profile identified by the given ID is not a person/facilitator, this will return a 400 error.",
-        "operationId" : "getCertificatesByOwner",
+        "description" : "*Note*: In case the profile identified by the given ID is not a person or facilitator, this will return a 400 error.",
+        "operationId" : "getCertificatesByProfile",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -4444,9 +4444,9 @@
       },
       "post" : {
         "tags" : [ "Certificates" ],
-        "summary" : "Creates a certificate",
+        "summary" : "Imports a certificate",
         "description" : "*Note*: Prerequisites will not be considered, the certificate will be created with the provided data.",
-        "operationId" : "createCertificate",
+        "operationId" : "importCertificate",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -4471,7 +4471,7 @@
           "required" : true
         },
         "responses" : {
-          "200" : {
+          "201" : {
             "description" : "Created, contains the ID of the certificate",
             "content" : {
               "application/json" : {
@@ -4644,7 +4644,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/Certificate"
+                "$ref" : "#/components/schemas/PatchCertificate"
               }
             }
           },
@@ -4653,185 +4653,6 @@
         "responses" : {
           "204" : {
             "description" : "Updated successfully"
-          },
-          "401" : {
-            "description" : "API key is missing or invalid",
-            "headers" : {
-              "WWW_Authenticate" : {
-                "style" : "simple",
-                "explode" : false,
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "API key does not have required permissions",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "The resource does not exist",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "501" : {
-            "description" : "Request cannot be handled, private API not active or required module not enabled",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/certificates/{id}/void" : {
-      "put" : {
-        "tags" : [ "Certificates" ],
-        "summary" : "Sets a certificate's status to \"Void\"",
-        "operationId" : "markCertificateAsVoid",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Numeric ID of the item",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "minimum" : 1,
-            "type" : "integer",
-            "format" : "int64"
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/SetCertificateVoid"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "Status changed successfully, returns the updated certificate",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Certificate"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "API key is missing or invalid",
-            "headers" : {
-              "WWW_Authenticate" : {
-                "style" : "simple",
-                "explode" : false,
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "API key does not have required permissions",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "The resource does not exist",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "501" : {
-            "description" : "Request cannot be handled, private API not active or required module not enabled",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/certificate-types" : {
-      "get" : {
-        "tags" : [ "Certificates" ],
-        "summary" : "Retrieves the list of certificate types",
-        "operationId" : "getCertificateTypes",
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/CertificateTypesList"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
           },
           "401" : {
             "description" : "API key is missing or invalid",
@@ -5107,6 +4928,19 @@
           }
         }
       },
+      "PatchCertificate" : {
+        "type" : "object",
+        "properties" : {
+          "internalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "externalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
       "Certificate" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/AbstractCertificate"
@@ -5152,7 +4986,8 @@
           "usedTakeover" : {
             "type" : "number",
             "format" : "integer",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           },
           "status" : {
             "type" : "string",
@@ -5161,6 +4996,7 @@
           },
           "yieldedBy" : {
             "type" : "string",
+            "readOnly" : true,
             "enum" : [ "INTERNAL", "EXTERNAL" ]
           },
           "externalIssuer" : {
@@ -5170,6 +5006,7 @@
           },
           "yieldedByEventDate" : {
             "nullable" : true,
+            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NamedIdReference"
             } ]
@@ -5189,14 +5026,17 @@
           "voidAt" : {
             "type" : "string",
             "format" : "date",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           },
           "voidReason" : {
             "type" : "string",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           },
           "eligibilityCheckOverwritten" : {
-            "type" : "boolean"
+            "type" : "boolean",
+            "readOnly" : true
           },
           "objectInfo" : {
             "nullable" : false,
