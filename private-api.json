@@ -818,6 +818,92 @@
         }
       }
     },
+    "/events/{id}/additional-fields/{fieldId}" : {
+      "patch" : {
+        "tags" : [ "Events" ],
+        "summary" : "Updates the value of the specified additional field",
+        "operationId" : "patchEventAdditionalField",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "fieldId",
+          "in" : "path",
+          "description" : "Numeric ID of the additional field",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchEventAdditionalField"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/dates" : {
       "get" : {
         "tags" : [ "Dates" ],
@@ -1219,6 +1305,92 @@
           },
           "404" : {
             "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dates/{id}/additional-fields/{fieldId}" : {
+      "patch" : {
+        "tags" : [ "Dates" ],
+        "summary" : "Updates the value of the specified additional field",
+        "operationId" : "patchEventDateAdditionalField",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "fieldId",
+          "in" : "path",
+          "description" : "Numeric ID of the additional field",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchEventDateAdditionalField"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -5034,7 +5206,7 @@
             "nullable" : true,
             "readOnly" : true
           },
-          "eligibilityCheckOverwritten" : {
+          "eligibilityCheckOverridden" : {
             "type" : "boolean",
             "readOnly" : true
           },
@@ -5707,6 +5879,9 @@
             },
             "attendanceFeePriceLists" : {
               "readOnly" : true
+            },
+            "additionalFields" : {
+              "readOnly" : true
             }
           }
         } ]
@@ -5722,7 +5897,7 @@
           }
         }
       },
-      "PatchProfileAdditionalField" : {
+      "PatchAdditionalField" : {
         "required" : [ "value" ],
         "type" : "object",
         "properties" : {
@@ -5733,6 +5908,21 @@
             } ]
           }
         }
+      },
+      "PatchProfileAdditionalField" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PatchAdditionalField"
+        } ]
+      },
+      "PatchEventDateAdditionalField" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PatchAdditionalField"
+        } ]
+      },
+      "PatchEventAdditionalField" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PatchAdditionalField"
+        } ]
       },
       "PatchEventDate" : {
         "allOf" : [ {
@@ -5768,6 +5958,9 @@
               "readOnly" : true
             },
             "functionRoomBookings" : {
+              "readOnly" : true
+            },
+            "additionalFields" : {
               "readOnly" : true
             }
           }
