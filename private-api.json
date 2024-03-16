@@ -5558,6 +5558,7 @@
         "allOf" : [ {
           "$ref" : "#/components/schemas/BookingGuest"
         }, {
+          "required" : [ "guest" ],
           "type" : "object",
           "properties" : {
             "guest" : {
