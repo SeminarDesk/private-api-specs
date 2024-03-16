@@ -4619,19 +4619,6 @@
         "summary" : "Imports a certificate",
         "description" : "*Note*: Prerequisites will not be considered, the certificate will be created with the provided data.",
         "operationId" : "importCertificate",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Numeric ID of the item",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "minimum" : 1,
-            "type" : "integer",
-            "format" : "int64"
-          }
-        } ],
         "requestBody" : {
           "content" : {
             "application/json" : {
