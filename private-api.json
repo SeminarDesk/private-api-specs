@@ -5101,35 +5101,25 @@
         }
       },
       "Certificate" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/AbstractCertificate"
-        }, {
-          "required" : [ "owner", "type" ],
-          "type" : "object",
-          "properties" : {
-            "owner" : {
-              "nullable" : false,
-              "allOf" : [ {
-                "$ref" : "#/components/schemas/NamedIdReference"
-              } ]
-            },
-            "type" : {
-              "nullable" : false,
-              "allOf" : [ {
-                "$ref" : "#/components/schemas/NamedIdReference"
-              } ]
-            }
-          }
-        } ]
-      },
-      "AbstractCertificate" : {
-        "required" : [ "id", "objectInfo", "status", "validFrom" ],
+        "required" : [ "id", "objectInfo", "owner", "status", "type", "validFrom" ],
         "type" : "object",
         "properties" : {
           "id" : {
             "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
+          "owner" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "type" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
             } ]
           },
           "validFrom" : {
