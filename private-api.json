@@ -5049,14 +5049,12 @@
             "nullable" : false
           },
           "defaultValidityInMonths" : {
-            "type" : "number",
+            "type" : "integer",
             "description" : "If present, indicates the number of months a certificate will be valid after issuing",
-            "format" : "integer",
             "nullable" : true
           },
           "takeoverPeriodInDays" : {
-            "type" : "number",
-            "format" : "integer",
+            "type" : "integer",
             "nullable" : true
           },
           "takeoverSource" : {
@@ -5133,8 +5131,7 @@
             "nullable" : true
           },
           "usedTakeover" : {
-            "type" : "number",
-            "format" : "integer",
+            "type" : "integer",
             "nullable" : true,
             "readOnly" : true
           },
@@ -5307,10 +5304,10 @@
         "allOf" : [ {
           "$ref" : "#/components/schemas/ActivityProperties"
         }, {
-          "$ref" : "#/components/schemas/ActivitiyRequiredProperties"
+          "$ref" : "#/components/schemas/ActivityRequiredProperties"
         } ]
       },
-      "ActivitiyRequiredProperties" : {
+      "ActivityRequiredProperties" : {
         "required" : [ "activityType", "from", "title" ],
         "type" : "object"
       },
@@ -5869,8 +5866,7 @@
         "properties" : {
           "quantity" : {
             "minimum" : 0,
-            "type" : "number",
-            "format" : "integer",
+            "type" : "integer",
             "nullable" : true
           }
         }
