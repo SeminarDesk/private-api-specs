@@ -5224,6 +5224,7 @@
             "readOnly" : true
           },
           "takeoverSourceCertificate" : {
+            "description" : "In case there was a \"takeover\" from a required certificate, this will be the reference to this very certificate",
             "nullable" : true,
             "readOnly" : true,
             "allOf" : [ {
@@ -8743,9 +8744,9 @@
             "nullable" : true,
             "example" : "23:MyFieldValue"
           },
-          "externalSystemId" : {
+          "externalReferenceId" : {
             "type" : "string",
-            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "description" : "Filter by an external ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
             "example" : "102"
           }
