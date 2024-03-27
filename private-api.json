@@ -5243,7 +5243,7 @@
           "status" : {
             "type" : "string",
             "readOnly" : true,
-            "enum" : [ "UPCOMING", "VALID", null, "EXPIRED", "VOID" ]
+            "enum" : [ "UPCOMING", "VALID", "EXPIRED", "VOID" ]
           },
           "yieldedBy" : {
             "type" : "string",
