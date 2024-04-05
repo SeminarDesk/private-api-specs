@@ -5224,21 +5224,7 @@
             "readOnly" : true
           },
           "takeoverSourceCertificate" : {
-            "description" : "In case there was a \"takeover\" from a required certificate, this will be the reference to this very certificate",
-            "nullable" : true,
-            "readOnly" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/NamedIdReference"
-            }, {
-              "type" : "object",
-              "properties" : {
-                "validUntil" : {
-                  "type" : "string",
-                  "format" : "date",
-                  "nullable" : true
-                }
-              }
-            } ]
+            "$ref" : "#/components/schemas/Certificate_takeoverSourceCertificate"
           },
           "status" : {
             "type" : "string",
@@ -5829,6 +5815,12 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/TaxRate"
             } ]
+          },
+          "quantity" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "This is only present in the case of a item of type \"misc\"",
+            "nullable" : true
           }
         }
       },
@@ -8908,6 +8900,23 @@
             "nullable" : true
           }
         }
+      },
+      "Certificate_takeoverSourceCertificate" : {
+        "required" : [ "id" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "validUntil" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          }
+        },
+        "description" : "In case there was a \"takeover\" from a required certificate, this will be the reference to this very certificate",
+        "nullable" : true,
+        "readOnly" : true
       },
       "CreateBookingGuest_guest" : {
         "type" : "object",
