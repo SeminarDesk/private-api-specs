@@ -548,11 +548,14 @@
             }
           }
         }
-      },
+      }
+    },
+    "/events/{id}/bookings" : {
       "post" : {
-        "tags" : [ "Events", "Dates" ],
-        "summary" : "Creates a new event date",
-        "operationId" : "createEventDate",
+        "tags" : [ "Events", "Bookings" ],
+        "summary" : "Creates a new booking for all dates of this event that have a status which allows bookings",
+        "description" : "Note: This could result in either *one* or *multiple bookings* being created based on the event's \"booking mode\" setting.\n",
+        "operationId" : "createBookingForEventDates",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -565,12 +568,22 @@
             "type" : "integer",
             "format" : "int64"
           }
+        }, {
+          "name" : "ignoreExistingBookings",
+          "in" : "query",
+          "description" : "If this is set to `true`, then existing bookings for any of the provided dates/guests will be ignored – otherwise this would result in a 400 error",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "boolean"
+          }
         } ],
         "requestBody" : {
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/CreateEventDate"
+                "$ref" : "#/components/schemas/CreateEventBooking"
               }
             }
           },
@@ -578,21 +591,12 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the event date",
+            "description" : "Created, contains the ID(s) of the booking(s)",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/CreateResourceListResponse"
                 }
-              }
-            },
-            "links" : {
-              "GetEventDateById" : {
-                "operationId" : "getEventDate",
-                "parameters" : {
-                  "id" : "$response.body#/id"
-                },
-                "description" : "The `id` value returned can be used as the `id` parameter in `GET /dates/{id}`\n"
               }
             }
           },
@@ -2341,6 +2345,88 @@
             }
           }
         }
+      },
+      "patch" : {
+        "tags" : [ "Profiles", "Persons" ],
+        "summary" : "Updates one or more properties of a person profile",
+        "operationId" : "patchPersonProfile",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchPersonProfile"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/facilitators" : {
@@ -2428,6 +2514,91 @@
             }
           }
         }
+      },
+      "post" : {
+        "tags" : [ "Profiles", "Facilitators" ],
+        "summary" : "Creates a new facilitator profile",
+        "operationId" : "createFacilitatorProfile",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FacilitatorProfile"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created, contains the ID of the profile",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            },
+            "links" : {
+              "GetBookingById" : {
+                "operationId" : "getFacilitatorProfile",
+                "parameters" : {
+                  "id" : "$response.body#/id"
+                },
+                "description" : "The `id` value returned can be used as the `id` parameter in `GET /facilitators/{id}`\n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/facilitators/{id}" : {
@@ -2458,6 +2629,88 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Profiles", "Facilitators" ],
+        "summary" : "Updates one or more properties of a facilitator profile",
+        "operationId" : "patchFacilitatorProfile",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchFacilitatorProfile"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
           },
           "401" : {
             "description" : "API key is missing or invalid",
@@ -5075,7 +5328,7 @@
       "BookingGuestsList" : {
         "type" : "array",
         "items" : {
-          "$ref" : "#/components/schemas/ListBookingGuest"
+          "$ref" : "#/components/schemas/BookingGuest"
         }
       },
       "ProfileCertificatesList" : {
@@ -5315,56 +5568,37 @@
           }
         } ]
       },
-      "CreateBooking" : {
-        "required" : [ "booker", "guests" ],
-        "type" : "object",
-        "properties" : {
-          "booker" : {
-            "nullable" : false,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/NamedIdReference"
-            } ]
-          },
-          "status" : {
-            "description" : "In case no status is provided, the booking will be created with status \"Pending\"",
-            "nullable" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/BookingStatus"
-            } ],
-            "default" : "PENDING"
-          },
-          "internalRemarks" : {
-            "type" : "string",
-            "nullable" : true
-          },
-          "labels" : {
-            "type" : "array",
-            "nullable" : true,
-            "items" : {
-              "$ref" : "#/components/schemas/Label"
+      "CreateEventBooking" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CreateBooking"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "guests" : {
+              "minItems" : 1,
+              "type" : "array",
+              "nullable" : false,
+              "items" : {
+                "$ref" : "#/components/schemas/EventBookingGuest"
+              }
             }
-          },
-          "guests" : {
-            "minItems" : 1,
-            "type" : "array",
-            "nullable" : false,
-            "items" : {
-              "$ref" : "#/components/schemas/CreateBookingGuest"
-            }
-          },
-          "externalReferences" : {
-            "type" : "array",
-            "nullable" : true,
-            "items" : {
-              "$ref" : "#/components/schemas/ExternalReference"
-            }
-          },
-          "externalIdentifier" : {
-            "maxLength" : 255,
-            "type" : "string",
-            "nullable" : true
           }
-        }
+        } ]
+      },
+      "CreateBooking" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Booking"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "notes" : {
+              "readOnly" : true
+            },
+            "tasks" : {
+              "readOnly" : true
+            }
+          }
+        } ]
       },
       "AddBookingGuestMiscItem" : {
         "required" : [ "id" ],
@@ -5523,7 +5757,8 @@
           },
           "externalRemarks" : {
             "type" : "string",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           },
           "internalRemarks" : {
             "type" : "string",
@@ -5531,12 +5766,14 @@
           },
           "paymentMethod" : {
             "nullable" : true,
+            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NamedIdReference"
             } ]
           },
           "specialRequestsPriceList" : {
             "nullable" : true,
+            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NamedIdReference"
             } ]
@@ -5567,7 +5804,7 @@
             "type" : "array",
             "nullable" : false,
             "items" : {
-              "$ref" : "#/components/schemas/ListBookingGuest"
+              "$ref" : "#/components/schemas/BookingGuest"
             }
           },
           "numberOfInvoices" : {
@@ -5583,6 +5820,7 @@
           "payments" : {
             "type" : "array",
             "nullable" : true,
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/Payment"
             }
@@ -5642,27 +5880,14 @@
         "type" : "string",
         "enum" : [ "PENDING", "CONFIRMED", "WAIT_LIST", "CANCELED", "WAIT_LIST_CANCELED", "NO_SHOW" ]
       },
-      "CreateBookingGuest" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/BookingGuest"
-        }, {
-          "required" : [ "guest" ],
-          "type" : "object",
-          "properties" : {
-            "guest" : {
-              "$ref" : "#/components/schemas/CreateBookingGuest_guest"
-            }
-          }
-        } ]
-      },
-      "ListBookingGuest" : {
+      "EventBookingGuest" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/BookingGuest"
         }, {
           "type" : "object",
           "properties" : {
-            "guest" : {
-              "$ref" : "#/components/schemas/ListBookingGuest_guest"
+            "eventDate" : {
+              "readOnly" : true
             }
           }
         } ]
@@ -5689,6 +5914,9 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/NamedIdReference"
             } ]
+          },
+          "guest" : {
+            "$ref" : "#/components/schemas/BookingGuest_guest"
           },
           "status" : {
             "nullable" : false,
@@ -5958,6 +6186,46 @@
           }
         } ]
       },
+      "PatchPersonProfile" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProfileProperties"
+        }, {
+          "$ref" : "#/components/schemas/PersonProfileProperties"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "notes" : {
+              "readOnly" : true
+            },
+            "tasks" : {
+              "readOnly" : true
+            },
+            "additionalFields" : {
+              "readOnly" : true
+            }
+          }
+        } ]
+      },
+      "PatchFacilitatorProfile" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProfileProperties"
+        }, {
+          "$ref" : "#/components/schemas/FacilitatorProfileProperties"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "notes" : {
+              "readOnly" : true
+            },
+            "tasks" : {
+              "readOnly" : true
+            },
+            "additionalFields" : {
+              "readOnly" : true
+            }
+          }
+        } ]
+      },
       "PatchMiscBookingGuestItem" : {
         "type" : "object",
         "properties" : {
@@ -6099,7 +6367,8 @@
           "url" : {
             "maxLength" : 2083,
             "type" : "string",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           }
         }
       },
@@ -8210,16 +8479,20 @@
         "properties" : {
           "qualifications" : {
             "type" : "array",
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/Qualification"
             }
           },
           "remarks" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           },
           "portraitPictureUrl" : {
             "type" : "string",
-            "format" : "uri"
+            "format" : "uri",
+            "nullable" : true,
+            "readOnly" : true
           },
           "isActive" : {
             "type" : "boolean"
@@ -8228,7 +8501,8 @@
             "type" : "boolean"
           },
           "info" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           },
           "assignedEventDates" : {
             "type" : "array",
@@ -8918,7 +9192,7 @@
         "nullable" : true,
         "readOnly" : true
       },
-      "CreateBookingGuest_guest" : {
+      "BookingGuest_guest" : {
         "type" : "object",
         "properties" : {
           "profile" : {
@@ -8938,37 +9212,6 @@
           },
           "gender" : {
             "nullable" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/Gender"
-            } ]
-          }
-        },
-        "description" : "Either a profile ID has to be provided via `profile` OR at least a `name` plus optionally an `age` and `gender` in case the guest does not have a profile.",
-        "nullable" : false
-      },
-      "ListBookingGuest_guest" : {
-        "type" : "object",
-        "properties" : {
-          "profile" : {
-            "nullable" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/NamedIdReference"
-            } ]
-          },
-          "name" : {
-            "type" : "string",
-            "nullable" : true,
-            "readOnly" : true
-          },
-          "age" : {
-            "minimum" : 1,
-            "type" : "integer",
-            "nullable" : true,
-            "readOnly" : true
-          },
-          "gender" : {
-            "nullable" : true,
-            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/Gender"
             } ]
