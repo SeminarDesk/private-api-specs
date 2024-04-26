@@ -2,7 +2,7 @@
   "openapi" : "3.0.3",
   "info" : {
     "title" : "SeminarDesk Private API (BETA)",
-    "description" : "Provides access to resources like events, dates, profiles, bookings and invoices.\n",
+    "description" : "Provides access to these resources: events, dates, profiles, bookings, invoices and certificates.\n",
     "termsOfService" : "https://www.seminardesk.de/nutzungsbedingungen/",
     "contact" : {
       "name" : "SeminarDesk support",
@@ -818,6 +818,92 @@
         }
       }
     },
+    "/events/{id}/additional-fields/{fieldId}" : {
+      "patch" : {
+        "tags" : [ "Events" ],
+        "summary" : "Updates the value of the specified additional field",
+        "operationId" : "patchEventAdditionalField",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "fieldId",
+          "in" : "path",
+          "description" : "Numeric ID of the additional field",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchEventAdditionalField"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/dates" : {
       "get" : {
         "tags" : [ "Dates" ],
@@ -1219,6 +1305,92 @@
           },
           "404" : {
             "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dates/{id}/additional-fields/{fieldId}" : {
+      "patch" : {
+        "tags" : [ "Dates" ],
+        "summary" : "Updates the value of the specified additional field",
+        "operationId" : "patchEventDateAdditionalField",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "fieldId",
+          "in" : "path",
+          "description" : "Numeric ID of the additional field",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchEventDateAdditionalField"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1827,6 +1999,88 @@
         }
       }
     },
+    "/profiles/{id}/certificates" : {
+      "get" : {
+        "tags" : [ "Profiles", "Certificates" ],
+        "summary" : "Retrieves the existing certificates of a person/facilitator profile",
+        "description" : "*Note*: In case the profile identified by the given ID is not a person or facilitator, this will return a 400 error.",
+        "operationId" : "getCertificatesByProfile",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProfileCertificatesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/persons" : {
       "get" : {
         "tags" : [ "Profiles", "Persons" ],
@@ -1859,6 +2113,91 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/PersonProfilesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Profiles", "Persons" ],
+        "summary" : "Creates a new person profile",
+        "operationId" : "createPersonProfile",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PersonProfile"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created, contains the ID of the profile",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            },
+            "links" : {
+              "GetBookingById" : {
+                "operationId" : "getPersonProfile",
+                "parameters" : {
+                  "id" : "$response.body#/id"
+                },
+                "description" : "The `id` value returned can be used as the `id` parameter in `GET /persons/{id}`\n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
                 }
               }
             }
@@ -2327,15 +2666,6 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
-          }
-        }, {
-          "name" : "filter",
-          "in" : "query",
-          "required" : false,
-          "style" : "deepObject",
-          "explode" : false,
-          "schema" : {
-            "$ref" : "#/components/schemas/filter_2"
           }
         } ],
         "responses" : {
@@ -3325,7 +3655,7 @@
     },
     "/guests/{id}/misc-items" : {
       "post" : {
-        "tags" : [ "Booking Guest Items" ],
+        "tags" : [ "Booking Guests" ],
         "summary" : "Adds a miscelleaneous item to the booking guest",
         "description" : "Note: Properties of the misc item (i.e. age and price level) will be considered, in case they do not match the guest, a 400 error will be returned.\n",
         "operationId" : "addMiscItemToGuest",
@@ -3425,6 +3755,97 @@
         }
       }
     },
+    "/misc-guest-items/{id}" : {
+      "patch" : {
+        "tags" : [ "Booking Guests" ],
+        "summary" : "Updates one or more properties of a misc guest item",
+        "operationId" : "patchMiscGuestItem",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchMiscBookingGuestItem"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK, returns the updated item",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingGuestItem"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/invoices" : {
       "get" : {
         "tags" : [ "Invoices" ],
@@ -3448,15 +3869,6 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
-          }
-        }, {
-          "name" : "filter",
-          "in" : "query",
-          "required" : false,
-          "style" : "deepObject",
-          "explode" : false,
-          "schema" : {
-            "$ref" : "#/components/schemas/filter_3"
           }
         } ],
         "responses" : {
@@ -3959,6 +4371,422 @@
           }
         }
       }
+    },
+    "/certificates" : {
+      "get" : {
+        "tags" : [ "Certificates" ],
+        "summary" : "Retrieves a list of certificates",
+        "operationId" : "getCertificates",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/page"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CertificatesList"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Certificates" ],
+        "summary" : "Imports a certificate",
+        "description" : "*Note*: Prerequisites will not be considered, the certificate will be created with the provided data.",
+        "operationId" : "importCertificate",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Certificate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created, contains the ID of the certificate",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/certificates/{id}" : {
+      "get" : {
+        "tags" : [ "Certificates" ],
+        "summary" : "Retrieves the details of a certificate",
+        "operationId" : "getCertificate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Certificate"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "Certificates" ],
+        "summary" : "Updates one or more properties of a certificate",
+        "operationId" : "patchCertificate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchCertificate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/certificate-types" : {
+      "get" : {
+        "tags" : [ "Certificates" ],
+        "summary" : "Retrieves the list of certificate types",
+        "operationId" : "getCertificateTypes",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CertificateTypesList"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components" : {
@@ -4085,7 +4913,213 @@
       "BookingGuestsList" : {
         "type" : "array",
         "items" : {
-          "$ref" : "#/components/schemas/ListBookingGuest"
+          "$ref" : "#/components/schemas/BookingGuest"
+        }
+      },
+      "ProfileCertificatesList" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Certificate"
+        }
+      },
+      "CertificatesList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Certificate"
+              }
+            }
+          }
+        } ]
+      },
+      "CertificateTypesList" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/CertificateType"
+        }
+      },
+      "CertificateType" : {
+        "required" : [ "id", "isActive", "name", "officialTitle", "provider" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
+          },
+          "provider" : {
+            "$ref" : "#/components/schemas/NamedIdReference"
+          },
+          "name" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : false
+          },
+          "officialTitle" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "description" : "Title or code as given by the provider",
+            "nullable" : false
+          },
+          "defaultValidityInMonths" : {
+            "type" : "integer",
+            "description" : "If present, indicates the number of months a certificate will be valid after issuing",
+            "nullable" : true
+          },
+          "takeoverPeriodInDays" : {
+            "type" : "integer",
+            "nullable" : true
+          },
+          "takeoverSource" : {
+            "type" : "string",
+            "description" : "Determines whether the takeover period should only consider certificates of the same type (ONLY_SAME_TYPE) or also the certificates from the requirements (REQUIREMENTS)",
+            "nullable" : true,
+            "enum" : [ "ONLY_SAME_TYPE", "REQUIREMENTS" ]
+          },
+          "requirements" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/CertificateType"
+            }
+          },
+          "requirementsAggregation" : {
+            "type" : "string",
+            "description" : "Determines whether all or only at least one of the requirements must be fulfilled",
+            "nullable" : true,
+            "enum" : [ "ALL", "ANY" ]
+          },
+          "remarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "isActive" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "PatchCertificate" : {
+        "type" : "object",
+        "properties" : {
+          "internalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "externalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
+      "Certificate" : {
+        "required" : [ "id", "objectInfo", "owner", "status", "type", "validFrom" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
+          "owner" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "type" : {
+            "nullable" : false,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            }, {
+              "type" : "object",
+              "properties" : {
+                "officialTitle" : {
+                  "maxLength" : 255,
+                  "type" : "string"
+                }
+              },
+              "readOnly" : true
+            } ]
+          },
+          "validFrom" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : false
+          },
+          "validUntil" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true
+          },
+          "usedTakeover" : {
+            "type" : "integer",
+            "description" : "Number of days that were \"taken over\" from a required certificate or null",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "takeoverSourceCertificate" : {
+            "$ref" : "#/components/schemas/Certificate_takeoverSourceCertificate"
+          },
+          "status" : {
+            "type" : "string",
+            "readOnly" : true,
+            "enum" : [ "UPCOMING", "VALID", "EXPIRED", "VOID" ]
+          },
+          "yieldedBy" : {
+            "type" : "string",
+            "readOnly" : true,
+            "enum" : [ "INTERNAL", "EXTERNAL" ]
+          },
+          "externalIssuer" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : true
+          },
+          "yieldedByEventDate" : {
+            "nullable" : true,
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NamedIdReference"
+            } ]
+          },
+          "externalNumber" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "internalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "externalRemarks" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "voidAt" : {
+            "type" : "string",
+            "format" : "date",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "voidReason" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "eligibilityCheckOverridden" : {
+            "type" : "boolean",
+            "readOnly" : true
+          },
+          "objectInfo" : {
+            "nullable" : false,
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ObjectMetaInfo"
+            } ]
+          }
         }
       },
       "BookingsList" : {
@@ -4104,48 +5138,19 @@
         } ]
       },
       "CreateBooking" : {
-        "required" : [ "booker", "guests" ],
-        "type" : "object",
-        "properties" : {
-          "booker" : {
-            "nullable" : false,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/NamedIdReference"
-            } ]
-          },
-          "status" : {
-            "description" : "In case no status is provided, the booking will be created with status \"Pending\"",
-            "nullable" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/BookingStatus"
-            } ],
-            "default" : "PENDING"
-          },
-          "internalRemarks" : {
-            "type" : "string",
-            "nullable" : true
-          },
-          "labels" : {
-            "type" : "array",
-            "nullable" : true,
-            "items" : {
-              "$ref" : "#/components/schemas/Label"
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/Booking"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "notes" : {
+              "readOnly" : true
+            },
+            "tasks" : {
+              "readOnly" : true
             }
-          },
-          "guests" : {
-            "minItems" : 1,
-            "type" : "array",
-            "nullable" : false,
-            "items" : {
-              "$ref" : "#/components/schemas/CreateBookingGuest"
-            }
-          },
-          "externalIdentifier" : {
-            "maxLength" : 255,
-            "type" : "string",
-            "nullable" : true
           }
-        }
+        } ]
       },
       "AddBookingGuestMiscItem" : {
         "required" : [ "id" ],
@@ -4162,6 +5167,12 @@
             "description" : "In case misc item has \"manual\" mode of calculation, the price must be specified",
             "format" : "double",
             "nullable" : true
+          },
+          "quantity" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "This is only allowed in the case of a item of type \"misc\"",
+            "nullable" : true
           }
         }
       },
@@ -4176,10 +5187,10 @@
         "allOf" : [ {
           "$ref" : "#/components/schemas/ActivityProperties"
         }, {
-          "$ref" : "#/components/schemas/ActivitiyRequiredProperties"
+          "$ref" : "#/components/schemas/ActivityRequiredProperties"
         } ]
       },
-      "ActivitiyRequiredProperties" : {
+      "ActivityRequiredProperties" : {
         "required" : [ "activityType", "from", "title" ],
         "type" : "object"
       },
@@ -4304,7 +5315,8 @@
           },
           "externalRemarks" : {
             "type" : "string",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           },
           "internalRemarks" : {
             "type" : "string",
@@ -4312,12 +5324,14 @@
           },
           "paymentMethod" : {
             "nullable" : true,
+            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NamedIdReference"
             } ]
           },
           "specialRequestsPriceList" : {
             "nullable" : true,
+            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/NamedIdReference"
             } ]
@@ -4348,7 +5362,7 @@
             "type" : "array",
             "nullable" : false,
             "items" : {
-              "$ref" : "#/components/schemas/ListBookingGuest"
+              "$ref" : "#/components/schemas/BookingGuest"
             }
           },
           "numberOfInvoices" : {
@@ -4364,6 +5378,7 @@
           "payments" : {
             "type" : "array",
             "nullable" : true,
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/Payment"
             }
@@ -4423,30 +5438,6 @@
         "type" : "string",
         "enum" : [ "PENDING", "CONFIRMED", "WAIT_LIST", "CANCELED", "WAIT_LIST_CANCELED", "NO_SHOW" ]
       },
-      "CreateBookingGuest" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/BookingGuest"
-        }, {
-          "type" : "object",
-          "properties" : {
-            "guest" : {
-              "$ref" : "#/components/schemas/CreateBookingGuest_guest"
-            }
-          }
-        } ]
-      },
-      "ListBookingGuest" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/BookingGuest"
-        }, {
-          "type" : "object",
-          "properties" : {
-            "guest" : {
-              "$ref" : "#/components/schemas/ListBookingGuest_guest"
-            }
-          }
-        } ]
-      },
       "BookingGuest" : {
         "required" : [ "eventDate", "guest" ],
         "type" : "object",
@@ -4469,6 +5460,9 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/NamedIdReference"
             } ]
+          },
+          "guest" : {
+            "$ref" : "#/components/schemas/BookingGuest_guest"
           },
           "status" : {
             "nullable" : false,
@@ -4546,6 +5540,12 @@
         "required" : [ "begin", "end", "status", "type" ],
         "type" : "object",
         "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
           "type" : {
             "nullable" : false,
             "allOf" : [ {
@@ -4595,6 +5595,12 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/TaxRate"
             } ]
+          },
+          "quantity" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "This is only present in the case of a item of type \"misc\"",
+            "nullable" : true
           }
         }
       },
@@ -4725,6 +5731,9 @@
             },
             "attendanceFeePriceLists" : {
               "readOnly" : true
+            },
+            "additionalFields" : {
+              "readOnly" : true
             }
           }
         } ]
@@ -4734,13 +5743,12 @@
         "properties" : {
           "quantity" : {
             "minimum" : 0,
-            "type" : "number",
-            "format" : "integer",
+            "type" : "integer",
             "nullable" : true
           }
         }
       },
-      "PatchProfileAdditionalField" : {
+      "PatchAdditionalField" : {
         "required" : [ "value" ],
         "type" : "object",
         "properties" : {
@@ -4751,6 +5759,21 @@
             } ]
           }
         }
+      },
+      "PatchProfileAdditionalField" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PatchAdditionalField"
+        } ]
+      },
+      "PatchEventDateAdditionalField" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PatchAdditionalField"
+        } ]
+      },
+      "PatchEventAdditionalField" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PatchAdditionalField"
+        } ]
       },
       "PatchEventDate" : {
         "allOf" : [ {
@@ -4786,6 +5809,9 @@
               "readOnly" : true
             },
             "functionRoomBookings" : {
+              "readOnly" : true
+            },
+            "additionalFields" : {
               "readOnly" : true
             }
           }
@@ -5022,57 +6048,6 @@
             "type" : "integer",
             "description" : "Number of bookable spots, based on the \"max. part\" or *null* in case this is not set",
             "nullable" : true
-          }
-        }
-      },
-      "DetailedEventAndDateStatistics" : {
-        "type" : "object",
-        "properties" : {
-          "bookings" : {
-            "type" : "object",
-            "description" : "Statistics for bookings related to this event or date",
-            "nullable" : false,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/BookingOrGuestStatistics"
-            } ]
-          },
-          "guests" : {
-            "$ref" : "#/components/schemas/DetailedEventAndDateStatistics_guests"
-          },
-          "availableSpots" : {
-            "type" : "integer",
-            "description" : "Number of bookable spots available, based on the \"max. part\" or *null* in case this is not set",
-            "nullable" : true
-          }
-        }
-      },
-      "BookingOrGuestStatistics" : {
-        "type" : "object",
-        "properties" : {
-          "total" : {
-            "type" : "integer",
-            "description" : "Total number of items, including canceled ones",
-            "nullable" : false
-          },
-          "pending" : {
-            "type" : "integer",
-            "description" : "Number of items in status \"Pending\"",
-            "nullable" : false
-          },
-          "confirmed" : {
-            "type" : "integer",
-            "description" : "Number of items in status \"Confirmed\"",
-            "nullable" : false
-          },
-          "waiting" : {
-            "type" : "integer",
-            "description" : "Number of items in status \"Wait list\"",
-            "nullable" : false
-          },
-          "canceled" : {
-            "type" : "integer",
-            "description" : "Number of items in status \"Canceled\"",
-            "nullable" : false
           }
         }
       },
@@ -6203,32 +7178,6 @@
           }
         }
       },
-      "ProfileAdditionalField" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/AdditionalField"
-        }, {
-          "required" : [ "usableForObjectType" ],
-          "type" : "object",
-          "properties" : {
-            "usableForObjectType" : {
-              "type" : "string",
-              "nullable" : false,
-              "enum" : [ "PERSON", "ORGANIZATION", "BOTH" ]
-            },
-            "category" : {
-              "type" : "string",
-              "nullable" : true
-            },
-            "restrictedToUserGroups" : {
-              "type" : "array",
-              "nullable" : true,
-              "items" : {
-                "$ref" : "#/components/schemas/UserGroup"
-              }
-            }
-          }
-        } ]
-      },
       "NamedIdReference" : {
         "required" : [ "id" ],
         "type" : "object",
@@ -6293,77 +7242,6 @@
             "readOnly" : true
           }
         }
-      },
-      "LabelIncludingGroup" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/Label"
-        }, {
-          "required" : [ "group" ],
-          "type" : "object",
-          "properties" : {
-            "group" : {
-              "$ref" : "#/components/schemas/LabelGroup"
-            }
-          }
-        } ]
-      },
-      "LabelGroup" : {
-        "required" : [ "abbreviation", "externalName", "id", "internalName" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "$ref" : "#/components/schemas/NumericPrimaryKey"
-          },
-          "abbreviation" : {
-            "type" : "string"
-          },
-          "internalName" : {
-            "type" : "string"
-          },
-          "externalName" : {
-            "type" : "string"
-          },
-          "externalDescription" : {
-            "type" : "string"
-          },
-          "imageUrl" : {
-            "type" : "string"
-          },
-          "isPublic" : {
-            "type" : "boolean"
-          },
-          "useForEventsDates" : {
-            "type" : "boolean"
-          },
-          "useForBookings" : {
-            "type" : "boolean"
-          },
-          "useForProfiles" : {
-            "type" : "boolean"
-          },
-          "isActive" : {
-            "type" : "boolean"
-          },
-          "showAsFilter" : {
-            "type" : "boolean"
-          }
-        }
-      },
-      "LabelGroupIncludingLabels" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/LabelGroup"
-        }, {
-          "required" : [ "labels" ],
-          "type" : "object",
-          "properties" : {
-            "labels" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/components/schemas/Label"
-              }
-            }
-          }
-        } ]
       },
       "Organization" : {
         "required" : [ "code" ],
@@ -6739,20 +7617,24 @@
         } ]
       },
       "Country" : {
+        "required" : [ "code" ],
         "type" : "object",
         "properties" : {
           "code" : {
             "type" : "string",
-            "description" : "ISO country code"
+            "description" : "ISO country code",
+            "nullable" : false
           },
           "name" : {
             "type" : "string",
             "description" : "Country name",
+            "readOnly" : true,
             "example" : "Germany"
           },
           "localizedName" : {
             "type" : "string",
             "description" : "Localized country name, depending on the system's locale",
+            "readOnly" : true,
             "example" : "Allemagne"
           }
         },
@@ -6839,6 +7721,13 @@
             "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/PersonProfileActivity"
+            }
+          },
+          "certificates" : {
+            "type" : "array",
+            "readOnly" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/Certificate"
             }
           }
         }
@@ -6932,16 +7821,20 @@
         "properties" : {
           "qualifications" : {
             "type" : "array",
+            "readOnly" : true,
             "items" : {
               "$ref" : "#/components/schemas/Qualification"
             }
           },
           "remarks" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           },
           "portraitPictureUrl" : {
             "type" : "string",
-            "format" : "uri"
+            "format" : "uri",
+            "nullable" : true,
+            "readOnly" : true
           },
           "isActive" : {
             "type" : "boolean"
@@ -6950,7 +7843,8 @@
             "type" : "boolean"
           },
           "info" : {
-            "type" : "string"
+            "type" : "string",
+            "nullable" : true
           },
           "assignedEventDates" : {
             "type" : "array",
@@ -7072,22 +7966,6 @@
             "type" : "string"
           }
         }
-      },
-      "UserGroupIncludingMembers" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/User"
-        }, {
-          "required" : [ "members" ],
-          "type" : "object",
-          "properties" : {
-            "members" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/components/schemas/User"
-              }
-            }
-          }
-        } ]
       },
       "NumericPrimaryKey" : {
         "type" : "integer",
@@ -7457,12 +8335,6 @@
             "description" : "Filter by additional field, based on its ID",
             "nullable" : true,
             "example" : "23:MyFieldValue"
-          },
-          "externalSystemId" : {
-            "type" : "string",
-            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
-            "nullable" : true,
-            "example" : "102"
           }
         }
       },
@@ -7517,37 +8389,9 @@
           "onlyPublished" : {
             "type" : "boolean",
             "nullable" : true
-          },
-          "externalSystemId" : {
-            "type" : "string",
-            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
-            "nullable" : true,
-            "example" : "102"
           }
         },
         "nullable" : true
-      },
-      "filter_2" : {
-        "type" : "object",
-        "properties" : {
-          "externalSystemId" : {
-            "type" : "string",
-            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
-            "nullable" : true,
-            "example" : "102"
-          }
-        }
-      },
-      "filter_3" : {
-        "type" : "object",
-        "properties" : {
-          "externalSystemId" : {
-            "type" : "string",
-            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
-            "nullable" : true,
-            "example" : "102"
-          }
-        }
       },
       "BaseList_meta" : {
         "type" : "object",
@@ -7593,35 +8437,24 @@
           }
         }
       },
-      "CreateBookingGuest_guest" : {
+      "Certificate_takeoverSourceCertificate" : {
+        "required" : [ "id" ],
         "type" : "object",
         "properties" : {
-          "profile" : {
-            "nullable" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/NamedIdReference"
-            } ]
+          "id" : {
+            "$ref" : "#/components/schemas/NumericPrimaryKey"
           },
-          "name" : {
+          "validUntil" : {
             "type" : "string",
+            "format" : "date",
             "nullable" : true
-          },
-          "age" : {
-            "minimum" : 1,
-            "type" : "integer",
-            "nullable" : true
-          },
-          "gender" : {
-            "nullable" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/Gender"
-            } ]
           }
         },
-        "description" : "Either a profile ID has to be provided via `profile` OR at least a `name` plus optionally an `age` and `gender` in case the guest does not have a profile.",
-        "nullable" : false
+        "description" : "In case there was a \"takeover\" from a required certificate, this will be the reference to this very certificate",
+        "nullable" : true,
+        "readOnly" : true
       },
-      "ListBookingGuest_guest" : {
+      "BookingGuest_guest" : {
         "type" : "object",
         "properties" : {
           "profile" : {
@@ -7632,18 +8465,15 @@
           },
           "name" : {
             "type" : "string",
-            "nullable" : true,
-            "readOnly" : true
+            "nullable" : true
           },
           "age" : {
             "minimum" : 1,
             "type" : "integer",
-            "nullable" : true,
-            "readOnly" : true
+            "nullable" : true
           },
           "gender" : {
             "nullable" : true,
-            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/Gender"
             } ]
@@ -7725,30 +8555,6 @@
           }
         },
         "description" : "At the moment, contains just base information from the \"booking page settings\". Might be extended in the future.",
-        "nullable" : false
-      },
-      "DetailedEventAndDateStatistics_guests" : {
-        "type" : "object",
-        "properties" : {
-          "total" : {
-            "type" : "integer",
-            "description" : "Number of all guests, including canceled ones, not considering their guest type",
-            "nullable" : false
-          },
-          "participants" : {
-            "$ref" : "#/components/schemas/BookingOrGuestStatistics"
-          },
-          "facilitators" : {
-            "$ref" : "#/components/schemas/BookingOrGuestStatistics"
-          },
-          "assistants" : {
-            "$ref" : "#/components/schemas/BookingOrGuestStatistics"
-          },
-          "companions" : {
-            "$ref" : "#/components/schemas/BookingOrGuestStatistics"
-          }
-        },
-        "description" : "Statistics for guests related to this event or date",
         "nullable" : false
       },
       "EventDateProperties_receptionSettings" : {
@@ -8186,26 +8992,6 @@
         "explode" : false,
         "schema" : {
           "$ref" : "#/components/schemas/filter"
-        }
-      },
-      "InvoiceFilter" : {
-        "name" : "filter",
-        "in" : "query",
-        "required" : false,
-        "style" : "deepObject",
-        "explode" : false,
-        "schema" : {
-          "$ref" : "#/components/schemas/filter_3"
-        }
-      },
-      "BookingFilter" : {
-        "name" : "filter",
-        "in" : "query",
-        "required" : false,
-        "style" : "deepObject",
-        "explode" : false,
-        "schema" : {
-          "$ref" : "#/components/schemas/filter_2"
         }
       },
       "EventDateFilter" : {
