@@ -7990,9 +7990,6 @@
             "type" : "string",
             "nullable" : true
           },
-          "securitySettings" : {
-            "$ref" : "#/components/schemas/ProfileProperties_securitySettings"
-          },
           "bankAccountData" : {
             "nullable" : true,
             "allOf" : [ {
@@ -9425,30 +9422,6 @@
             "format" : "date"
           }
         }
-      },
-      "ProfileProperties_securitySettings" : {
-        "type" : "object",
-        "properties" : {
-          "isVisibilityRestricted" : {
-            "type" : "boolean",
-            "nullable" : false,
-            "default" : false
-          },
-          "visibleFor" : {
-            "type" : "array",
-            "nullable" : true,
-            "items" : {
-              "$ref" : "#/components/schemas/UserGroup"
-            }
-          },
-          "sensitiveFieldsVisibility" : {
-            "type" : "string",
-            "nullable" : false,
-            "default" : "UNRESTRICTED",
-            "enum" : [ "UNRESTRICTED", "RESTRICTED" ]
-          }
-        },
-        "nullable" : true
       },
       "ProfileProperties_dataProtection" : {
         "type" : "object",
