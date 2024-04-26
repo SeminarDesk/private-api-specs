@@ -2,7 +2,7 @@
   "openapi" : "3.0.3",
   "info" : {
     "title" : "SeminarDesk Private API (BETA – unreleased next version)",
-    "description" : "Provides access to resources like events, dates, profiles, bookings and invoices. <p>**Note**: This is the upcoming version which is not yet released.</p>\n",
+    "description" : "Provides access to these resources: events, dates, profiles, bookings, invoices and certificates. <p>**Note**: This is the upcoming version which is not yet released.</p>\n",
     "termsOfService" : "https://www.seminardesk.de/nutzungsbedingungen/",
     "contact" : {
       "name" : "SeminarDesk support",
@@ -4051,7 +4051,7 @@
     },
     "/guests/{id}/misc-items" : {
       "post" : {
-        "tags" : [ "Booking Guest Items" ],
+        "tags" : [ "Booking Guests" ],
         "summary" : "Adds a miscelleaneous item to the booking guest",
         "description" : "Note: Properties of the misc item (i.e. age and price level) will be considered, in case they do not match the guest, a 400 error will be returned.\n",
         "operationId" : "addMiscItemToGuest",
@@ -4153,7 +4153,7 @@
     },
     "/misc-guest-items/{id}" : {
       "patch" : {
-        "tags" : [ "Booking Guest Items" ],
+        "tags" : [ "Booking Guests" ],
         "summary" : "Updates one or more properties of a misc guest item",
         "operationId" : "patchMiscGuestItem",
         "parameters" : [ {
@@ -5635,22 +5635,6 @@
           }
         }
       },
-      "SetCertificateVoid" : {
-        "required" : [ "date", "reason" ],
-        "type" : "object",
-        "properties" : {
-          "reason" : {
-            "type" : "string",
-            "description" : "Reason for the status change",
-            "nullable" : false
-          },
-          "date" : {
-            "type" : "string",
-            "format" : "date",
-            "nullable" : false
-          }
-        }
-      },
       "BookingsList" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/BaseList"
@@ -5712,6 +5696,12 @@
             "type" : "number",
             "description" : "In case misc item has \"manual\" mode of calculation, the price must be specified",
             "format" : "double",
+            "nullable" : true
+          },
+          "quantity" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "description" : "This is only allowed in the case of a item of type \"misc\"",
             "nullable" : true
           }
         }
@@ -6092,6 +6082,12 @@
         "required" : [ "begin", "end", "status", "type" ],
         "type" : "object",
         "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
           "type" : {
             "nullable" : false,
             "allOf" : [ {
@@ -6660,57 +6656,6 @@
             "type" : "integer",
             "description" : "Number of bookable spots, based on the \"max. part\" or *null* in case this is not set",
             "nullable" : true
-          }
-        }
-      },
-      "DetailedEventAndDateStatistics" : {
-        "type" : "object",
-        "properties" : {
-          "bookings" : {
-            "type" : "object",
-            "description" : "Statistics for bookings related to this event or date",
-            "nullable" : false,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/BookingOrGuestStatistics"
-            } ]
-          },
-          "guests" : {
-            "$ref" : "#/components/schemas/DetailedEventAndDateStatistics_guests"
-          },
-          "availableSpots" : {
-            "type" : "integer",
-            "description" : "Number of bookable spots available, based on the \"max. part\" or *null* in case this is not set",
-            "nullable" : true
-          }
-        }
-      },
-      "BookingOrGuestStatistics" : {
-        "type" : "object",
-        "properties" : {
-          "total" : {
-            "type" : "integer",
-            "description" : "Total number of items, including canceled ones",
-            "nullable" : false
-          },
-          "pending" : {
-            "type" : "integer",
-            "description" : "Number of items in status \"Pending\"",
-            "nullable" : false
-          },
-          "confirmed" : {
-            "type" : "integer",
-            "description" : "Number of items in status \"Confirmed\"",
-            "nullable" : false
-          },
-          "waiting" : {
-            "type" : "integer",
-            "description" : "Number of items in status \"Wait list\"",
-            "nullable" : false
-          },
-          "canceled" : {
-            "type" : "integer",
-            "description" : "Number of items in status \"Canceled\"",
-            "nullable" : false
           }
         }
       },
@@ -7841,32 +7786,6 @@
           }
         }
       },
-      "ProfileAdditionalField" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/AdditionalField"
-        }, {
-          "required" : [ "usableForObjectType" ],
-          "type" : "object",
-          "properties" : {
-            "usableForObjectType" : {
-              "type" : "string",
-              "nullable" : false,
-              "enum" : [ "PERSON", "ORGANIZATION", "BOTH" ]
-            },
-            "category" : {
-              "type" : "string",
-              "nullable" : true
-            },
-            "restrictedToUserGroups" : {
-              "type" : "array",
-              "nullable" : true,
-              "items" : {
-                "$ref" : "#/components/schemas/UserGroup"
-              }
-            }
-          }
-        } ]
-      },
       "NamedIdReference" : {
         "required" : [ "id" ],
         "type" : "object",
@@ -7931,77 +7850,6 @@
             "readOnly" : true
           }
         }
-      },
-      "LabelIncludingGroup" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/Label"
-        }, {
-          "required" : [ "group" ],
-          "type" : "object",
-          "properties" : {
-            "group" : {
-              "$ref" : "#/components/schemas/LabelGroup"
-            }
-          }
-        } ]
-      },
-      "LabelGroup" : {
-        "required" : [ "abbreviation", "externalName", "id", "internalName" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "$ref" : "#/components/schemas/NumericPrimaryKey"
-          },
-          "abbreviation" : {
-            "type" : "string"
-          },
-          "internalName" : {
-            "type" : "string"
-          },
-          "externalName" : {
-            "type" : "string"
-          },
-          "externalDescription" : {
-            "type" : "string"
-          },
-          "imageUrl" : {
-            "type" : "string"
-          },
-          "isPublic" : {
-            "type" : "boolean"
-          },
-          "useForEventsDates" : {
-            "type" : "boolean"
-          },
-          "useForBookings" : {
-            "type" : "boolean"
-          },
-          "useForProfiles" : {
-            "type" : "boolean"
-          },
-          "isActive" : {
-            "type" : "boolean"
-          },
-          "showAsFilter" : {
-            "type" : "boolean"
-          }
-        }
-      },
-      "LabelGroupIncludingLabels" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/LabelGroup"
-        }, {
-          "required" : [ "labels" ],
-          "type" : "object",
-          "properties" : {
-            "labels" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/components/schemas/Label"
-              }
-            }
-          }
-        } ]
       },
       "Organization" : {
         "required" : [ "code" ],
@@ -8377,20 +8225,24 @@
         } ]
       },
       "Country" : {
+        "required" : [ "code" ],
         "type" : "object",
         "properties" : {
           "code" : {
             "type" : "string",
-            "description" : "ISO country code"
+            "description" : "ISO country code",
+            "nullable" : false
           },
           "name" : {
             "type" : "string",
             "description" : "Country name",
+            "readOnly" : true,
             "example" : "Germany"
           },
           "localizedName" : {
             "type" : "string",
             "description" : "Localized country name, depending on the system's locale",
+            "readOnly" : true,
             "example" : "Allemagne"
           }
         },
@@ -8485,6 +8337,11 @@
             "items" : {
               "$ref" : "#/components/schemas/Certificate"
             }
+          },
+          "isFacilitator" : {
+            "type" : "boolean",
+            "description" : "When this is set to `true`, this person profile will be converted to a facilitator profile.",
+            "writeOnly" : true
           }
         }
       },
@@ -8722,22 +8579,6 @@
             "type" : "string"
           }
         }
-      },
-      "UserGroupIncludingMembers" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/User"
-        }, {
-          "required" : [ "members" ],
-          "type" : "object",
-          "properties" : {
-            "members" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/components/schemas/User"
-              }
-            }
-          }
-        } ]
       },
       "NumericPrimaryKey" : {
         "type" : "integer",
@@ -9391,30 +9232,6 @@
           }
         },
         "description" : "At the moment, contains just base information from the \"booking page settings\". Might be extended in the future.",
-        "nullable" : false
-      },
-      "DetailedEventAndDateStatistics_guests" : {
-        "type" : "object",
-        "properties" : {
-          "total" : {
-            "type" : "integer",
-            "description" : "Number of all guests, including canceled ones, not considering their guest type",
-            "nullable" : false
-          },
-          "participants" : {
-            "$ref" : "#/components/schemas/BookingOrGuestStatistics"
-          },
-          "facilitators" : {
-            "$ref" : "#/components/schemas/BookingOrGuestStatistics"
-          },
-          "assistants" : {
-            "$ref" : "#/components/schemas/BookingOrGuestStatistics"
-          },
-          "companions" : {
-            "$ref" : "#/components/schemas/BookingOrGuestStatistics"
-          }
-        },
-        "description" : "Statistics for guests related to this event or date",
         "nullable" : false
       },
       "EventDateProperties_receptionSettings" : {
