@@ -1436,6 +1436,15 @@
             "type" : "string",
             "nullable" : true
           }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter_2"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -2105,6 +2114,15 @@
             "type" : "string",
             "nullable" : true
           }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter_2"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -2323,6 +2341,88 @@
             }
           }
         }
+      },
+      "patch" : {
+        "tags" : [ "Profiles", "Persons" ],
+        "summary" : "Updates one or more properties of a person profile",
+        "operationId" : "patchPersonProfile",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchPersonProfile"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/facilitators" : {
@@ -2349,6 +2449,15 @@
             "type" : "string",
             "nullable" : true
           }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter_2"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -2357,6 +2466,91 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/FacilitatorProfilesList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Profiles", "Facilitators" ],
+        "summary" : "Creates a new facilitator profile",
+        "operationId" : "createFacilitatorProfile",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FacilitatorProfile"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created, contains the ID of the profile",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                }
+              }
+            },
+            "links" : {
+              "GetBookingById" : {
+                "operationId" : "getFacilitatorProfile",
+                "parameters" : {
+                  "id" : "$response.body#/id"
+                },
+                "description" : "The `id` value returned can be used as the `id` parameter in `GET /facilitators/{id}`\n"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
                 }
               }
             }
@@ -2482,6 +2676,88 @@
             }
           }
         }
+      },
+      "patch" : {
+        "tags" : [ "Profiles", "Facilitators" ],
+        "summary" : "Updates one or more properties of a facilitator profile",
+        "operationId" : "patchFacilitatorProfile",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchFacilitatorProfile"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated successfully"
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/organizations" : {
@@ -2507,6 +2783,15 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter_2"
           }
         } ],
         "responses" : {
@@ -2666,6 +2951,15 @@
           "schema" : {
             "type" : "string",
             "nullable" : true
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter_3"
           }
         } ],
         "responses" : {
@@ -3870,6 +4164,15 @@
             "type" : "string",
             "nullable" : true
           }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/filter_4"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -4224,6 +4527,107 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/Payment"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices/{id}/external-references" : {
+      "post" : {
+        "tags" : [ "Invoices" ],
+        "summary" : "Adds an external reference to an invoice",
+        "operationId" : "addExternalReferenceToInvoice",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExternalReference"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created, contains the ID of the external reference",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateResourceResponse"
                 }
               }
             }
@@ -4829,6 +5233,13 @@
             "allOf" : [ {
               "$ref" : "#/components/schemas/ObjectMetaInfo"
             } ]
+          },
+          "externalReferences" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ExternalReference"
+            }
           }
         }
       },
@@ -5137,6 +5548,23 @@
           }
         } ]
       },
+      "CreateEventBooking" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/CreateBooking"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "guests" : {
+              "minItems" : 1,
+              "type" : "array",
+              "nullable" : false,
+              "items" : {
+                "$ref" : "#/components/schemas/EventBookingGuest"
+              }
+            }
+          }
+        } ]
+      },
       "CreateBooking" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/Booking"
@@ -5438,6 +5866,18 @@
         "type" : "string",
         "enum" : [ "PENDING", "CONFIRMED", "WAIT_LIST", "CANCELED", "WAIT_LIST_CANCELED", "NO_SHOW" ]
       },
+      "EventBookingGuest" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BookingGuest"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "eventDate" : {
+              "readOnly" : true
+            }
+          }
+        } ]
+      },
       "BookingGuest" : {
         "required" : [ "eventDate", "guest" ],
         "type" : "object",
@@ -5738,6 +6178,46 @@
           }
         } ]
       },
+      "PatchPersonProfile" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/ProfileProperties"
+        }, {
+          "$ref" : "#/components/schemas/PersonProfileProperties"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "notes" : {
+              "readOnly" : true
+            },
+            "tasks" : {
+              "readOnly" : true
+            },
+            "additionalFields" : {
+              "readOnly" : true
+            }
+          }
+        } ]
+      },
+      "PatchFacilitatorProfile" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PatchPersonProfile"
+        }, {
+          "$ref" : "#/components/schemas/FacilitatorProfileProperties"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "notes" : {
+              "readOnly" : true
+            },
+            "tasks" : {
+              "readOnly" : true
+            },
+            "additionalFields" : {
+              "readOnly" : true
+            }
+          }
+        } ]
+      },
       "PatchMiscBookingGuestItem" : {
         "type" : "object",
         "properties" : {
@@ -5788,7 +6268,7 @@
               "readOnly" : true
             },
             "facilitators" : {
-              "readOnly" : true
+              "description" : "When a value is provided, this will override the existing list of facilitators."
             },
             "equipment" : {
               "readOnly" : true
@@ -5857,6 +6337,32 @@
         }, {
           "$ref" : "#/components/schemas/EventRequiredProperties"
         } ]
+      },
+      "ExternalReference" : {
+        "required" : [ "externalId", "id", "system" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
+          "system" : {
+            "$ref" : "#/components/schemas/NamedIdReference"
+          },
+          "externalId" : {
+            "maxLength" : 255,
+            "type" : "string",
+            "nullable" : false
+          },
+          "url" : {
+            "maxLength" : 2083,
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          }
+        }
       },
       "EventRequiredProperties" : {
         "required" : [ "bookingSettings", "internalOrganizer", "name", "publishingSettings" ],
@@ -7382,9 +7888,6 @@
             "type" : "string",
             "nullable" : true
           },
-          "securitySettings" : {
-            "$ref" : "#/components/schemas/ProfileProperties_securitySettings"
-          },
           "bankAccountData" : {
             "nullable" : true,
             "allOf" : [ {
@@ -7729,6 +8232,11 @@
             "items" : {
               "$ref" : "#/components/schemas/Certificate"
             }
+          },
+          "isFacilitator" : {
+            "type" : "boolean",
+            "description" : "When this is set to `true`, this person profile will be converted to a facilitator profile.",
+            "writeOnly" : true
           }
         }
       },
@@ -7811,7 +8319,7 @@
       "FacilitatorProfile" : {
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/Profile"
+          "$ref" : "#/components/schemas/PersonProfile"
         }, {
           "$ref" : "#/components/schemas/FacilitatorProfileProperties"
         } ]
@@ -7852,6 +8360,9 @@
             "items" : {
               "$ref" : "#/components/schemas/NamedIdReference"
             }
+          },
+          "isFacilitator" : {
+            "readOnly" : true
           }
         }
       },
@@ -8335,6 +8846,12 @@
             "description" : "Filter by additional field, based on its ID",
             "nullable" : true,
             "example" : "23:MyFieldValue"
+          },
+          "externalReferenceId" : {
+            "type" : "string",
+            "description" : "Filter by an external ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
           }
         }
       },
@@ -8389,9 +8906,49 @@
           "onlyPublished" : {
             "type" : "boolean",
             "nullable" : true
+          },
+          "externalReferenceId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
           }
         },
         "nullable" : true
+      },
+      "filter_2" : {
+        "type" : "object",
+        "properties" : {
+          "externalReferenceId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
+          }
+        },
+        "nullable" : true
+      },
+      "filter_3" : {
+        "type" : "object",
+        "properties" : {
+          "externalReferenceId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
+          }
+        }
+      },
+      "filter_4" : {
+        "type" : "object",
+        "properties" : {
+          "externalReferenceId" : {
+            "type" : "string",
+            "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
+            "nullable" : true,
+            "example" : "102"
+          }
+        }
       },
       "BaseList_meta" : {
         "type" : "object",
@@ -8749,30 +9306,6 @@
           }
         }
       },
-      "ProfileProperties_securitySettings" : {
-        "type" : "object",
-        "properties" : {
-          "isVisibilityRestricted" : {
-            "type" : "boolean",
-            "nullable" : false,
-            "default" : false
-          },
-          "visibleFor" : {
-            "type" : "array",
-            "nullable" : true,
-            "items" : {
-              "$ref" : "#/components/schemas/UserGroup"
-            }
-          },
-          "sensitiveFieldsVisibility" : {
-            "type" : "string",
-            "nullable" : false,
-            "default" : "UNRESTRICTED",
-            "enum" : [ "UNRESTRICTED", "RESTRICTED" ]
-          }
-        },
-        "nullable" : true
-      },
       "ProfileProperties_dataProtection" : {
         "type" : "object",
         "properties" : {
@@ -8992,6 +9525,36 @@
         "explode" : false,
         "schema" : {
           "$ref" : "#/components/schemas/filter"
+        }
+      },
+      "InvoiceFilter" : {
+        "name" : "filter",
+        "in" : "query",
+        "required" : false,
+        "style" : "deepObject",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/filter_4"
+        }
+      },
+      "BookingFilter" : {
+        "name" : "filter",
+        "in" : "query",
+        "required" : false,
+        "style" : "deepObject",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/filter_3"
+        }
+      },
+      "ProfileFilter" : {
+        "name" : "filter",
+        "in" : "query",
+        "required" : false,
+        "style" : "deepObject",
+        "explode" : false,
+        "schema" : {
+          "$ref" : "#/components/schemas/filter_2"
         }
       },
       "EventDateFilter" : {
