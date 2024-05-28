@@ -6302,7 +6302,7 @@
       },
       "PatchFacilitatorProfile" : {
         "allOf" : [ {
-          "$ref" : "#/components/schemas/ProfileProperties"
+          "$ref" : "#/components/schemas/PatchPersonProfile"
         }, {
           "$ref" : "#/components/schemas/FacilitatorProfileProperties"
         }, {
@@ -6370,7 +6370,7 @@
               "readOnly" : true
             },
             "facilitators" : {
-              "readOnly" : true
+              "description" : "When a value is provided, this will override the existing list of facilitators."
             },
             "equipment" : {
               "readOnly" : true
@@ -8421,7 +8421,7 @@
       "FacilitatorProfile" : {
         "type" : "object",
         "allOf" : [ {
-          "$ref" : "#/components/schemas/Profile"
+          "$ref" : "#/components/schemas/PersonProfile"
         }, {
           "$ref" : "#/components/schemas/FacilitatorProfileProperties"
         } ]
@@ -8462,6 +8462,9 @@
             "items" : {
               "$ref" : "#/components/schemas/NamedIdReference"
             }
+          },
+          "isFacilitator" : {
+            "readOnly" : true
           }
         }
       },
@@ -9006,7 +9009,7 @@
             "type" : "boolean",
             "nullable" : true
           },
-          "externalSystemId" : {
+          "externalReferenceId" : {
             "type" : "string",
             "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
@@ -9036,7 +9039,7 @@
             "nullable" : true,
             "example" : "42:MyFieldValue"
           },
-          "externalSystemId" : {
+          "externalReferenceId" : {
             "type" : "string",
             "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
@@ -9048,7 +9051,7 @@
       "filter_3" : {
         "type" : "object",
         "properties" : {
-          "externalSystemId" : {
+          "externalReferenceId" : {
             "type" : "string",
             "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
@@ -9059,7 +9062,7 @@
       "filter_4" : {
         "type" : "object",
         "properties" : {
-          "externalSystemId" : {
+          "externalReferenceId" : {
             "type" : "string",
             "description" : "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable" : true,
