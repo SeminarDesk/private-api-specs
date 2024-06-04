@@ -4151,9 +4151,100 @@
         }
       }
     },
+    "/guest-items/{id}" : {
+      "patch" : {
+        "tags" : [ "Booking Guests", "Guest Items" ],
+        "summary" : "Updates one or more properties of a guest item",
+        "operationId" : "patchGuestItem",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PatchBookingGuestItem"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK, returns the updated item",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingGuestItem"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/misc-guest-items/{id}" : {
       "patch" : {
-        "tags" : [ "Booking Guests" ],
+        "tags" : [ "Booking Guests", "Guest Items" ],
         "summary" : "Updates one or more properties of a misc guest item",
         "operationId" : "patchMiscGuestItem",
         "parameters" : [ {
@@ -6079,7 +6170,7 @@
         }
       },
       "BookingGuestItem" : {
-        "required" : [ "begin", "end", "status", "type" ],
+        "required" : [ "status", "type" ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -6090,12 +6181,14 @@
           },
           "type" : {
             "nullable" : false,
+            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/BookingGuestItemType"
             } ]
           },
           "status" : {
             "nullable" : false,
+            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/BookingStatus"
             } ]
@@ -6134,6 +6227,7 @@
           },
           "taxRate" : {
             "nullable" : false,
+            "readOnly" : true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/TaxRate"
             } ]
@@ -6142,7 +6236,8 @@
             "minimum" : 0,
             "type" : "integer",
             "description" : "This is only present in the case of a item of type \"misc\"",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           }
         }
       },
@@ -6273,9 +6368,6 @@
             },
             "attendanceFeePriceLists" : {
               "readOnly" : true
-            },
-            "additionalFields" : {
-              "readOnly" : true
             }
           }
         } ]
@@ -6321,14 +6413,21 @@
         } ]
       },
       "PatchMiscBookingGuestItem" : {
-        "type" : "object",
-        "properties" : {
-          "quantity" : {
-            "minimum" : 0,
-            "type" : "integer",
-            "nullable" : true
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/PatchBookingGuestItem"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "quantity" : {
+              "readOnly" : false
+            }
           }
-        }
+        } ]
+      },
+      "PatchBookingGuestItem" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BookingGuestItem"
+        } ]
       },
       "PatchAdditionalField" : {
         "required" : [ "value" ],
