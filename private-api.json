@@ -126,11 +126,11 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the event",
+            "description" : "Created, contains the newly created event",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/Event"
                 }
               }
             },
@@ -578,11 +578,11 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the event date",
+            "description" : "Created, contains the newly created event date",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/EventDate"
                 }
               }
             },
@@ -689,11 +689,14 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID(s) of the booking(s)",
+            "description" : "Created, contains the newly created booking(s)",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceListResponse"
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Booking"
+                  }
                 }
               }
             }
@@ -859,11 +862,11 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the newly created price list",
+            "description" : "Created, contains the newly created price list",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/AttendanceFeePriceList"
                 }
               }
             }
@@ -2059,11 +2062,11 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the activity",
+            "description" : "Created, contains the newly created activity",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/ProfileActivity"
                 }
               }
             }
@@ -2294,11 +2297,11 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the profile",
+            "description" : "Created, contains the newly created person profile",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/PersonProfile"
                 }
               }
             },
@@ -2629,21 +2632,12 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the profile",
+            "description" : "Created, contains the newly created facilitator profile",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/FacilitatorProfile"
                 }
-              }
-            },
-            "links" : {
-              "GetBookingById" : {
-                "operationId" : "getFacilitatorProfile",
-                "parameters" : {
-                  "id" : "$response.body#/id"
-                },
-                "description" : "The `id` value returned can be used as the `id` parameter in `GET /facilitators/{id}`\n"
               }
             }
           },
@@ -3133,21 +3127,15 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID(s) of the booking(s)",
+            "description" : "Created, contains the newly created booking(s)",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceListResponse"
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Booking"
+                  }
                 }
-              }
-            },
-            "links" : {
-              "GetBookingById" : {
-                "operationId" : "getBooking",
-                "parameters" : {
-                  "id" : "$response.body#/id"
-                },
-                "description" : "The `id` value returned can be used as the `id` parameter in `GET /bookings/{id}`\n"
               }
             }
           },
@@ -4049,6 +4037,87 @@
         }
       }
     },
+    "/guests/{id}" : {
+      "get" : {
+        "tags" : [ "Booking Guests" ],
+        "summary" : "Retrieves the details of a booking guest",
+        "operationId" : "getBookingGuest",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Numeric ID of the item",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BookingGuest"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "The resource does not exist",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/guests/{id}/misc-items" : {
       "post" : {
         "tags" : [ "Booking Guests" ],
@@ -4080,11 +4149,11 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the booking item",
+            "description" : "Created, contains the newly created booking item",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/BookingGuestItem"
                 }
               }
             }
@@ -4153,7 +4222,7 @@
     },
     "/guest-items/{id}" : {
       "patch" : {
-        "tags" : [ "Booking Guests", "Guest Items" ],
+        "tags" : [ "Guest Items" ],
         "summary" : "Updates one or more properties of a guest item",
         "operationId" : "patchGuestItem",
         "parameters" : [ {
@@ -4174,97 +4243,6 @@
             "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/PatchBookingGuestItem"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK, returns the updated item",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/BookingGuestItem"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "API key is missing or invalid",
-            "headers" : {
-              "WWW_Authenticate" : {
-                "style" : "simple",
-                "explode" : false,
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "API key does not have required permissions",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "The resource does not exist",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "501" : {
-            "description" : "Request cannot be handled, private API not active or required module not enabled",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/misc-guest-items/{id}" : {
-      "patch" : {
-        "tags" : [ "Booking Guests", "Guest Items" ],
-        "summary" : "Updates one or more properties of a misc guest item",
-        "operationId" : "patchMiscGuestItem",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Numeric ID of the item",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "minimum" : 1,
-            "type" : "integer",
-            "format" : "int64"
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/PatchMiscBookingGuestItem"
               }
             }
           },
@@ -4715,7 +4693,7 @@
         },
         "responses" : {
           "201" : {
-            "description" : "OK",
+            "description" : "OK, contains the newly created payment",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4816,11 +4794,11 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the external reference",
+            "description" : "Created, contains the the newly created external reference",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/ExternalReference"
                 }
               }
             }
@@ -5073,11 +5051,11 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the certificate",
+            "description" : "Created, contains the newly created certificate",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/Certificate"
                 }
               }
             }
@@ -6215,6 +6193,13 @@
               "$ref" : "#/components/schemas/NamedIdReference"
             } ]
           },
+          "priceListItemId" : {
+            "description" : "Contains the ID of the price list item related to this item, if any",
+            "readOnly" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/NumericPrimaryKey"
+            } ]
+          },
           "calculatedPrice" : {
             "type" : "number",
             "format" : "double",
@@ -6235,9 +6220,8 @@
           "quantity" : {
             "minimum" : 0,
             "type" : "integer",
-            "description" : "This is only present in the case of a item of type \"misc\"",
-            "nullable" : true,
-            "readOnly" : true
+            "description" : "This is only considered for items of type \"misc\"",
+            "nullable" : true
           }
         }
       },
@@ -6408,18 +6392,6 @@
             },
             "additionalFields" : {
               "readOnly" : true
-            }
-          }
-        } ]
-      },
-      "PatchMiscBookingGuestItem" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/PatchBookingGuestItem"
-        }, {
-          "type" : "object",
-          "properties" : {
-            "quantity" : {
-              "readOnly" : false
             }
           }
         } ]
@@ -8150,7 +8122,7 @@
           }
         }
       },
-      "PersonProfileActivity" : {
+      "ProfileActivity" : {
         "required" : [ "begin", "category", "title", "type" ],
         "type" : "object",
         "properties" : {
@@ -8160,7 +8132,7 @@
             "enum" : [ "SYSTEM", "MANUAL" ]
           },
           "type" : {
-            "$ref" : "#/components/schemas/PersonProfileActivity_type"
+            "$ref" : "#/components/schemas/ProfileActivity_type"
           },
           "title" : {
             "type" : "string"
@@ -8424,7 +8396,7 @@
             "type" : "array",
             "readOnly" : true,
             "items" : {
-              "$ref" : "#/components/schemas/PersonProfileActivity"
+              "$ref" : "#/components/schemas/ProfileActivity"
             }
           },
           "certificates" : {
@@ -9546,7 +9518,7 @@
         "nullable" : true,
         "readOnly" : true
       },
-      "PersonProfileActivity_type" : {
+      "ProfileActivity_type" : {
         "required" : [ "name" ],
         "type" : "object",
         "properties" : {
