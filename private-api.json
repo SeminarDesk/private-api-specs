@@ -3978,11 +3978,11 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Created, contains the ID of the booking item",
+            "description" : "Created, contains the newly created booking item",
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreateResourceResponse"
+                  "$ref" : "#/components/schemas/BookingGuestItem"
                 }
               }
             }
@@ -4049,11 +4049,11 @@
         }
       }
     },
-    "/misc-guest-items/{id}" : {
+    "/guest-items/{id}" : {
       "patch" : {
-        "tags" : [ "Booking Guests" ],
-        "summary" : "Updates one or more properties of a misc guest item",
-        "operationId" : "patchMiscGuestItem",
+        "tags" : [ "Guest Items" ],
+        "summary" : "Updates one or more properties of a guest item",
+        "operationId" : "patchGuestItem",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -4071,7 +4071,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/PatchMiscBookingGuestItem"
+                "$ref" : "#/components/schemas/PatchBookingGuestItem"
               }
             }
           },
@@ -5548,23 +5548,6 @@
           }
         } ]
       },
-      "CreateEventBooking" : {
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/CreateBooking"
-        }, {
-          "type" : "object",
-          "properties" : {
-            "guests" : {
-              "minItems" : 1,
-              "type" : "array",
-              "nullable" : false,
-              "items" : {
-                "$ref" : "#/components/schemas/EventBookingGuest"
-              }
-            }
-          }
-        } ]
-      },
       "CreateBooking" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/Booking"
@@ -6218,15 +6201,10 @@
           }
         } ]
       },
-      "PatchMiscBookingGuestItem" : {
-        "type" : "object",
-        "properties" : {
-          "quantity" : {
-            "minimum" : 0,
-            "type" : "integer",
-            "nullable" : true
-          }
-        }
+      "PatchBookingGuestItem" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BookingGuestItem"
+        } ]
       },
       "PatchAdditionalField" : {
         "required" : [ "value" ],
