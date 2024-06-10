@@ -6267,11 +6267,6 @@
             "type" : "string",
             "description" : "Unique code of this payment method",
             "nullable" : false
-          },
-          "name" : {
-            "type" : "string",
-            "nullable" : false,
-            "readOnly" : true
           }
         }
       },
@@ -6305,33 +6300,6 @@
         "allOf" : [ {
           "$ref" : "#/components/schemas/AttendanceFeePriceList"
         } ]
-      },
-      "CreateResourceResponse" : {
-        "required" : [ "id" ],
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "description" : "ID of the created element",
-            "readOnly" : true,
-            "allOf" : [ {
-              "$ref" : "#/components/schemas/NumericPrimaryKey"
-            } ]
-          }
-        }
-      },
-      "CreateResourceListResponse" : {
-        "required" : [ "ids" ],
-        "type" : "object",
-        "properties" : {
-          "ids" : {
-            "minLength" : 1,
-            "type" : "array",
-            "description" : "IDs of the created elements",
-            "items" : {
-              "$ref" : "#/components/schemas/NumericPrimaryKey"
-            }
-          }
-        }
       },
       "CreateEventDate" : {
         "allOf" : [ {
@@ -6764,7 +6732,7 @@
         } ]
       },
       "AttendanceFeePriceList" : {
-        "required" : [ "details", "id", "isActive", "name", "order" ],
+        "required" : [ "details", "id", "name", "order" ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -6793,11 +6761,6 @@
             "items" : {
               "$ref" : "#/components/schemas/AttendanceFeePriceListDetail"
             }
-          },
-          "isActive" : {
-            "type" : "boolean",
-            "nullable" : false,
-            "readOnly" : true
           }
         }
       },
