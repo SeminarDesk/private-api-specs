@@ -7838,7 +7838,7 @@
         }
       },
       "Label" : {
-        "required" : [ "abbreviation", "externalName", "id", "internalName", "order" ],
+        "required" : [ "abbreviation", "externalName", "id", "internalName", "labelGroup", "order" ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -7882,6 +7882,9 @@
             "type" : "integer",
             "nullable" : false,
             "readOnly" : true
+          },
+          "labelGroup" : {
+            "$ref" : "#/components/schemas/NamedIdReference"
           }
         }
       },
