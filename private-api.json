@@ -5622,6 +5622,12 @@
                 "officialTitle" : {
                   "maxLength" : 255,
                   "type" : "string"
+                },
+                "provider" : {
+                  "readOnly" : true,
+                  "allOf" : [ {
+                    "$ref" : "#/components/schemas/NamedIdReference"
+                  } ]
                 }
               },
               "readOnly" : true
