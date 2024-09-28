@@ -5593,6 +5593,10 @@
           "externalRemarks" : {
             "type" : "string",
             "nullable" : true
+          },
+          "number" : {
+            "type" : "string",
+            "nullable" : true
           }
         }
       },
@@ -5674,7 +5678,7 @@
               "$ref" : "#/components/schemas/NamedIdReference"
             } ]
           },
-          "externalNumber" : {
+          "number" : {
             "type" : "string",
             "nullable" : true
           },
