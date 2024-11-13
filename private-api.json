@@ -5218,6 +5218,17 @@
             "type" : "integer",
             "format" : "int64"
           }
+        }, {
+          "name" : "regeneratePdf",
+          "in" : "query",
+          "description" : "If this is set to `true`, the certificate PDF file that may already exist is regenerated and overwritten",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
         } ],
         "requestBody" : {
           "content" : {
