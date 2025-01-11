@@ -1,7 +1,7 @@
 {
   "openapi" : "3.0.3",
   "info" : {
-    "title" : "SeminarDesk Private API (BETA)",
+    "title" : "SeminarDesk Private API",
     "description" : "Provides access to these resources: events, dates, profiles, bookings, invoices and certificates.\n",
     "termsOfService" : "https://www.seminardesk.de/nutzungsbedingungen/",
     "contact" : {
