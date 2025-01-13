@@ -6007,6 +6007,11 @@
             "maxLength" : 255,
             "type" : "string",
             "nullable" : true
+          },
+          "onlinePaymentStatus" : {
+            "type" : "string",
+            "nullable" : true,
+            "enum" : [ "PENDING", "COMPLETED", "FAILED" ]
           }
         }
       },
