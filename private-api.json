@@ -1,7 +1,7 @@
 {
   "openapi" : "3.0.3",
   "info" : {
-    "title" : "SeminarDesk Private API (BETA – unreleased next version)",
+    "title" : "SeminarDesk Private API (unreleased next version)",
     "description" : "Provides access to these resources: events, dates, profiles, bookings, invoices and certificates. <p>**Note**: This is the upcoming version which is not yet released.</p>\n",
     "termsOfService" : "https://www.seminardesk.de/nutzungsbedingungen/",
     "contact" : {
@@ -8003,6 +8003,11 @@
             "format" : "email",
             "nullable" : true
           },
+          "effectiveInvoiceEmailAddress" : {
+            "type" : "string",
+            "format" : "email",
+            "nullable" : true
+          },
           "website" : {
             "type" : "string",
             "format" : "uri",
@@ -8426,7 +8431,8 @@
             "type" : "string"
           },
           "email" : {
-            "type" : "string"
+            "type" : "string",
+            "format" : "email"
           },
           "isPrimary" : {
             "type" : "boolean"
