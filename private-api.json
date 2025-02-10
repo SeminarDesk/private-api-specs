@@ -8003,8 +8003,9 @@
             "format" : "email",
             "nullable" : true
           },
-          "effectiveInvoiceEmailAddress" : {
+          "effectiveInvoiceEmail" : {
             "type" : "string",
+            "description" : "The email address that should be used to send invoices to",
             "format" : "email",
             "nullable" : true
           },
