@@ -8283,6 +8283,11 @@
           "properties" : {
             "nameOrCompany" : {
               "type" : "string"
+            },
+            "email" : {
+              "type" : "string",
+              "format" : "email",
+              "nullable" : true
             }
           }
         }, {
@@ -8360,27 +8365,28 @@
           },
           "preferredEmail" : {
             "type" : "string",
-            "nullable" : true,
             "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "ALTERNATIVE", "INVOICE", "PRIMARY_ORGANIZATION" ]
           },
           "preferredPhone" : {
             "type" : "string",
-            "nullable" : true,
             "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "ALTERNATIVE", "BUSINESS", "PRIMARY_ORGANIZATION" ]
           },
           "preferredAddress" : {
             "type" : "string",
-            "nullable" : true,
             "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "INVOICE", "PRIMARY_ORGANIZATION" ]
           },
           "preferredBillingAddress" : {
             "type" : "string",
-            "nullable" : true,
             "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "INVOICE", "PRIMARY_ORGANIZATION" ]
+          },
+          "preferredBillingEmail" : {
+            "type" : "string",
+            "default" : "PRIVATE",
+            "enum" : [ "PRIVATE", "ALTERNATIVE", "INVOICE", "PRIMARY_ORGANIZATION" ]
           },
           "isSubscribedToNewsletter" : {
             "type" : "boolean"
@@ -8466,12 +8472,12 @@
           "contactPerson" : {
             "type" : "string"
           },
+          "parentOrganization" : {
+            "$ref" : "#/components/schemas/OrganizationProfile"
+          },
           "preferredEmail" : {
             "type" : "string",
             "enum" : [ "BUSINESS", "ALTERNATIVE", "INVOICE" ]
-          },
-          "parentOrganization" : {
-            "$ref" : "#/components/schemas/OrganizationProfile"
           },
           "preferredPhone" : {
             "type" : "string",
@@ -8484,6 +8490,11 @@
           "preferredBillingAddress" : {
             "type" : "string",
             "enum" : [ "BUSINESS", "INVOICE" ]
+          },
+          "preferredBillingEmail" : {
+            "type" : "string",
+            "default" : "BUSINESS",
+            "enum" : [ "BUSINESS", "ALTERNATIVE", "INVOICE" ]
           }
         }
       },
