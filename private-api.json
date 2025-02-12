@@ -8007,7 +8007,8 @@
             "type" : "string",
             "description" : "The email address that should be used to send invoices to",
             "format" : "email",
-            "nullable" : true
+            "nullable" : true,
+            "readOnly" : true
           },
           "website" : {
             "type" : "string",
@@ -8384,7 +8385,7 @@
             "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "INVOICE", "PRIMARY_ORGANIZATION" ]
           },
-          "preferredBillingEmail" : {
+          "preferredInvoiceEmail" : {
             "type" : "string",
             "default" : "PRIVATE",
             "enum" : [ "PRIVATE", "ALTERNATIVE", "INVOICE", "PRIMARY_ORGANIZATION" ]
@@ -8492,7 +8493,7 @@
             "type" : "string",
             "enum" : [ "BUSINESS", "INVOICE" ]
           },
-          "preferredBillingEmail" : {
+          "preferredInvoiceEmail" : {
             "type" : "string",
             "default" : "BUSINESS",
             "enum" : [ "BUSINESS", "ALTERNATIVE", "INVOICE" ]
