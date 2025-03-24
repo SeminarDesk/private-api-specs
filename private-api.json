@@ -8350,6 +8350,7 @@
             "nullable" : true
           },
           "additionalTitle" : {
+            "maxLength" : 200,
             "type" : "string",
             "nullable" : true
           },
