@@ -9365,11 +9365,12 @@
             "readOnly" : true,
             "default" : false
           },
-          "miscPriceList" : {
+          "miscPriceLists" : {
+            "type" : "array",
             "nullable" : true,
-            "allOf" : [ {
+            "items" : {
               "$ref" : "#/components/schemas/NamedIdReference"
-            } ]
+            }
           },
           "hasAccommodation" : {
             "nullable" : true,
