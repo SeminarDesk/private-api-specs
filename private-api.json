@@ -5377,6 +5377,40 @@
   },
   "components" : {
     "schemas" : {
+      "AdditionalBookingFormFieldValue": {
+        "type": "object",
+        "description": "Represents a value for an additional booking form field. These fields can be defined in the backend and can be filled either during the online booking process by the end user, or in the backoffice by administrators. The fields can be assigned either to the booking itself or to individual booking guests.",
+        "required": [
+          "field",
+          "value",
+          "objectInfo"
+        ],
+        "properties": {
+          "field": {
+            "$ref": "#/components/schemas/NamedIdReference",
+            "description": "Reference to the field definition with ID and name"
+          },
+          "value": {
+            "description": "Value of the additional field. Can be any value, including 'null'. The type of value depends on the field type (e.g. string for text fields, boolean for yes/no fields, etc.).",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "description": "Source of the value, indicating how the value was added (e.g. 'Booking' for values added during online booking, 'User' for values added by an administrator in the backoffice).",
+            "nullable": true,
+            "example": "Booking"
+          },
+          "objectInfo": {
+            "nullable": false,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ObjectMetaInfo"
+              }
+            ],
+            "description": "Information about who created or changed the value and when"
+          }
+        }
+      },
       "BaseList" : {
         "type" : "object",
         "properties" : {
@@ -5903,15 +5937,29 @@
           }
         }
       },
-      "Booking" : {
-        "type" : "object",
-        "allOf" : [ {
-          "$ref" : "#/components/schemas/BaseModelProperties"
-        }, {
-          "$ref" : "#/components/schemas/BookingProperties"
-        }, {
-          "$ref" : "#/components/schemas/BookingRequiredProperties"
-        } ]
+      "Booking": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseModelProperties"
+          },
+          {
+            "$ref": "#/components/schemas/BookingProperties"
+          },
+          {
+            "$ref": "#/components/schemas/BookingRequiredProperties"
+          }
+        ],
+        "properties": {
+          "additionalFieldValues": {
+            "type": "array",
+            "description": "Values for additional booking form fields that are assigned to the booking itself (not to individual guests).",
+            "nullable": true,
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/AdditionalBookingFormFieldValue"
+            }
+          }
+        }
       },
       "BookingRequiredProperties" : {
         "required" : [ "booker", "guests", "status" ],
@@ -6076,7 +6124,10 @@
         } ]
       },
       "BookingGuest" : {
-        "required" : [ "eventDate", "guest" ],
+        "required": [
+          "eventDate",
+          "guest"
+        ],
         "type" : "object",
         "properties" : {
           "id" : {
@@ -6170,6 +6221,15 @@
             "type" : "string",
             "nullable" : true,
             "readOnly" : true
+          },
+          "additionalFieldValues": {
+            "type": "array",
+            "description": "Values for additional booking form fields that are assigned to this specific booking guest.",
+            "nullable": true,
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/AdditionalBookingFormFieldValue"
+            }
           }
         }
       },
