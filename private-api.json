@@ -5387,7 +5387,11 @@
         ],
         "properties": {
           "field": {
-            "$ref": "#/components/schemas/NamedIdReference",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NamedIdReference"
+              }
+            ],
             "description": "Reference to the field definition with ID and name"
           },
           "value": {
@@ -5401,7 +5405,6 @@
             "example": "Booking"
           },
           "objectInfo": {
-            "nullable": false,
             "allOf": [
               {
                 "$ref": "#/components/schemas/ObjectMetaInfo"
@@ -7817,7 +7820,6 @@
         }
       },
       "ObjectMetaInfo" : {
-        "required" : [ "changedAt", "changedBy", "createdAt", "createdBy" ],
         "type" : "object",
         "properties" : {
           "createdAt" : {
@@ -7827,6 +7829,7 @@
           },
           "createdBy" : {
             "readOnly" : true,
+            "nullable": true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/User"
             } ]
@@ -7838,6 +7841,7 @@
           },
           "changedBy" : {
             "readOnly" : true,
+            "nullable": true,
             "allOf" : [ {
               "$ref" : "#/components/schemas/User"
             } ]
