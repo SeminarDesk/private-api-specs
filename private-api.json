@@ -3024,6 +3024,86 @@
         }
       }
     },
+    "/payments" : {
+      "get" : {
+        "tags" : [ "Payments" ],
+        "summary" : "Retrieves a list of payments",
+        "operationId" : "getPayments",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : false,
+          "style" : "deepObject",
+          "explode" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/page"
+          }
+        }, {
+          "name" : "paymentReferenceId",
+          "in" : "query",
+          "description" : "Filter payments by UUID reference passed to external payment providers",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid",
+            "nullable" : true
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentsList"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "API key is missing or invalid",
+            "headers" : {
+              "WWW_Authenticate" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "API key does not have required permissions",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "501" : {
+            "description" : "Request cannot be handled, private API not active or required module not enabled",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/bookings" : {
       "get" : {
         "tags" : [ "Bookings" ],
@@ -5498,6 +5578,21 @@
           }
         } ]
       },
+      "PaymentsList" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/BaseList"
+        }, {
+          "type" : "object",
+          "properties" : {
+            "data" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/Payment"
+              }
+            }
+          }
+        } ]
+      },
       "FacilitatorProfilesList" : {
         "allOf" : [ {
           "$ref" : "#/components/schemas/BaseList"
@@ -6107,6 +6202,13 @@
           },
           "remarks" : {
             "type" : "string"
+          },
+          "paymentReferenceId" : {
+            "type" : "string",
+            "format" : "uuid",
+            "description" : "UUID reference passed to external payment providers",
+            "nullable" : true,
+            "example" : "550e8400-e29b-41d4-a716-446655440000"
           }
         }
       },
