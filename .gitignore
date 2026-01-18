@@ -1,2 +1,17 @@
+# IDE
 .idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude
+.claude/
+
+# Local files
 *.local.*
+
+# Swagger Codegen output
+/generated/
