@@ -484,7 +484,7 @@
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/filter_1"
+            "$ref" : "#/components/schemas/EventDateFilter"
           }
         } ],
         "responses" : {
@@ -1040,7 +1040,7 @@
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/filter_1"
+            "$ref" : "#/components/schemas/EventDateFilter"
           }
         } ],
         "responses" : {
@@ -1548,7 +1548,7 @@
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/filter_2"
+            "$ref" : "#/components/schemas/ProfileFilter"
           }
         } ],
         "responses" : {
@@ -2226,7 +2226,7 @@
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/filter_2"
+            "$ref" : "#/components/schemas/ProfileFilter"
           }
         } ],
         "responses" : {
@@ -2561,7 +2561,7 @@
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/filter_2"
+            "$ref" : "#/components/schemas/ProfileFilter"
           }
         } ],
         "responses" : {
@@ -2887,7 +2887,7 @@
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/filter_2"
+            "$ref" : "#/components/schemas/ProfileFilter"
           }
         } ],
         "responses" : {
@@ -3055,7 +3055,7 @@
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/filter_3"
+            "$ref" : "#/components/schemas/BookingFilter"
           }
         } ],
         "responses" : {
@@ -4342,7 +4342,7 @@
           "style" : "deepObject",
           "explode" : false,
           "schema" : {
-            "$ref" : "#/components/schemas/filter_4"
+            "$ref" : "#/components/schemas/InvoiceFilter"
           }
         } ],
         "responses" : {
@@ -9015,7 +9015,7 @@
           }
         }
       },
-      "filter_1" : {
+      "EventDateFilter" : {
         "type" : "object",
         "properties" : {
           "beginAfter" : {
@@ -9076,7 +9076,7 @@
         },
         "nullable" : true
       },
-      "filter_2" : {
+      "ProfileFilter" : {
         "type" : "object",
         "properties" : {
           "isSubscribedToNewsletter" : {
@@ -9106,7 +9106,7 @@
         },
         "nullable" : true
       },
-      "filter_3" : {
+      "BookingFilter" : {
         "type" : "object",
         "properties" : {
           "externalReferenceId" : {
@@ -9117,7 +9117,7 @@
           }
         }
       },
-      "filter_4" : {
+      "InvoiceFilter" : {
         "type" : "object",
         "properties" : {
           "externalReferenceId" : {
@@ -9712,7 +9712,7 @@
         "style" : "deepObject",
         "explode" : false,
         "schema" : {
-          "$ref" : "#/components/schemas/filter_4"
+          "$ref" : "#/components/schemas/InvoiceFilter"
         }
       },
       "BookingFilter" : {
@@ -9722,7 +9722,7 @@
         "style" : "deepObject",
         "explode" : false,
         "schema" : {
-          "$ref" : "#/components/schemas/filter_3"
+          "$ref" : "#/components/schemas/BookingFilter"
         }
       },
       "ProfileFilter" : {
@@ -9732,7 +9732,7 @@
         "style" : "deepObject",
         "explode" : false,
         "schema" : {
-          "$ref" : "#/components/schemas/filter_2"
+          "$ref" : "#/components/schemas/ProfileFilter"
         }
       },
       "EventDateFilter" : {
@@ -9742,7 +9742,7 @@
         "style" : "deepObject",
         "explode" : false,
         "schema" : {
-          "$ref" : "#/components/schemas/filter_1"
+          "$ref" : "#/components/schemas/EventDateFilter"
         }
       }
     },
