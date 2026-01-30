@@ -6765,6 +6765,58 @@
             "type": "integer",
             "description": "This is only considered for items of type \"misc\"",
             "nullable": true
+          },
+          "roomAssignment": {
+            "description": "Room assignment details. Only present for items where type.type = 'ACCOMMODATION'. Omitted for all other item types.",
+            "readOnly": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RoomAssignment"
+              }
+            ]
+          }
+        }
+      },
+      "RoomAssignment": {
+        "type": "object",
+        "description": "Represents a room assignment for an accommodation booking item.",
+        "properties": {
+          "roomName": {
+            "type": "string",
+            "description": "Name of the assigned room",
+            "nullable": true
+          },
+          "roomTypeCode": {
+            "type": "string",
+            "description": "Code of the room type",
+            "nullable": true
+          },
+          "roomTypeName": {
+            "type": "string",
+            "description": "Name of the room type",
+            "nullable": true
+          },
+          "begin": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start date/time of the room assignment"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End date/time of the room assignment"
+          },
+          "isSingleUse": {
+            "type": "boolean",
+            "description": "Whether the room is booked for single use (even if it has multiple beds)"
+          },
+          "isPrepared": {
+            "type": "boolean",
+            "description": "Whether the room assignment is prepared/provisional"
+          },
+          "isFinal": {
+            "type": "boolean",
+            "description": "Whether the room assignment is final/confirmed"
           }
         }
       },
