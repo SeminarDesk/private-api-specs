@@ -7497,11 +7497,23 @@
             "format": "double",
             "nullable": false
           },
+          "netPrice": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
           "grossRoomRent": {
             "minimum": 0,
             "type": "number",
             "format": "double",
             "nullable": true
+          },
+          "netRoomRent": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "readOnly": true
           },
           "calculationMode": {
             "type": "string",
@@ -7520,10 +7532,22 @@
             "format": "double",
             "nullable": true
           },
+          "netSelfAssessmentMinPrice": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
           "grossSelfAssessmentMaxPrice": {
             "minimum": 0,
             "format": "double",
             "nullable": true
+          },
+          "netSelfAssessmentMaxPrice": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double",
+            "readOnly": true
           },
           "taxRate": {
             "$ref": "#/components/schemas/TaxRate"
