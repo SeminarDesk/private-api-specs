@@ -9634,6 +9634,12 @@
             "type": "string",
             "readOnly": true,
             "example": "Felicitas Facilitator"
+          },
+          "portraitPictureUrl": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "readOnly": true
           }
         }
       },
@@ -9681,6 +9687,12 @@
             "nullable": true,
             "readOnly": true,
             "example": "Event Management"
+          },
+          "portraitPictureUrl": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "readOnly": true
           },
           "roleName": {
             "type": "string",
