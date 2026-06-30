@@ -17,6 +17,12 @@ This document outlines the patterns and conventions used in the SeminarDesk Priv
   - **v1-next (Development)**: Corresponds to `next` branch - upcoming version with new features
 - **Current branch**: This specification represents the `next` branch (v1-next)
 
+### Branch Workflow
+
+- **All in-development changes go on `next`.** Any spec change for an upcoming, not-yet-released feature is committed to `next` (v1-next). Never edit `main` directly for new work.
+- **Merge `next` -> `main` when the feature ships.** Once the corresponding ClickUp task is closed (feature live in production), merge the change into `main` so the stable v1 spec reflects the released API. Release merges are recorded as `chore: Sync next -> main (release YYYY-MM-DD)`.
+- **Quick check before editing**: run `git branch --show-current`. If it is `main` and the work is for an unreleased feature, switch to `next` first.
+
 ## Naming Conventions
 
 ### Parameter Names
