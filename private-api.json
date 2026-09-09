@@ -6094,7 +6094,7 @@
             "nullable": true,
             "readOnly": true
           },
-          "eligibilityCheckOverridden": {
+          "eligibilityCheckOverwritten": {
             "type": "boolean",
             "readOnly": true
           },
@@ -6106,6 +6106,31 @@
                 "$ref": "#/components/schemas/ObjectMetaInfo"
               }
             ]
+          },
+          "isDraft": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "finalizedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true,
+            "description": "When the certificate was finalized. Only set on finalized certificates."
+          },
+          "finalizedBy": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "description": "Who finalized the certificate. Only set on finalized certificates."
+          },
+          "qualifyingCertificates": {
+            "type": "array",
+            "nullable": true,
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/QualifyingCertificate"
+            }
           }
         }
       },
@@ -6460,6 +6485,19 @@
               "COMPLETED",
               "FAILED"
             ]
+          },
+          "confirmationDate": {
+            "type": "string",
+            "description": "When the booking was confirmed. Only set on confirmed bookings.",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "confirmedBy": {
+            "type": "string",
+            "description": "Who confirmed the booking. Only set on confirmed bookings.",
+            "nullable": true,
+            "readOnly": true
           }
         }
       },
@@ -6515,13 +6553,6 @@
           },
           "remarks": {
             "type": "string"
-          },
-          "paymentReferenceId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "UUID reference passed to external payment providers",
-            "nullable": true,
-            "example": "550e8400-e29b-41d4-a716-446655440000"
           }
         }
       },
@@ -7468,6 +7499,9 @@
             "items": {
               "$ref": "#/components/schemas/AttendanceFeePriceListDetail"
             }
+          },
+          "isActive": {
+            "type": "boolean"
           }
         }
       },
@@ -7804,7 +7838,13 @@
         "type": "object",
         "properties": {
           "id": {
-            "$ref": "#/components/schemas/NumericPrimaryKey"
+            "description": "Only sent on create and update; never returned.",
+            "writeOnly": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NumericPrimaryKey"
+              }
+            ]
           },
           "name": {
             "type": "string",
@@ -8200,6 +8240,10 @@
           },
           "order": {
             "type": "integer"
+          },
+          "externalName": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -8426,6 +8470,10 @@
             "format": "double",
             "nullable": false,
             "example": 0.19
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -9069,6 +9117,14 @@
             "minimum": 0,
             "type": "integer",
             "readOnly": true
+          },
+          "securitySettings": {
+            "readOnly": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ProfileSecuritySettings"
+              }
+            ]
           }
         }
       },
@@ -9121,7 +9177,7 @@
         "required": [
           "consentType",
           "date",
-          "isPermitted",
+          "isPermit",
           "source"
         ],
         "type": "object",
@@ -9147,7 +9203,7 @@
             "type": "string",
             "nullable": true
           },
-          "isPermitted": {
+          "isPermit": {
             "type": "boolean"
           },
           "legalBasis": {
@@ -9181,7 +9237,7 @@
       },
       "LegalBasis": {
         "required": [
-          "gdprReference",
+          "gdpReference",
           "name",
           "retentionPeriod"
         ],
@@ -9190,7 +9246,7 @@
           "name": {
             "type": "string"
           },
-          "gdprReference": {
+          "gdpReference": {
             "type": "string"
           },
           "retentionPeriod": {
@@ -9421,13 +9477,6 @@
               "$ref": "#/components/schemas/ProfileActivity"
             }
           },
-          "certificates": {
-            "type": "array",
-            "readOnly": true,
-            "items": {
-              "$ref": "#/components/schemas/Certificate"
-            }
-          },
           "isFacilitator": {
             "type": "boolean",
             "description": "When this is set to `true`, this person profile will be converted to a facilitator profile.",
@@ -9549,7 +9598,7 @@
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/components/schemas/PersonProfile"
+            "$ref": "#/components/schemas/Profile"
           },
           {
             "$ref": "#/components/schemas/FacilitatorProfileProperties"
@@ -9565,16 +9614,6 @@
             "items": {
               "$ref": "#/components/schemas/Qualification"
             }
-          },
-          "remarks": {
-            "type": "string",
-            "nullable": true
-          },
-          "portraitPictureUrl": {
-            "type": "string",
-            "format": "uri",
-            "nullable": true,
-            "readOnly": true
           },
           "isActive": {
             "type": "boolean"
@@ -9593,7 +9632,10 @@
               "$ref": "#/components/schemas/NamedIdReference"
             }
           },
-          "isFacilitator": {
+          "portraitPicture": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
             "readOnly": true
           }
         }
@@ -9917,7 +9959,7 @@
             "format": "double",
             "readOnly": true
           },
-          "lastEmailSentAt": {
+          "lastEmailSent": {
             "type": "string",
             "format": "date-time",
             "readOnly": true
@@ -9988,7 +10030,6 @@
       "InvoiceItem": {
         "required": [
           "grossAmount",
-          "netAmount",
           "number",
           "periodOfService",
           "sources",
@@ -10016,11 +10057,6 @@
             ]
           },
           "grossAmount": {
-            "type": "number",
-            "format": "double",
-            "nullable": false
-          },
-          "netAmount": {
             "type": "number",
             "format": "double",
             "nullable": false
@@ -10347,6 +10383,31 @@
             "type": "string",
             "format": "date",
             "nullable": true
+          },
+          "type": {
+            "readOnly": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NamedIdReference"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "officialTitle": {
+                    "maxLength": 255,
+                    "type": "string"
+                  },
+                  "provider": {
+                    "readOnly": true,
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/NamedIdReference"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
           }
         },
         "description": "In case there was a \"takeover\" from a required certificate, this will be the reference to this very certificate",
@@ -10812,6 +10873,73 @@
         },
         "description": "In case of a cancelation invoice, this will contain a reference to the \"original invoice\"",
         "nullable": true
+      },
+      "QualifyingCertificate": {
+        "type": "object",
+        "description": "A certificate that qualifies its owner for this certificate.",
+        "properties": {
+          "id": {
+            "readOnly": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NumericPrimaryKey"
+              }
+            ]
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "type": {
+            "readOnly": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NamedIdReference"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "officialTitle": {
+                    "maxLength": 255,
+                    "type": "string"
+                  },
+                  "provider": {
+                    "readOnly": true,
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/NamedIdReference"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "ProfileSecuritySettings": {
+        "type": "object",
+        "description": "Visibility restrictions on the profile.",
+        "properties": {
+          "isVisibilityRestricted": {
+            "type": "boolean"
+          },
+          "visibleFor": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserGroup"
+            }
+          },
+          "sensitiveFieldsVisibility": {
+            "type": "string",
+            "enum": [
+              "UNRESTRICTED",
+              "RESTRICTED"
+            ],
+            "default": "UNRESTRICTED"
+          }
+        }
       }
     },
     "responses": {
