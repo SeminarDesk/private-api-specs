@@ -15,7 +15,6 @@ This document outlines the patterns and conventions used in the SeminarDesk Priv
 - **Two API versions**: The specification includes both stable and development versions
   - **v1 (Stable)**: Corresponds to `main` branch - production-ready API
   - **v1-next (Development)**: Corresponds to `next` branch - upcoming version with new features
-- **Current branch**: This specification represents the `next` branch (v1-next)
 
 ### Branch Workflow
 
