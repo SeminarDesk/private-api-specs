@@ -7097,6 +7097,13 @@
               "facilitators": {
                 "description": "When a value is provided, this will override the existing list of facilitators."
               },
+              "externalReferences": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExternalReference"
+                },
+                "description": "When a value is provided, this replaces all external references of the event date, including those of other external systems. An empty list removes all of them. Every referenced external system must exist. Each externalId is trimmed and must not be empty or \"0\", and a system/externalId pair must not appear twice."
+              },
               "equipment": {
                 "readOnly": true
               },
@@ -7196,7 +7203,7 @@
             "$ref": "#/components/schemas/NamedIdReference"
           },
           "externalId": {
-            "maxLength": 255,
+            "maxLength": 50,
             "type": "string",
             "nullable": false
           },
@@ -7348,6 +7355,12 @@
           },
           "remarks": {
             "type": "string",
+            "nullable": true
+          },
+          "referenceNumbers": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Reference numbers entered on this event. They appear on invoices together with those of the event date and the booking. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
             "nullable": true
           },
           "additionalFields": {
@@ -7740,6 +7753,12 @@
           },
           "remarks": {
             "type": "string",
+            "nullable": true
+          },
+          "referenceNumbers": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Reference numbers entered on this event date. They appear on invoices together with those of the event and the booking. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
             "nullable": true
           },
           "labels": {
