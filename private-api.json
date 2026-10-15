@@ -10205,7 +10205,7 @@
             "type": "string",
             "description": "Filter by an external ID in the format `<ID of external system>:<System ID>`",
             "nullable": true,
-            "example": "102"
+            "example": "5:A-1001"
           }
         }
       },
@@ -10269,7 +10269,7 @@
             "type": "string",
             "description": "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable": true,
-            "example": "102"
+            "example": "5:A-1001"
           }
         },
         "nullable": true
@@ -10299,7 +10299,7 @@
             "type": "string",
             "description": "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable": true,
-            "example": "102"
+            "example": "5:A-1001"
           }
         },
         "nullable": true
@@ -10311,7 +10311,7 @@
             "type": "string",
             "description": "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable": true,
-            "example": "102"
+            "example": "5:A-1001"
           }
         }
       },
@@ -10322,7 +10322,7 @@
             "type": "string",
             "description": "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
             "nullable": true,
-            "example": "102"
+            "example": "5:A-1001"
           }
         }
       },
