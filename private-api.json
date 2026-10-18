@@ -5703,7 +5703,7 @@
         "type": "object",
         "properties": {
           "meta": {
-            "$ref": "#/components/schemas/BaseList_meta"
+            "$ref": "#/components/schemas/ListMeta"
           }
         }
       },
@@ -6037,7 +6037,7 @@
             "readOnly": true
           },
           "takeoverSourceCertificate": {
-            "$ref": "#/components/schemas/Certificate_takeoverSourceCertificate"
+            "$ref": "#/components/schemas/TakeoverSourceCertificate"
           },
           "status": {
             "type": "string",
@@ -6615,7 +6615,7 @@
             ]
           },
           "guest": {
-            "$ref": "#/components/schemas/BookingGuest_guest"
+            "$ref": "#/components/schemas/GuestReference"
           },
           "status": {
             "nullable": false,
@@ -7351,7 +7351,7 @@
             "nullable": true
           },
           "bookingSettings": {
-            "$ref": "#/components/schemas/EventProperties_bookingSettings"
+            "$ref": "#/components/schemas/EventBookingSettings"
           },
           "attendanceFeePriceLists": {
             "type": "array",
@@ -7376,7 +7376,7 @@
             }
           },
           "publishingSettings": {
-            "$ref": "#/components/schemas/EventProperties_publishingSettings"
+            "$ref": "#/components/schemas/EventPublishingSettings"
           },
           "statistics": {
             "nullable": false,
@@ -7745,13 +7745,13 @@
             "nullable": true
           },
           "receptionSettings": {
-            "$ref": "#/components/schemas/EventDateProperties_receptionSettings"
+            "$ref": "#/components/schemas/EventDateReceptionSettings"
           },
           "serviceAndPriceSettings": {
-            "$ref": "#/components/schemas/EventDateProperties_serviceAndPriceSettings"
+            "$ref": "#/components/schemas/EventDateServiceAndPriceSettings"
           },
           "publishingSettings": {
-            "$ref": "#/components/schemas/EventDateProperties_publishingSettings"
+            "$ref": "#/components/schemas/EventDatePublishingSettings"
           },
           "additionalInfo": {
             "type": "string",
@@ -8474,7 +8474,7 @@
           "payments": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/RevenueItem_payments"
+              "$ref": "#/components/schemas/RevenuePayment"
             }
           },
           "remarks": {
@@ -9109,7 +9109,7 @@
             }
           },
           "dataProtection": {
-            "$ref": "#/components/schemas/ProfileProperties_dataProtection"
+            "$ref": "#/components/schemas/DataProtection"
           },
           "linkedProfiles": {
             "type": "array",
@@ -9170,7 +9170,7 @@
             ]
           },
           "type": {
-            "$ref": "#/components/schemas/ProfileActivity_type"
+            "$ref": "#/components/schemas/ProfileActivityType"
           },
           "title": {
             "type": "string"
@@ -9274,7 +9274,7 @@
             "type": "string"
           },
           "retentionPeriod": {
-            "$ref": "#/components/schemas/LegalBasis_retentionPeriod"
+            "$ref": "#/components/schemas/RetentionPeriod"
           }
         }
       },
@@ -9450,7 +9450,7 @@
             "nullable": true
           },
           "salutationSettings": {
-            "$ref": "#/components/schemas/PersonProfileProperties_salutationSettings"
+            "$ref": "#/components/schemas/SalutationSettings"
           },
           "preferredEmail": {
             "type": "string",
@@ -9900,7 +9900,7 @@
             ]
           },
           "originalInvoice": {
-            "$ref": "#/components/schemas/InvoiceProperties_originalInvoice"
+            "$ref": "#/components/schemas/OriginalInvoiceReference"
           },
           "recipient": {
             "nullable": false,
@@ -10364,7 +10364,7 @@
           }
         }
       },
-      "BaseList_meta": {
+      "ListMeta": {
         "type": "object",
         "properties": {
           "totalCount": {
@@ -10408,7 +10408,7 @@
           }
         }
       },
-      "Certificate_takeoverSourceCertificate": {
+      "TakeoverSourceCertificate": {
         "required": [
           "id"
         ],
@@ -10452,7 +10452,7 @@
         "nullable": true,
         "readOnly": true
       },
-      "BookingGuest_guest": {
+      "GuestReference": {
         "type": "object",
         "properties": {
           "profile": {
@@ -10484,7 +10484,7 @@
         "description": "Either a profile OR name plus optionally age and gender",
         "nullable": false
       },
-      "EventProperties_bookingSettings": {
+      "EventBookingSettings": {
         "required": [
           "allowChildren",
           "isMultiPart",
@@ -10550,7 +10550,7 @@
         },
         "nullable": false
       },
-      "EventProperties_publishingSettings": {
+      "EventPublishingSettings": {
         "required": [
           "status",
           "title"
@@ -10580,7 +10580,7 @@
         "description": "At the moment, contains just base information from the \"booking page settings\". Might be extended in the future.",
         "nullable": false
       },
-      "EventDateProperties_receptionSettings": {
+      "EventDateReceptionSettings": {
         "required": [
           "begin",
           "end",
@@ -10613,7 +10613,7 @@
         },
         "nullable": true
       },
-      "EventDateProperties_serviceAndPriceSettings": {
+      "EventDateServiceAndPriceSettings": {
         "type": "object",
         "properties": {
           "hasAttendanceFees": {
@@ -10678,7 +10678,7 @@
         },
         "nullable": true
       },
-      "EventDateProperties_publishingSettings": {
+      "EventDatePublishingSettings": {
         "type": "object",
         "properties": {
           "title": {
@@ -10780,7 +10780,7 @@
         },
         "nullable": true
       },
-      "RevenueItem_payments": {
+      "RevenuePayment": {
         "required": [
           "amount",
           "date",
@@ -10806,7 +10806,7 @@
           }
         }
       },
-      "ProfileProperties_dataProtection": {
+      "DataProtection": {
         "type": "object",
         "properties": {
           "legalBasisEntries": {
@@ -10827,7 +10827,7 @@
         "nullable": true,
         "readOnly": true
       },
-      "ProfileActivity_type": {
+      "ProfileActivityType": {
         "required": [
           "name"
         ],
@@ -10838,7 +10838,7 @@
           }
         }
       },
-      "LegalBasis_retentionPeriod": {
+      "RetentionPeriod": {
         "required": [
           "isStandard",
           "name",
@@ -10862,7 +10862,7 @@
           }
         }
       },
-      "PersonProfileProperties_salutationSettings": {
+      "SalutationSettings": {
         "required": [
           "preferredSalutation"
         ],
@@ -10887,7 +10887,7 @@
           }
         }
       },
-      "InvoiceProperties_originalInvoice": {
+      "OriginalInvoiceReference": {
         "required": [
           "date",
           "id",
