@@ -6997,6 +6997,9 @@
             "$ref": "#/components/schemas/PersonProfileProperties"
           },
           {
+            "$ref": "#/components/schemas/PersonToFacilitatorConversionProperties"
+          },
+          {
             "type": "object",
             "properties": {
               "notes": {
@@ -7015,7 +7018,10 @@
       "PatchFacilitatorProfile": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/PatchPersonProfile"
+            "$ref": "#/components/schemas/ProfileProperties"
+          },
+          {
+            "$ref": "#/components/schemas/PersonProfileProperties"
           },
           {
             "$ref": "#/components/schemas/FacilitatorProfileProperties"
@@ -9392,6 +9398,9 @@
           },
           {
             "$ref": "#/components/schemas/PersonProfileRequiredProperties"
+          },
+          {
+            "$ref": "#/components/schemas/PersonToFacilitatorConversionProperties"
           }
         ]
       },
@@ -9400,6 +9409,16 @@
           "lastName"
         ],
         "type": "object"
+      },
+      "PersonToFacilitatorConversionProperties": {
+        "type": "object",
+        "properties": {
+          "isFacilitator": {
+            "type": "boolean",
+            "description": "When this is set to `true`, this person profile will be converted to a facilitator profile.",
+            "writeOnly": true
+          }
+        }
       },
       "PersonProfileProperties": {
         "type": "object",
@@ -9494,11 +9513,6 @@
             "items": {
               "$ref": "#/components/schemas/ProfileActivity"
             }
-          },
-          "isFacilitator": {
-            "type": "boolean",
-            "description": "When this is set to `true`, this person profile will be converted to a facilitator profile.",
-            "writeOnly": true
           }
         }
       },
@@ -9617,6 +9631,12 @@
         "allOf": [
           {
             "$ref": "#/components/schemas/Profile"
+          },
+          {
+            "$ref": "#/components/schemas/PersonProfileProperties"
+          },
+          {
+            "$ref": "#/components/schemas/PersonProfileRequiredProperties"
           },
           {
             "$ref": "#/components/schemas/FacilitatorProfileProperties"
