@@ -8063,6 +8063,7 @@
           "begin",
           "end",
           "location",
+          "name",
           "teachingUnits",
           "type"
         ],
@@ -8093,7 +8094,8 @@
           "teachingUnits": {
             "maximum": 99,
             "minimum": 0,
-            "type": "integer"
+            "type": "number",
+            "format": "double"
           },
           "facilitator": {
             "$ref": "#/components/schemas/FacilitatorInfo"
