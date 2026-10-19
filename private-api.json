@@ -8070,7 +8070,9 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "maxLength": 255,
+            "type": "string",
+            "description": "Must not be blank when creating an entry. Existing entries can return an empty name."
           },
           "type": {
             "type": "string",
@@ -8095,7 +8097,7 @@
             "maximum": 99,
             "minimum": 0,
             "type": "number",
-            "format": "double"
+            "format": "float"
           },
           "facilitator": {
             "$ref": "#/components/schemas/FacilitatorInfo"
