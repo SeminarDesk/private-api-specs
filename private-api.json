@@ -5703,7 +5703,7 @@
         "type": "object",
         "properties": {
           "meta": {
-            "$ref": "#/components/schemas/BaseList_meta"
+            "$ref": "#/components/schemas/ListMeta"
           }
         }
       },
@@ -6037,7 +6037,7 @@
             "readOnly": true
           },
           "takeoverSourceCertificate": {
-            "$ref": "#/components/schemas/Certificate_takeoverSourceCertificate"
+            "$ref": "#/components/schemas/TakeoverSourceCertificate"
           },
           "status": {
             "type": "string",
@@ -6616,7 +6616,7 @@
             ]
           },
           "guest": {
-            "$ref": "#/components/schemas/BookingGuest_guest"
+            "$ref": "#/components/schemas/GuestReference"
           },
           "status": {
             "nullable": false,
@@ -7001,6 +7001,9 @@
             "$ref": "#/components/schemas/PersonProfileProperties"
           },
           {
+            "$ref": "#/components/schemas/PersonToFacilitatorConversionProperties"
+          },
+          {
             "type": "object",
             "properties": {
               "notes": {
@@ -7019,7 +7022,10 @@
       "PatchFacilitatorProfile": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/PatchPersonProfile"
+            "$ref": "#/components/schemas/ProfileProperties"
+          },
+          {
+            "$ref": "#/components/schemas/PersonProfileProperties"
           },
           {
             "$ref": "#/components/schemas/FacilitatorProfileProperties"
@@ -7100,6 +7106,13 @@
               },
               "facilitators": {
                 "description": "When a value is provided, this will override the existing list of facilitators."
+              },
+              "externalReferences": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ExternalReference"
+                },
+                "description": "When a value is provided, this replaces all external references of the event date, including those of other external systems. An empty list removes all of them. Every referenced external system must exist. Each externalId is trimmed and must not be empty or \"0\", and a system/externalId pair must not appear twice."
               },
               "equipment": {
                 "readOnly": true
@@ -7200,7 +7213,7 @@
             "$ref": "#/components/schemas/NamedIdReference"
           },
           "externalId": {
-            "maxLength": 255,
+            "maxLength": 50,
             "type": "string",
             "nullable": false
           },
@@ -7342,7 +7355,7 @@
             "nullable": true
           },
           "bookingSettings": {
-            "$ref": "#/components/schemas/EventProperties_bookingSettings"
+            "$ref": "#/components/schemas/EventBookingSettings"
           },
           "attendanceFeePriceLists": {
             "type": "array",
@@ -7354,6 +7367,12 @@
             "type": "string",
             "nullable": true
           },
+          "referenceNumbers": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Reference numbers entered on this event. They appear on invoices together with those of the event date and the booking. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
+            "nullable": true
+          },
           "additionalFields": {
             "type": "array",
             "items": {
@@ -7361,7 +7380,7 @@
             }
           },
           "publishingSettings": {
-            "$ref": "#/components/schemas/EventProperties_publishingSettings"
+            "$ref": "#/components/schemas/EventPublishingSettings"
           },
           "statistics": {
             "nullable": false,
@@ -7730,13 +7749,13 @@
             "nullable": true
           },
           "receptionSettings": {
-            "$ref": "#/components/schemas/EventDateProperties_receptionSettings"
+            "$ref": "#/components/schemas/EventDateReceptionSettings"
           },
           "serviceAndPriceSettings": {
-            "$ref": "#/components/schemas/EventDateProperties_serviceAndPriceSettings"
+            "$ref": "#/components/schemas/EventDateServiceAndPriceSettings"
           },
           "publishingSettings": {
-            "$ref": "#/components/schemas/EventDateProperties_publishingSettings"
+            "$ref": "#/components/schemas/EventDatePublishingSettings"
           },
           "additionalInfo": {
             "type": "string",
@@ -7744,6 +7763,12 @@
           },
           "remarks": {
             "type": "string",
+            "nullable": true
+          },
+          "referenceNumbers": {
+            "maxLength": 250,
+            "type": "string",
+            "description": "Reference numbers entered on this event date. They appear on invoices together with those of the event and the booking. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
             "nullable": true
           },
           "labels": {
@@ -8042,13 +8067,16 @@
           "begin",
           "end",
           "location",
+          "name",
           "teachingUnits",
           "type"
         ],
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "maxLength": 255,
+            "type": "string",
+            "description": "Must not be blank when creating an entry. Existing entries can return an empty name."
           },
           "type": {
             "type": "string",
@@ -8072,7 +8100,8 @@
           "teachingUnits": {
             "maximum": 99,
             "minimum": 0,
-            "type": "integer"
+            "type": "number",
+            "format": "float"
           },
           "facilitator": {
             "$ref": "#/components/schemas/FacilitatorInfo"
@@ -8453,7 +8482,7 @@
           "payments": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/RevenueItem_payments"
+              "$ref": "#/components/schemas/RevenuePayment"
             }
           },
           "remarks": {
@@ -8951,7 +8980,6 @@
       },
       "ProfileRequiredProperties": {
         "required": [
-          "name",
           "objectType",
           "salutation"
         ],
@@ -9089,7 +9117,7 @@
             }
           },
           "dataProtection": {
-            "$ref": "#/components/schemas/ProfileProperties_dataProtection"
+            "$ref": "#/components/schemas/DataProtection"
           },
           "linkedProfiles": {
             "type": "array",
@@ -9150,7 +9178,7 @@
             ]
           },
           "type": {
-            "$ref": "#/components/schemas/ProfileActivity_type"
+            "$ref": "#/components/schemas/ProfileActivityType"
           },
           "title": {
             "type": "string"
@@ -9254,7 +9282,7 @@
             "type": "string"
           },
           "retentionPeriod": {
-            "$ref": "#/components/schemas/LegalBasis_retentionPeriod"
+            "$ref": "#/components/schemas/RetentionPeriod"
           }
         }
       },
@@ -9378,6 +9406,9 @@
           },
           {
             "$ref": "#/components/schemas/PersonProfileRequiredProperties"
+          },
+          {
+            "$ref": "#/components/schemas/PersonToFacilitatorConversionProperties"
           }
         ]
       },
@@ -9386,6 +9417,16 @@
           "lastName"
         ],
         "type": "object"
+      },
+      "PersonToFacilitatorConversionProperties": {
+        "type": "object",
+        "properties": {
+          "isFacilitator": {
+            "type": "boolean",
+            "description": "When this is set to `true`, this person profile will be converted to a facilitator profile.",
+            "writeOnly": true
+          }
+        }
       },
       "PersonProfileProperties": {
         "type": "object",
@@ -9417,7 +9458,7 @@
             "nullable": true
           },
           "salutationSettings": {
-            "$ref": "#/components/schemas/PersonProfileProperties_salutationSettings"
+            "$ref": "#/components/schemas/SalutationSettings"
           },
           "preferredEmail": {
             "type": "string",
@@ -9480,11 +9521,6 @@
             "items": {
               "$ref": "#/components/schemas/ProfileActivity"
             }
-          },
-          "isFacilitator": {
-            "type": "boolean",
-            "description": "When this is set to `true`, this person profile will be converted to a facilitator profile.",
-            "writeOnly": true
           }
         }
       },
@@ -9603,6 +9639,12 @@
         "allOf": [
           {
             "$ref": "#/components/schemas/Profile"
+          },
+          {
+            "$ref": "#/components/schemas/PersonProfileProperties"
+          },
+          {
+            "$ref": "#/components/schemas/PersonProfileRequiredProperties"
           },
           {
             "$ref": "#/components/schemas/FacilitatorProfileProperties"
@@ -9866,7 +9908,7 @@
             ]
           },
           "originalInvoice": {
-            "$ref": "#/components/schemas/InvoiceProperties_originalInvoice"
+            "$ref": "#/components/schemas/OriginalInvoiceReference"
           },
           "recipient": {
             "nullable": false,
@@ -10330,7 +10372,7 @@
           }
         }
       },
-      "BaseList_meta": {
+      "ListMeta": {
         "type": "object",
         "properties": {
           "totalCount": {
@@ -10374,7 +10416,7 @@
           }
         }
       },
-      "Certificate_takeoverSourceCertificate": {
+      "TakeoverSourceCertificate": {
         "required": [
           "id"
         ],
@@ -10418,7 +10460,7 @@
         "nullable": true,
         "readOnly": true
       },
-      "BookingGuest_guest": {
+      "GuestReference": {
         "type": "object",
         "properties": {
           "profile": {
@@ -10450,7 +10492,7 @@
         "description": "Either a profile OR name plus optionally age and gender",
         "nullable": false
       },
-      "EventProperties_bookingSettings": {
+      "EventBookingSettings": {
         "required": [
           "allowChildren",
           "isMultiPart",
@@ -10516,7 +10558,7 @@
         },
         "nullable": false
       },
-      "EventProperties_publishingSettings": {
+      "EventPublishingSettings": {
         "required": [
           "status",
           "title"
@@ -10546,7 +10588,7 @@
         "description": "At the moment, contains just base information from the \"booking page settings\". Might be extended in the future.",
         "nullable": false
       },
-      "EventDateProperties_receptionSettings": {
+      "EventDateReceptionSettings": {
         "required": [
           "begin",
           "end",
@@ -10579,7 +10621,7 @@
         },
         "nullable": true
       },
-      "EventDateProperties_serviceAndPriceSettings": {
+      "EventDateServiceAndPriceSettings": {
         "type": "object",
         "properties": {
           "hasAttendanceFees": {
@@ -10644,7 +10686,7 @@
         },
         "nullable": true
       },
-      "EventDateProperties_publishingSettings": {
+      "EventDatePublishingSettings": {
         "type": "object",
         "properties": {
           "title": {
@@ -10746,7 +10788,7 @@
         },
         "nullable": true
       },
-      "RevenueItem_payments": {
+      "RevenuePayment": {
         "required": [
           "amount",
           "date",
@@ -10772,7 +10814,7 @@
           }
         }
       },
-      "ProfileProperties_dataProtection": {
+      "DataProtection": {
         "type": "object",
         "properties": {
           "legalBasisEntries": {
@@ -10793,7 +10835,7 @@
         "nullable": true,
         "readOnly": true
       },
-      "ProfileActivity_type": {
+      "ProfileActivityType": {
         "required": [
           "name"
         ],
@@ -10804,7 +10846,7 @@
           }
         }
       },
-      "LegalBasis_retentionPeriod": {
+      "RetentionPeriod": {
         "required": [
           "isStandard",
           "name",
@@ -10828,7 +10870,7 @@
           }
         }
       },
-      "PersonProfileProperties_salutationSettings": {
+      "SalutationSettings": {
         "required": [
           "preferredSalutation"
         ],
@@ -10853,7 +10895,7 @@
           }
         }
       },
-      "InvoiceProperties_originalInvoice": {
+      "OriginalInvoiceReference": {
         "required": [
           "date",
           "id",
