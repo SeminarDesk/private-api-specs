@@ -6483,7 +6483,8 @@
             "enum": [
               "PENDING",
               "COMPLETED",
-              "FAILED"
+              "FAILED",
+              null
             ]
           },
           "confirmationDate": {
@@ -6756,7 +6757,8 @@
             "nullable": true
           },
           "priceList": {
-            "nullable": false,
+            "description": "Null when the item has no price list. In a PATCH request, null leaves the price list unchanged.",
+            "nullable": true,
             "allOf": [
               {
                 "$ref": "#/components/schemas/NamedIdReference"
@@ -6766,6 +6768,7 @@
           "priceListItemId": {
             "description": "Contains the ID of the price list item related to this item, if any",
             "readOnly": true,
+            "nullable": true,
             "allOf": [
               {
                 "$ref": "#/components/schemas/NumericPrimaryKey"
@@ -6874,6 +6877,8 @@
               "ACCOMMODATION",
               "MEALS",
               "MISC",
+              "RENT",
+              "CREDIT",
               "PAYMENT_FEE"
             ]
           }
@@ -6910,8 +6915,7 @@
       },
       "PaymentMethod": {
         "required": [
-          "code",
-          "name"
+          "code"
         ],
         "type": "object",
         "properties": {
@@ -9780,7 +9784,7 @@
           },
           "roleName": {
             "type": "string",
-            "nullable": false,
+            "nullable": true,
             "readOnly": true,
             "example": "Administration"
           },
@@ -10472,7 +10476,7 @@
             "nullable": true
           },
           "age": {
-            "minimum": 1,
+            "minimum": 0,
             "type": "integer",
             "nullable": true
           },
