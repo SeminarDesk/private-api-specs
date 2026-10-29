@@ -685,117 +685,6 @@
         }
       }
     },
-    "/events/{id}/bookings": {
-      "post": {
-        "tags": [
-          "Events",
-          "Bookings"
-        ],
-        "summary": "Creates a new booking for all dates of this event that have a status which allows bookings",
-        "description": "Note: This could result in either *one* or *multiple bookings* being created based on the event's \"booking mode\" setting.\n",
-        "operationId": "createBookingForEventDates",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Numeric ID of the item",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "minimum": 1,
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "ignoreExistingBookings",
-            "in": "query",
-            "description": "If this is set to `true`, then existing bookings for any of the provided dates/guests will be ignored \u2013 otherwise this would result in a 400 error",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateEventBooking"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created, contains the newly created booking(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Booking"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "API key is missing or invalid",
-            "headers": {
-              "WWW_Authenticate": {
-                "style": "simple",
-                "explode": false,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "API key does not have required permissions",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "501": {
-            "description": "Request cannot be handled, private API not active or required module not enabled",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/events/{id}/attendance-fee-price-lists": {
       "get": {
         "tags": [
@@ -6152,26 +6041,6 @@
           }
         ]
       },
-      "CreateEventBooking": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/CreateBooking"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "guests": {
-                "minItems": 1,
-                "type": "array",
-                "nullable": false,
-                "items": {
-                  "$ref": "#/components/schemas/EventBookingGuest"
-                }
-              }
-            }
-          }
-        ]
-      },
       "CreateBooking": {
         "allOf": [
           {
@@ -6566,21 +6435,6 @@
           "CANCELED",
           "WAIT_LIST_CANCELED",
           "NO_SHOW"
-        ]
-      },
-      "EventBookingGuest": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/BookingGuest"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "eventDate": {
-                "readOnly": true
-              }
-            }
-          }
         ]
       },
       "BookingGuest": {
