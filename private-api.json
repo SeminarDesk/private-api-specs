@@ -10088,7 +10088,7 @@
           "number": {
             "minimum": 1,
             "type": "integer",
-            "description": "Page number",
+            "description": "Page number. A page beyond the last returns an empty `data` list; `meta` still carries the requested page number and the totals.",
             "default": 1
           },
           "size": {
@@ -10267,8 +10267,9 @@
             "default": 20
           },
           "totalPages": {
-            "minimum": 1,
-            "type": "integer"
+            "minimum": 0,
+            "type": "integer",
+            "description": "0 for an empty list"
           },
           "firstPage": {
             "type": "string",
