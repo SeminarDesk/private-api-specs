@@ -10323,24 +10323,6 @@
       "ProfileFilter": {
         "type": "object",
         "properties": {
-          "isSubscribedToNewsletter": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "isBlocked": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "customerNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "additionalField": {
-            "type": "string",
-            "description": "Filter by value of additional field designated by the given ID",
-            "nullable": true,
-            "example": "42:MyFieldValue"
-          },
           "externalReferenceId": {
             "type": "string",
             "description": "Filter by an external system ID in the format `<ID of external system>:<System ID>`",
