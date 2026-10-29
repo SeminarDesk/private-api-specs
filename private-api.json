@@ -6049,6 +6049,18 @@
           {
             "type": "object",
             "properties": {
+              "marker": {
+                "readOnly": true
+              },
+              "referenceNumbers": {
+                "readOnly": true
+              },
+              "voucherCode": {
+                "readOnly": true
+              },
+              "onlinePaymentStatus": {
+                "readOnly": true
+              },
               "notes": {
                 "readOnly": true
               },
@@ -6651,7 +6663,7 @@
           "quantity": {
             "minimum": 0,
             "type": "integer",
-            "description": "This is only considered for items of type \"misc\"",
+            "description": "In PATCH requests, only applied to items of type \"misc\"; ignored for all other item types.",
             "nullable": true
           },
           "roomAssignment": {
@@ -6860,6 +6872,13 @@
           {
             "type": "object",
             "properties": {
+              "billingAddress": {
+                "properties": {
+                  "email": {
+                    "readOnly": true
+                  }
+                }
+              },
               "notes": {
                 "readOnly": true
               },
@@ -6887,6 +6906,13 @@
           {
             "type": "object",
             "properties": {
+              "billingAddress": {
+                "properties": {
+                  "email": {
+                    "readOnly": true
+                  }
+                }
+              },
               "notes": {
                 "readOnly": true
               },
@@ -7378,7 +7404,8 @@
             }
           },
           "isActive": {
-            "type": "boolean"
+            "type": "boolean",
+            "readOnly": true
           }
         }
       },
@@ -7473,6 +7500,7 @@
           },
           "order": {
             "type": "integer",
+            "description": "Applied by `POST /events/{id}/attendance-fee-price-lists`, where it is required when `isPublished` is `true`. Ignored by `POST /events`.",
             "nullable": true
           }
         }
@@ -8245,6 +8273,14 @@
             "allOf": [
               {
                 "$ref": "#/components/schemas/BankAccountData"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "country": {
+                    "readOnly": true
+                  }
+                }
               }
             ]
           },
@@ -10599,6 +10635,7 @@
           },
           "allowFlexibleStay": {
             "type": "boolean",
+            "readOnly": true,
             "nullable": false
           },
           "earlyArrivalMode": {
