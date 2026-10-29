@@ -1513,6 +1513,7 @@
           {
             "name": "searchTerm",
             "in": "query",
+            "description": "Case-insensitive substring search in the full name, `email` and `alternativeEmail`. The invoice email is not searched. Encode a `+` in an address as `%2B`, otherwise it is read as a space.",
             "required": false,
             "style": "form",
             "explode": true,
@@ -2234,6 +2235,7 @@
           {
             "name": "searchTerm",
             "in": "query",
+            "description": "Case-insensitive substring search in the full name, `email` and `alternativeEmail`. The invoice email is not searched. Encode a `+` in an address as `%2B`, otherwise it is read as a space.",
             "required": false,
             "style": "form",
             "explode": true,
@@ -2589,6 +2591,7 @@
           {
             "name": "searchTerm",
             "in": "query",
+            "description": "Case-insensitive substring search in the full name, `email` and `alternativeEmail`. The invoice email is not searched. Encode a `+` in an address as `%2B`, otherwise it is read as a space.",
             "required": false,
             "style": "form",
             "explode": true,
@@ -2934,6 +2937,7 @@
           {
             "name": "searchTerm",
             "in": "query",
+            "description": "Case-insensitive substring search in the organization name (`name`, `name2`), `email` and `alternativeEmail`. The invoice email is not searched. Encode a `+` in an address as `%2B`, otherwise it is read as a space.",
             "required": false,
             "style": "form",
             "explode": true,
