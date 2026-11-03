@@ -6325,7 +6325,7 @@
           },
           "referenceNumbers": {
             "type": "string",
-            "description": "Buyer reference (EN 16931 BT-10) entered on this booking, such as a Leitweg-ID.",
+            "description": "Buyer reference (EN 16931 BT-10) entered on this booking, a free reference such as a cost center. It appears on invoices together with those of the event and the event date.",
             "nullable": true
           },
           "voucherCode": {
@@ -7255,7 +7255,7 @@
           "referenceNumbers": {
             "maxLength": 250,
             "type": "string",
-            "description": "Buyer reference (EN 16931 BT-10) entered on this event, such as a Leitweg-ID. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
+            "description": "Buyer reference (EN 16931 BT-10) entered on this event, a free reference such as a cost center. It appears on invoices together with those of the event date and the booking. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
             "nullable": true
           },
           "additionalFields": {
@@ -7655,7 +7655,7 @@
           "referenceNumbers": {
             "maxLength": 250,
             "type": "string",
-            "description": "Buyer reference (EN 16931 BT-10) entered on this event date, such as a Leitweg-ID. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
+            "description": "Buyer reference (EN 16931 BT-10) entered on this event date, a free reference such as a cost center. It appears on invoices together with those of the event and the booking. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
             "nullable": true
           },
           "labels": {
@@ -9934,7 +9934,7 @@
             "properties": {
               "buyerReference": {
                 "type": "string",
-                "description": "Buyer reference (BT-10), such as a Leitweg-ID. `null` when the invoice has none.",
+                "description": "Buyer reference (BT-10), a free reference such as a cost center. `null` when the invoice has none.",
                 "nullable": true
               },
               "purchaseOrderReference": {
