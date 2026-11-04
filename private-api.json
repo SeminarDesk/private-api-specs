@@ -1513,6 +1513,7 @@
           {
             "name": "searchTerm",
             "in": "query",
+            "description": "Case-insensitive substring search in the full name, `email` and `alternativeEmail`. The invoice email is not searched. Encode a `+` in an address as `%2B`, otherwise it is read as a space.",
             "required": false,
             "style": "form",
             "explode": true,
@@ -2234,6 +2235,7 @@
           {
             "name": "searchTerm",
             "in": "query",
+            "description": "Case-insensitive substring search in the full name, `email` and `alternativeEmail`. The invoice email is not searched. Encode a `+` in an address as `%2B`, otherwise it is read as a space.",
             "required": false,
             "style": "form",
             "explode": true,
@@ -2589,6 +2591,7 @@
           {
             "name": "searchTerm",
             "in": "query",
+            "description": "Case-insensitive substring search in the full name, `email` and `alternativeEmail`. The invoice email is not searched. Encode a `+` in an address as `%2B`, otherwise it is read as a space.",
             "required": false,
             "style": "form",
             "explode": true,
@@ -2934,6 +2937,7 @@
           {
             "name": "searchTerm",
             "in": "query",
+            "description": "Case-insensitive substring search in the organization name (`name`, `name2`), `email` and `alternativeEmail`. The invoice email is not searched. Encode a `+` in an address as `%2B`, otherwise it is read as a space.",
             "required": false,
             "style": "form",
             "explode": true,
@@ -10084,7 +10088,7 @@
           "number": {
             "minimum": 1,
             "type": "integer",
-            "description": "Page number",
+            "description": "Page number. A page beyond the last returns an empty `data` list; `meta` still carries the requested page number and the totals.",
             "default": 1
           },
           "size": {
@@ -10263,8 +10267,9 @@
             "default": 20
           },
           "totalPages": {
-            "minimum": 1,
-            "type": "integer"
+            "minimum": 0,
+            "type": "integer",
+            "description": "0 for an empty list"
           },
           "firstPage": {
             "type": "string",
