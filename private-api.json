@@ -108,6 +108,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -195,6 +198,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -279,6 +285,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -366,6 +375,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -451,6 +463,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -569,6 +584,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -672,6 +690,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -756,6 +777,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -850,6 +874,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -940,6 +967,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -1034,6 +1064,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1108,6 +1141,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -1195,6 +1231,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1280,6 +1319,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -1388,6 +1430,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1478,6 +1523,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -1573,6 +1621,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1657,6 +1708,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -1765,6 +1819,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1862,6 +1919,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1936,6 +1996,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2028,6 +2091,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -2112,6 +2178,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2199,6 +2268,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2295,6 +2367,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -2383,6 +2458,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -2468,6 +2546,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2555,6 +2636,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2651,6 +2735,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -2729,6 +2816,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2816,6 +2906,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -2902,6 +2995,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2997,6 +3093,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3081,6 +3180,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -3175,6 +3277,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3256,6 +3361,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -3342,6 +3450,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3426,6 +3537,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -3534,6 +3648,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3638,6 +3755,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -3746,6 +3866,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3841,6 +3964,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -3948,6 +4074,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -4043,6 +4172,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -4143,6 +4275,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -4239,6 +4374,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -4323,6 +4461,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -4430,6 +4571,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -4525,6 +4669,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -4618,6 +4765,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -4702,6 +4852,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -4788,6 +4941,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -4893,6 +5049,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -5001,6 +5160,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -5106,6 +5268,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -5191,6 +5356,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -5284,6 +5452,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -5373,6 +5544,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -5457,6 +5631,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -5556,6 +5733,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -5635,6 +5815,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -11060,6 +11243,16 @@
       },
       "NotImplementedError": {
         "description": "Request cannot be handled, private API not active or required module not enabled",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Unexpected error on the server. A change the request asked for may have been applied in part or in full, so read the resource again before retrying. If the error persists, contact support.",
         "content": {
           "application/json": {
             "schema": {
