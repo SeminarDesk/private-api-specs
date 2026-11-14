@@ -3591,7 +3591,7 @@
             }
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Pending\" or \"Confirmed\"; the booking has no pending or confirmed items; the request body is not a valid JSON object or a field value cannot be read; `reason` is missing, blank or longer than 255 characters",
             "content": {
               "application/json": {
                 "schema": {
@@ -3649,7 +3649,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Only bookings in status \"Pending\" or \"Confirmed\" can be canceled. A reason is required. Depending on the event's email settings, the booker receives the cancelation email; see `sendStatusEmail` for how to control it. Nothing is sent if the booker has no email address."
       }
     },
     "/bookings/{id}/confirm": {
@@ -3658,7 +3659,7 @@
           "Bookings"
         ],
         "summary": "Sets a booking's status to \"Confirmed\"",
-        "description": "Only bookings in status \"Pending\", \"Wait list\" or \"Canceled wait list\" can be confirmed.",
+        "description": "Only bookings in status \"Pending\", \"Wait list\" or \"Canceled wait list\" can be confirmed. Depending on the event's email settings, the booker receives the confirmation email, which can include an invoice and a payment link; see `sendStatusEmail` for how to control it. Nothing is sent if the booker has no email address. The request body is optional.",
         "operationId": "markBookingAsConfirmed",
         "parameters": [
           {
@@ -3683,7 +3684,7 @@
               }
             }
           },
-          "required": true
+          "required": false
         },
         "responses": {
           "200": {
@@ -3697,7 +3698,7 @@
             }
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Pending\", \"Wait list\" or \"Canceled wait list\"; the request body is not a valid JSON object or a field value cannot be read",
             "content": {
               "application/json": {
                 "schema": {
@@ -3793,7 +3794,7 @@
             }
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Confirmed\"; the booking has no pending or confirmed items",
             "content": {
               "application/json": {
                 "schema": {
@@ -3860,7 +3861,7 @@
           "Bookings"
         ],
         "summary": "Sets a booking's status to \"Wait list\"",
-        "description": "Only bookings in status \"Pending\", \"Confirmed\" or \"Canceled wait list\" can be set to \"Wait list\".",
+        "description": "Only bookings in status \"Pending\", \"Confirmed\" or \"Canceled wait list\" can be set to \"Wait list\". Depending on the event's email settings, the booker receives the wait list email; see `sendStatusEmail` for how to control it. Nothing is sent if the booker has no email address. The request body is optional.",
         "operationId": "markBookingAsWaitList",
         "parameters": [
           {
@@ -3885,7 +3886,7 @@
               }
             }
           },
-          "required": true
+          "required": false
         },
         "responses": {
           "200": {
@@ -3899,7 +3900,7 @@
             }
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Pending\", \"Confirmed\" or \"Canceled wait list\"; the request body is not a valid JSON object or a field value cannot be read",
             "content": {
               "application/json": {
                 "schema": {
@@ -4094,7 +4095,7 @@
             "description": "Booking deleted successfully"
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Pending\", \"Wait list\" or \"Canceled wait list\"; the request body is not a valid JSON object or a field value cannot be read; `reason` is missing, blank or longer than 255 characters",
             "content": {
               "application/json": {
                 "schema": {
@@ -4190,7 +4191,7 @@
             }
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Canceled\" or \"No-show\"",
             "content": {
               "application/json": {
                 "schema": {
@@ -6266,7 +6267,10 @@
         "type": "object",
         "properties": {
           "sendStatusEmail": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "description": "Whether the booker receives the email for this status change; `null` counts as `false`. It applies only when the event's email setting for this change is \"Ask if it should be sent\"; with the settings to always or never send, the setting decides and this field has no effect."
           }
         }
       },
@@ -6283,8 +6287,10 @@
             "properties": {
               "reason": {
                 "type": "string",
-                "description": "Reason for the cancelation",
-                "nullable": false
+                "description": "Reason for the cancelation; must not be blank",
+                "nullable": false,
+                "minLength": 1,
+                "maxLength": 255
               }
             }
           }
@@ -6298,8 +6304,10 @@
         "properties": {
           "reason": {
             "type": "string",
-            "description": "Reason for the deletion",
-            "nullable": false
+            "description": "Reason for the deletion; must not be blank",
+            "nullable": false,
+            "minLength": 1,
+            "maxLength": 255
           }
         }
       },
@@ -6548,7 +6556,8 @@
           "CANCELED",
           "WAIT_LIST_CANCELED",
           "NO_SHOW"
-        ]
+        ],
+        "description": "Status of a booking. Guests and their items use the same values, except `NO_SHOW`: a no-show guest or item has no status (`null`).\n- `PENDING` (\"Pending\"): received, not yet confirmed\n- `CONFIRMED` (\"Confirmed\")\n- `WAIT_LIST` (\"Wait list\"): waiting for a free place\n- `CANCELED` (\"Canceled\")\n- `WAIT_LIST_CANCELED` (\"Canceled wait list\"): removed from the wait list without having been confirmed\n- `NO_SHOW` (\"No-show\"): confirmed, but did not attend"
       },
       "BookingGuest": {
         "required": [
