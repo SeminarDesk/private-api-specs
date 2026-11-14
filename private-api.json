@@ -3860,7 +3860,7 @@
           "Bookings"
         ],
         "summary": "Sets a booking's status to \"Wait list\"",
-        "description": "Only bookings in status \"Pending\" or \"Confirmed\" can be set to \"Wait list\".",
+        "description": "Only bookings in status \"Pending\", \"Confirmed\" or \"Canceled wait list\" can be set to \"Wait list\".",
         "operationId": "markBookingAsWaitList",
         "parameters": [
           {
