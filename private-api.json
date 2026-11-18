@@ -108,6 +108,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -195,6 +198,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -279,6 +285,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -366,6 +375,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -451,6 +463,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -569,6 +584,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -672,6 +690,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -756,6 +777,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -850,6 +874,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -940,6 +967,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -1034,6 +1064,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1108,6 +1141,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -1195,6 +1231,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1280,6 +1319,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -1388,6 +1430,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1478,6 +1523,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -1573,6 +1621,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1657,6 +1708,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -1765,6 +1819,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1862,6 +1919,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -1936,6 +1996,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2028,6 +2091,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -2112,6 +2178,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2199,6 +2268,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2295,6 +2367,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -2383,6 +2458,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -2468,6 +2546,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2555,6 +2636,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2651,6 +2735,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -2729,6 +2816,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2816,6 +2906,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -2902,6 +2995,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -2997,6 +3093,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3081,6 +3180,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -3175,6 +3277,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3256,6 +3361,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -3342,6 +3450,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3426,6 +3537,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -3534,6 +3648,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3591,7 +3708,7 @@
             }
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Pending\" or \"Confirmed\"; the booking has no pending or confirmed items; the request body is not a valid JSON object or a field value cannot be read; `reason` is missing, blank or longer than 255 characters",
             "content": {
               "application/json": {
                 "schema": {
@@ -3639,6 +3756,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3649,7 +3769,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Only bookings in status \"Pending\" or \"Confirmed\" can be canceled. A reason is required. Depending on the event's email settings, the booker receives the cancelation email; see `sendStatusEmail` for how to control it. Nothing is sent if the booker has no email address."
       }
     },
     "/bookings/{id}/confirm": {
@@ -3658,7 +3779,7 @@
           "Bookings"
         ],
         "summary": "Sets a booking's status to \"Confirmed\"",
-        "description": "Only bookings in status \"Pending\", \"Wait list\" or \"Canceled wait list\" can be confirmed.",
+        "description": "Only bookings in status \"Pending\", \"Wait list\" or \"Canceled wait list\" can be confirmed. Depending on the event's email settings, the booker receives the confirmation email, which can include an invoice and a payment link; see `sendStatusEmail` for how to control it. Nothing is sent if the booker has no email address. The request body is optional.",
         "operationId": "markBookingAsConfirmed",
         "parameters": [
           {
@@ -3683,7 +3804,7 @@
               }
             }
           },
-          "required": true
+          "required": false
         },
         "responses": {
           "200": {
@@ -3697,7 +3818,7 @@
             }
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Pending\", \"Wait list\" or \"Canceled wait list\"; the request body is not a valid JSON object or a field value cannot be read",
             "content": {
               "application/json": {
                 "schema": {
@@ -3744,6 +3865,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -3793,7 +3917,7 @@
             }
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Confirmed\"; the booking has no pending or confirmed items",
             "content": {
               "application/json": {
                 "schema": {
@@ -3841,6 +3965,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -3860,7 +3987,7 @@
           "Bookings"
         ],
         "summary": "Sets a booking's status to \"Wait list\"",
-        "description": "Only bookings in status \"Pending\" or \"Confirmed\" can be set to \"Wait list\".",
+        "description": "Only bookings in status \"Pending\", \"Confirmed\" or \"Canceled wait list\" can be set to \"Wait list\". Depending on the event's email settings, the booker receives the wait list email; see `sendStatusEmail` for how to control it. Nothing is sent if the booker has no email address. The request body is optional.",
         "operationId": "markBookingAsWaitList",
         "parameters": [
           {
@@ -3885,7 +4012,7 @@
               }
             }
           },
-          "required": true
+          "required": false
         },
         "responses": {
           "200": {
@@ -3899,7 +4026,7 @@
             }
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Pending\", \"Confirmed\" or \"Canceled wait list\"; the request body is not a valid JSON object or a field value cannot be read",
             "content": {
               "application/json": {
                 "schema": {
@@ -3946,6 +4073,108 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "501": {
+            "description": "Request cannot be handled, private API not active or required module not enabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{id}/cancel-wait-list": {
+      "put": {
+        "tags": [
+          "Bookings"
+        ],
+        "summary": "Sets a booking's status to \"Canceled wait list\"",
+        "description": "Only bookings in status \"Wait list\" can be set to \"Canceled wait list\", as \"Remove from wait list\" does in SeminarDesk. No email is sent. Unused payment links of the booking are deactivated.",
+        "operationId": "markBookingAsWaitListCanceled",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Numeric ID of the item",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Booking status changed successfully, returns the updated booking",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Wait list\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "API key is missing or invalid",
+            "headers": {
+              "WWW_Authenticate": {
+                "style": "simple",
+                "explode": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "API key does not have required permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The resource does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -3998,7 +4227,7 @@
             "description": "Booking deleted successfully"
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Pending\", \"Wait list\" or \"Canceled wait list\"; the request body is not a valid JSON object or a field value cannot be read; `reason` is missing, blank or longer than 255 characters",
             "content": {
               "application/json": {
                 "schema": {
@@ -4045,6 +4274,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -4094,7 +4326,7 @@
             }
           },
           "400": {
-            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change",
+            "description": "Request cannot be completed due to invalid input or because the item's state does not permit a certain change: the booking is not in status \"Canceled\" or \"No-show\"",
             "content": {
               "application/json": {
                 "schema": {
@@ -4141,6 +4373,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -4226,6 +4461,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -4333,6 +4571,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -4428,6 +4669,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -4521,6 +4765,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -4605,6 +4852,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -4691,6 +4941,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -4796,6 +5049,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -4904,6 +5160,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -5009,6 +5268,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -5094,6 +5356,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -5187,6 +5452,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -5276,6 +5544,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -5360,6 +5631,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -5459,6 +5733,9 @@
               }
             }
           },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
             "content": {
@@ -5538,6 +5815,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           },
           "501": {
             "description": "Request cannot be handled, private API not active or required module not enabled",
@@ -6170,7 +6450,10 @@
         "type": "object",
         "properties": {
           "sendStatusEmail": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "description": "Whether the booker receives the email for this status change; `null` counts as `false`. It applies only when the event's email setting for this change is \"Ask if it should be sent\"; with the settings to always or never send, the setting decides and this field has no effect."
           }
         }
       },
@@ -6187,8 +6470,10 @@
             "properties": {
               "reason": {
                 "type": "string",
-                "description": "Reason for the cancelation",
-                "nullable": false
+                "description": "Reason for the cancelation; must not be blank",
+                "nullable": false,
+                "minLength": 1,
+                "maxLength": 255
               }
             }
           }
@@ -6202,8 +6487,10 @@
         "properties": {
           "reason": {
             "type": "string",
-            "description": "Reason for the deletion",
-            "nullable": false
+            "description": "Reason for the deletion; must not be blank",
+            "nullable": false,
+            "minLength": 1,
+            "maxLength": 255
           }
         }
       },
@@ -6325,6 +6612,7 @@
           },
           "referenceNumbers": {
             "type": "string",
+            "description": "Buyer reference (EN 16931 BT-10) entered on this booking, a free reference such as a cost center. It appears on invoices together with those of the event and the event date.",
             "nullable": true
           },
           "voucherCode": {
@@ -6451,7 +6739,8 @@
           "CANCELED",
           "WAIT_LIST_CANCELED",
           "NO_SHOW"
-        ]
+        ],
+        "description": "Status of a booking. Guests and their items use the same values, except `NO_SHOW`: a no-show guest or item has no status (`null`).\n- `PENDING` (\"Pending\"): received, not yet confirmed\n- `CONFIRMED` (\"Confirmed\")\n- `WAIT_LIST` (\"Wait list\"): waiting for a free place\n- `CANCELED` (\"Canceled\")\n- `WAIT_LIST_CANCELED` (\"Canceled wait list\"): removed from the wait list without having been confirmed\n- `NO_SHOW` (\"No-show\"): confirmed, but did not attend"
       },
       "BookingGuest": {
         "required": [
@@ -7254,7 +7543,7 @@
           "referenceNumbers": {
             "maxLength": 250,
             "type": "string",
-            "description": "Reference numbers entered on this event. They appear on invoices together with those of the event date and the booking. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
+            "description": "Buyer reference (EN 16931 BT-10) entered on this event, a free reference such as a cost center. It appears on invoices together with those of the event date and the booking. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
             "nullable": true
           },
           "additionalFields": {
@@ -7654,7 +7943,7 @@
           "referenceNumbers": {
             "maxLength": 250,
             "type": "string",
-            "description": "Reference numbers entered on this event date. They appear on invoices together with those of the event and the booking. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
+            "description": "Buyer reference (EN 16931 BT-10) entered on this event date, a free reference such as a cost center. It appears on invoices together with those of the event and the booking. The value is trimmed; send an empty string to clear it, null leaves it unchanged.",
             "nullable": true
           },
           "labels": {
@@ -9913,9 +10202,34 @@
           },
           "referenceNumbers": {
             "type": "array",
+            "description": "Deprecated: use `references.buyerReference`. The individual values that make up the buyer reference.",
+            "deprecated": true,
+            "readOnly": true,
             "nullable": true,
             "items": {
               "type": "string"
+            }
+          },
+          "references": {
+            "type": "object",
+            "description": "The invoice's references (EN 16931).",
+            "readOnly": true,
+            "nullable": false,
+            "required": [
+              "buyerReference",
+              "purchaseOrderReference"
+            ],
+            "properties": {
+              "buyerReference": {
+                "type": "string",
+                "description": "Buyer reference (BT-10), a free reference such as a cost center. `null` when the invoice has none.",
+                "nullable": true
+              },
+              "purchaseOrderReference": {
+                "type": "string",
+                "description": "Purchase order number (BT-13). `null` when the invoice has none.",
+                "nullable": true
+              }
             }
           }
         }
@@ -9929,6 +10243,7 @@
           "organization",
           "periodOfService",
           "recipient",
+          "references",
           "status",
           "template",
           "type"
@@ -10928,6 +11243,16 @@
       },
       "NotImplementedError": {
         "description": "Request cannot be handled, private API not active or required module not enabled",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Unexpected error on the server. A change the request asked for may have been applied in part or in full, so read the resource again before retrying. If the error persists, contact support.",
         "content": {
           "application/json": {
             "schema": {
