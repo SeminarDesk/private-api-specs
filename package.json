@@ -1,0 +1,9 @@
+{
+  "name": "private-api-specs",
+  "version": "1.0.0",
+  "description": "SeminarDesk Private API OpenAPI Specification",
+  "private": true,
+  "scripts": {
+    "validate": "npx @apidevtools/swagger-cli validate private-api.json"
+  }
+}
