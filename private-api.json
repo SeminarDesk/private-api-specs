@@ -3225,6 +3225,97 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Creates a new organization profile",
+        "description": "`additionalFields` accepts only additional fields that apply to organizations; any other field is rejected with 400.",
+        "operationId": "createOrganizationProfile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationProfile"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created, contains the newly created organization profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationProfile"
+                }
+              }
+            },
+            "links": {
+              "GetOrganizationById": {
+                "operationId": "getOrganizationProfile",
+                "parameters": {
+                  "id": "$response.body#/id"
+                },
+                "description": "The `id` value returned can be used as the `id` parameter in `GET /organizations/{id}`\n"
+              }
+            }
+          },
+          "400": {
+            "description": "Request cannot be completed due to invalid input, for example a missing or empty `name`, a `parentOrganization` that is not an organization profile or an additional field that does not apply to organizations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "API key is missing or invalid",
+            "headers": {
+              "WWW_Authenticate": {
+                "style": "simple",
+                "explode": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "API key does not have required permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "501": {
+            "description": "Request cannot be handled, private API not active or required module not enabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/organizations/{id}": {
@@ -3291,6 +3382,105 @@
           },
           "404": {
             "description": "The resource does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "501": {
+            "description": "Request cannot be handled, private API not active or required module not enabled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Updates one or more properties of an organization profile",
+        "operationId": "patchOrganizationProfile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Numeric ID of the item",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchOrganizationProfile"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Updated successfully"
+          },
+          "400": {
+            "description": "Request cannot be completed due to invalid input, for example an empty `name` or a `parentOrganization` that is not an organization profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "API key is missing or invalid",
+            "headers": {
+              "WWW_Authenticate": {
+                "style": "simple",
+                "explode": false,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "API key does not have required permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The resource does not exist or is not an organization profile",
             "content": {
               "application/json": {
                 "schema": {
@@ -7303,6 +7493,37 @@
           }
         ]
       },
+      "PatchOrganizationProfile": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProfileProperties"
+          },
+          {
+            "$ref": "#/components/schemas/OrganizationProfileProperties"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "billingAddress": {
+                "properties": {
+                  "email": {
+                    "readOnly": true
+                  }
+                }
+              },
+              "notes": {
+                "readOnly": true
+              },
+              "tasks": {
+                "readOnly": true
+              },
+              "additionalFields": {
+                "readOnly": true
+              }
+            }
+          }
+        ]
+      },
       "PatchFacilitatorProfile": {
         "allOf": [
           {
@@ -9894,6 +10115,10 @@
       "OrganizationProfileProperties": {
         "type": "object",
         "properties": {
+          "salutation": {
+            "readOnly": true,
+            "description": "Organizations take no salutation in a request; POST and PATCH ignore it."
+          },
           "name": {
             "type": "string",
             "nullable": false
@@ -9905,7 +10130,12 @@
             "type": "string"
           },
           "parentOrganization": {
-            "$ref": "#/components/schemas/OrganizationProfile"
+            "description": "Parent organization. A request sets it by `id`, which has to belong to an organization profile.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NamedIdReference"
+              }
+            ]
           },
           "preferredEmail": {
             "type": "string",
