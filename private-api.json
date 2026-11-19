@@ -9854,6 +9854,11 @@
             "type": "string",
             "nullable": true
           },
+          "facilitatorRemarks": {
+            "type": "string",
+            "nullable": true,
+            "description": "Remarks on the facilitator tab of the profile. Separate from `remarks` (the profile's general remarks), `information` (the profile's general information) and `info` (the facilitator's vita). On PATCH, `null` or an omitted field leaves the value unchanged and an empty string clears it."
+          },
           "assignedEventDates": {
             "type": "array",
             "readOnly": true,
